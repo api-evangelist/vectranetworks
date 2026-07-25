@@ -1,0 +1,433 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Notes API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Notes
+  description: Manage entities notes
+paths:
+  /accounts/{accountID}/notes:
+    parameters:
+    - name: accountID
+      description: ID of the Account notes you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: accountNotesGetSeveral
+      summary: Get all account notes
+      tags:
+      - Notes
+      responses:
+        '200':
+          description: Retrieved account notes successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      operationId: accountNoteCreate
+      summary: Create a new Account note
+      tags:
+      - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Account note created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /accounts/{accountID}/notes/{noteID}:
+    parameters:
+    - name: accountID
+      description: ID of the Account you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    - name: noteID
+      description: ID of the Note you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: accountNoteGetSingle
+      summary: Get a single Account note
+      tags:
+      - Notes
+      responses:
+        '200':
+          description: Retrieved account note successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: accountNoteUpdate
+      summary: Update an existing Account note
+      tags:
+      - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Account note updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    delete:
+      operationId: accountNoteDelete
+      summary: Delete an existing Account note
+      tags:
+      - Notes
+      responses:
+        '200':
+          description: Account note deleted
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /detections/{detectionID}/notes:
+    parameters:
+    - name: detectionID
+      description: ID of the Detection notes you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: detectionNotesGetSeveral
+      summary: Get all Detection notes
+      tags:
+      - Notes
+      responses:
+        '200':
+          description: Retrieved Detection notes successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      operationId: detectionNoteCreate
+      summary: Create a new Detection note
+      tags:
+      - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Detection note created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /detections/{detectionID}/notes/{noteID}:
+    parameters:
+    - name: detectionID
+      description: ID of the Detection you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    - name: noteID
+      description: ID of the Note you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: detectionNoteGetSingle
+      summary: Get a single Detection note
+      tags:
+      - Notes
+      responses:
+        '200':
+          description: Retrieved Detection note successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: detectionNoteUpdate
+      summary: Update an existing Detection note
+      tags:
+      - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Detection note updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    delete:
+      operationId: detectionNoteDelete
+      summary: Delete an existing Detection note
+      tags:
+      - Notes
+      responses:
+        '200':
+          description: Detection note deleted
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /hosts/{hostID}/notes:
+    parameters:
+    - name: hostID
+      description: ID of the Host notes you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: hostNotesGetSeveral
+      summary: Get all Host notes
+      tags:
+      - Notes
+      responses:
+        '200':
+          description: Retrieved Host notes successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      operationId: hostNoteCreate
+      summary: Create a new Host note
+      tags:
+      - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Host note created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /hosts/{hostID}/notes/{noteID}:
+    parameters:
+    - name: hostID
+      description: ID of the Host you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    - name: noteID
+      description: ID of the Note you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: hostNoteGetSingle
+      summary: Get a single Host note
+      tags:
+      - Notes
+      responses:
+        '200':
+          description: Retrieved Host note successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: hostNoteUpdate
+      summary: Update an existing Host note
+      tags:
+      - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Host note updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    delete:
+      operationId: hostNoteDelete
+      summary: Delete an existing Host note
+      tags:
+      - Notes
+      responses:
+        '200':
+          description: Host note deleted
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+components:
+  schemas:
+    isoDate:
+      description: ISO representation of a date
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
+    note:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        date_created:
+          oneOf:
+          - $ref: '#/components/schemas/isoDate'
+          - type: string
+            nullable: true
+        date_modified:
+          oneOf:
+          - $ref: '#/components/schemas/isoDate'
+          - type: string
+            nullable: true
+        created_by:
+          $ref: '#/components/schemas/name'
+        modified_by:
+          oneOf:
+          - $ref: '#/components/schemas/name'
+          - type: string
+            nullable: true
+        note:
+          $ref: '#/components/schemas/text'
+    name:
+      type: string
+      minLength: 1
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    noteRequestBody:
+      type: object
+      properties:
+        note:
+          $ref: '#/components/schemas/text'
+      required:
+      - note
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    text:
+      type: string
+  responses:
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

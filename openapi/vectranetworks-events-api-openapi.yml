@@ -1,0 +1,224 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Events API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Events
+paths:
+  /events/entity_scoring:
+    get:
+      summary: Retrieve entity scoring events
+      operationId: getEntityScoringEvents
+      tags:
+      - Events
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - account
+          - host
+        description: Specifies the type of entity scoring events (e.g., "account" or "host")
+      - name: from
+        in: query
+        schema:
+          type: integer
+        description: Starting checkpoint for filtering scoring events
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          maximum: 1000
+        description: Maximum number of events to return, with a default of 500 if unspecified
+      - name: event_timestamp_gte
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Start date/time for scoring events (inclusive, ISO-8601 format)
+      - name: event_timestamp_lte
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: End date/time for scoring events (inclusive, ISO-8601 format)
+      - name: include_score_decreases
+        in: query
+        schema:
+          type: boolean
+        description: Whether to include events that reflect score decreases
+      responses:
+        '200':
+          description: A list of entity scoring events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EntityScoring'
+  /events/detections:
+    get:
+      summary: Retrieve detection events
+      operationId: getDetectionEvents
+      tags:
+      - Events
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type: integer
+        description: Starting checkpoint for filtering detection events
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          maximum: 1000
+        description: Maximum number of detection events to return, default is 500
+      - name: event_timestamp_gte
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Start date/time for detection events (inclusive, ISO-8601 format)
+      - name: event_timestamp_lte
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: End date/time for detection events (inclusive, ISO-8601 format)
+      - name: entity_type
+        in: query
+        schema:
+          type: string
+          enum:
+          - account
+          - host
+        description: Type of the related entity ("account" or "host")
+      - name: detection_id
+        in: query
+        schema:
+          type: integer
+        description: Filter by a specific Detection ID
+      - name: ordering
+        in: query
+        schema:
+          type: string
+          enum:
+          - event_timestamp
+          - -event_timestamp
+        description: Ordering options, with default ascending by "event_timestamp"
+      responses:
+        '200':
+          description: List of detection events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      type: object
+                  next_checkpoint:
+                    type: integer
+                  remaining_count:
+                    type: integer
+  /events/audits:
+    get:
+      summary: Retrieve audit log events
+      operationId: getAuditEvents
+      tags:
+      - Events
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type: integer
+        description: Starting checkpoint for filtering
+      - name: event_timestamp_gte
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        description: Maximum number of events to return
+      responses:
+        '200':
+          description: Audit log events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditLogEvent'
+components:
+  schemas:
+    EntityScoring:
+      type: object
+      properties:
+        entity_id:
+          type: integer
+        entity_type:
+          type: string
+        urgency_score:
+          type: integer
+        event_timestamp:
+          type: string
+          format: date-time
+        name:
+          type: string
+        last_detection_id:
+          type: integer
+        severity:
+          type: string
+          enum:
+          - Low
+          - Medium
+          - High
+    AuditLogEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        username:
+          type: string
+        event_timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+        result_status:
+          type: string
+        event_action:
+          type: string
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

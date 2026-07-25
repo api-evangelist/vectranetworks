@@ -1,0 +1,60 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Health API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Health
+paths:
+  /health:
+    get:
+      summary: Retrieve health data of the appliance
+      operationId: getHealthData
+      tags:
+      - Health
+      responses:
+        '200':
+          description: Health data of the appliance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+components:
+  schemas:
+    Health:
+      type: object
+      properties:
+        status:
+          type: string
+        components:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              status:
+                type: string
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

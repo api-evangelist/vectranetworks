@@ -1,0 +1,194 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Threat Feeds API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Threat Feeds
+  description: The threatFeeds endpoint can be used to automate the upload of STIX files for threat intelligence matching. This endpoint can also be used to retrieve the current list of threatFeed objects already configured in the system.
+paths:
+  /threatFeeds:
+    description: The threatFeeds endpoint can be used to automate the upload of STIX files for threat intelligence matching.
+    get:
+      operationId: threatFeedGetSeveral
+      summary: Get all Threat Feeds
+      tags:
+      - Threat Feeds
+      responses:
+        '200':
+          description: Retrieved Threat Feeds successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      summary: Create a new threat feed
+      operationId: createThreatFeed
+      tags:
+      - Threat Feeds
+      responses:
+        '201':
+          description: Threat feed created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatFeed'
+  /threatFeeds/{threatFeedID}:
+    parameters:
+    - name: threatFeedID
+      description: ID of the Threat Feed you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: threatFeedGetSingle
+      summary: Describe a specific Threat Feed
+      tags:
+      - Threat Feeds
+      responses:
+        '200':
+          description: Describe a specific Threat Feed
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          $ref: '#/components/responses/notFound'
+    delete:
+      operationId: threatFeedDeleteSingle
+      summary: Delete a specific Threat Feed
+      tags:
+      - Threat Feeds
+      responses:
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /threatFeeds/{id}:
+    get:
+      summary: Retrieve a specific threat feed
+      operationId: getThreatFeedById
+      tags:
+      - Threat Feeds
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique ID for the threat feed
+      responses:
+        '200':
+          description: Threat feed details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatFeed'
+    patch:
+      summary: Update a threat feed
+      operationId: updateThreatFeed
+      tags:
+      - Threat Feeds
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThreatFeed'
+      responses:
+        '204':
+          description: Threat feed updated successfully
+components:
+  responses:
+    notFound:
+      description: Object not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            detail: Not Found.
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+  schemas:
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    ThreatFeed:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        severity:
+          type: string
+        file:
+          type: string
+          format: uri
+          description: URI of the threat feed file
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

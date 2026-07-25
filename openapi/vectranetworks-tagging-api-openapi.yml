@@ -1,0 +1,298 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Tagging API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Tagging
+  description: Dedicated endpoint to manage entities's tags
+paths:
+  /tagging/account/{accountID}:
+    description: The tagging endpoint can be used to manage Account tags
+    parameters:
+    - name: accountID
+      description: ID of the Account you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: accountTagsGetAll
+      summary: Get all Account's tags
+      tags:
+      - Tagging
+      responses:
+        '200':
+          description: Retrieved tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: accountTagsReplace
+      summary: Replace all Account's tags
+      tags:
+      - Tagging
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tagsRequestBody'
+      responses:
+        '200':
+          description: Replaced tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /tagging/detection/{detectionID}:
+    description: The tagging endpoint can be used to manage Detection tags
+    parameters:
+    - name: detectionID
+      description: ID of the Detection you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: detectionTagsGetAll
+      summary: Get all Detection's tags
+      tags:
+      - Tagging
+      responses:
+        '200':
+          description: Retrieved tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: detectionTagsReplace
+      summary: Replace all Detection's tags
+      tags:
+      - Tagging
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tagsRequestBody'
+      responses:
+        '200':
+          description: Replaced tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /tagging/host/{hostID}:
+    description: The tagging endpoint can be used to manage Host tags
+    parameters:
+    - name: hostID
+      description: ID of the Host you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: hostTagsGetAll
+      summary: Get all Host's tags
+      tags:
+      - Tagging
+      responses:
+        '200':
+          description: Retrieved tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: hostTagsReplace
+      summary: Replace all Host's tags
+      tags:
+      - Tagging
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tagsRequestBody'
+      responses:
+        '200':
+          description: Replaced tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /tagging/detection/{detection_id}:
+    get:
+      summary: Retrieve tags for a specific detection
+      operationId: getDetectionTags
+      tags:
+      - Tagging
+      parameters:
+      - name: detection_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique ID for the detection
+      responses:
+        '200':
+          description: Detection tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+    post:
+      summary: Add tags to a detection
+      operationId: addDetectionTags
+      tags:
+      - Tagging
+      parameters:
+      - name: detection_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Unique ID for the detection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: List of tags to add to the detection
+      responses:
+        '201':
+          description: Tags added successfully
+components:
+  schemas:
+    tagsRequestBody:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+          - $ref: '#/components/schemas/text'
+      required:
+      - tags
+    tags:
+      type: object
+      properties:
+        status:
+          type: string
+        tag_id:
+          $ref: '#/components/schemas/ID'
+        tags:
+          type: array
+          items:
+          - $ref: '#/components/schemas/text'
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    Tag:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - failure
+          description: Status of tagging request
+        tag_id:
+          type: string
+          description: Corresponds to the account, host, or detection id of the object being tagged
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of tags for the host or detection object
+        message:
+          type: string
+          description: Error message if operation was unsuccessful. Only present when status is 'failure'
+        invalid_tags:
+          type: array
+          items:
+            type: string
+          description: List of tags which are invalid. Only present when status is 'failure'
+    text:
+      type: string
+  responses:
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

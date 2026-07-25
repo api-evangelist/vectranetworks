@@ -1,0 +1,157 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Search API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Search
+  description: Dedicated endpoint to run searches among entities
+paths:
+  /search/accounts:
+    description: Search for accounts objects.
+    get:
+      operationId: searchAccounts
+      summary: Search for Accounts
+      tags:
+      - Search
+      parameters:
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/pageSize'
+      - name: query_string
+        description: The Lucene search query
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Retrieved Hosts successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /search/detections:
+    description: Search for detections objects.
+    get:
+      operationId: searchDetections
+      summary: Search for Detections
+      tags:
+      - Search
+      parameters:
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/pageSize'
+      - name: query_string
+        description: The Lucene search query
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Retrieved Hosts successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /search/hosts:
+    description: Search for hosts objects.
+    get:
+      operationId: searchHosts
+      summary: Search for Hosts
+      tags:
+      - Search
+      parameters:
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/pageSize'
+      - name: query_string
+        description: The Lucene search query
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Retrieved Hosts successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+components:
+  schemas:
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+  parameters:
+    pageSize:
+      name: page_size
+      description: The number of results to return per page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 5000
+      example: 50
+    pageNumber:
+      name: page
+      description: The page result to look at
+      in: query
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+      example: 1
+  responses:
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

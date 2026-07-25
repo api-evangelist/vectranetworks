@@ -1,0 +1,294 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Users API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Users
+  description: Dedicated endpoint to Users.
+paths:
+  /users:
+    description: Work on several Vectra Users
+    parameters:
+    - name: username
+      description: Filter by user name
+      in: query
+      schema:
+        $ref: '#/components/schemas/name'
+    - name: role
+      description: Filter by role
+      in: query
+      schema:
+        $ref: '#/components/schemas/userRole'
+    - name: account_type
+      description: Filter by user type
+      in: query
+      schema:
+        $ref: '#/components/schemas/userType'
+    - name: authentication_profile
+      description: Filter by authentication profile
+      in: query
+      schema:
+        $ref: '#/components/schemas/userAuthProfile'
+    - name: last_login_gte
+      description: Filters for User's that have logged in since the given timestamp
+      in: query
+      schema:
+        $ref: '#/components/schemas/isoDate'
+    get:
+      operationId: usersGetSeveral
+      summary: Search Vectra Users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Vectra Users search succesfull
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfUsers'
+              examples:
+                Users List:
+                  $ref: '#/components/examples/multipleExample'
+                None Users:
+                  $ref: '#/components/examples/noneUsers'
+        '400':
+          $ref: '#/components/responses/invalidQueryParameter'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /users/{userID}:
+    description: Work on a single Vectra User
+    parameters:
+    - name: userID
+      description: ID of the Vectra User you're working on
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: usersGetSingle
+      summary: Describe a single Vectra User
+      tags:
+      - Users
+      responses:
+        '200':
+          description: A single Vectra user response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+              examples:
+                Admin User:
+                  $ref: '#/components/examples/userAdminExample'
+                Local User:
+                  $ref: '#/components/examples/userLocalExample'
+                SAML User:
+                  $ref: '#/components/examples/userSAMLExample'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+components:
+  schemas:
+    userAuthProfile:
+      description: Vectra User authentication profile when coming from SAML or LDAP
+      type: string
+      nullable: true
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    link:
+      description: URL Link
+      type: string
+      nullable: true
+      format: uri
+      example: https://dummy.link
+    isoDate:
+      description: ISO representation of a date
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
+    name:
+      type: string
+      minLength: 1
+    userType:
+      description: Vectra User type
+      type: string
+      enum:
+      - local
+      - SAML
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    results:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/positiveInt'
+        next:
+          $ref: '#/components/schemas/link'
+        previous:
+          $ref: '#/components/schemas/link'
+    userRole:
+      description: Vectra User Role
+      type: string
+    resultsOfUsers:
+      allOf:
+      - $ref: '#/components/schemas/results'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/user'
+    email:
+      type: string
+      format: email
+    user:
+      description: Vectra User object
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        last_login:
+          $ref: '#/components/schemas/isoDate'
+        username:
+          $ref: '#/components/schemas/name'
+        email:
+          $ref: '#/components/schemas/email'
+        account_type:
+          $ref: '#/components/schemas/userType'
+        authentication_profile:
+          $ref: '#/components/schemas/userAuthProfile'
+        role:
+          $ref: '#/components/schemas/userRole'
+      required:
+      - id
+      - last_login
+      - username
+      - email
+      - account_type
+      - authentication_profile
+      - role
+  responses:
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+    invalidQueryParameter:
+      description: Invalid Query Parameter
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: 'The following query parameter(s) are invalid: xxx.'
+  examples:
+    userSAMLExample:
+      value:
+        id: 129
+        last_login: '2022-01-01T12:34:56'
+        username: SAML:dummy-user@company.com
+        email: dummy-user@company.com
+        account_type: SAML
+        authentication_profile: Company SE
+        role: Custom Admin
+    userAdminExample:
+      value:
+        id: 20
+        last_login: '2022-01-01T12:34:56Z'
+        username: admin
+        email: ''
+        account_type: local
+        authentication_profile: null
+        role: Super Admin
+    multipleExample:
+      value:
+        count: 3
+        next: null
+        previous: null
+        results:
+        - id: 20
+          last_login: '2022-01-01T12:34:56Z'
+          username: admin
+          email: ''
+          account_type: local
+          authentication_profile: null
+          role: Super Admin
+        - id: 101
+          last_login: '2022-01-01T12:34:56Z'
+          username: dummy-user
+          email: ''
+          account_type: local
+          authentication_profile: null
+          role: Read-Only
+        - id: 129
+          last_login: '2022-01-01T12:34:56'
+          username: SAML:dummy-user@company.com
+          email: dummy-user@company.com
+          account_type: SAML
+          authentication_profile: Company SE
+          role: Custom Admin
+    userLocalExample:
+      value:
+        id: 101
+        last_login: '2022-01-01T12:34:56Z'
+        username: dummy-user
+        email: ''
+        account_type: local
+        authentication_profile: null
+        role: Read-Only
+    noneUsers:
+      value:
+        count: 0
+        next: null
+        previous: null
+        results: []
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

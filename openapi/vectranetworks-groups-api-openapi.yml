@@ -1,0 +1,94 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Groups API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Groups
+paths:
+  /groups:
+    get:
+      summary: Retrieve all groups
+      operationId: getGroups
+      tags:
+      - Groups
+      responses:
+        '200':
+          description: List of groups
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Group'
+    post:
+      summary: Create new group
+      tags:
+      - Groups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                type:
+                  type: string
+                members:
+                  type: array
+                  items:
+                    type: string
+                description:
+                  type: string
+                importance:
+                  type: string
+      responses:
+        '200':
+          description: Created group
+components:
+  schemas:
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        importance:
+          type: string
+        members:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

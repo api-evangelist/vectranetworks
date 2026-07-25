@@ -1,0 +1,288 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Proxies API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Proxies
+  description: Dedicated endpoint to Proxies
+paths:
+  /proxies:
+    description: The proxies endpoint can be used to manage proxy IP addresses (internal or external).
+    get:
+      operationId: proxyGetSeveral
+      summary: Get all Proxies
+      tags:
+      - Proxies
+      responses:
+        '200':
+          description: Retrieved Proxies successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfProxies'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      operationId: proxyCreate
+      summary: Create a proxy
+      tags:
+      - Proxies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/proxyRequestBody'
+      responses:
+        '200':
+          description: Proxy created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfProxies'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_error'
+              examples:
+                Invalid JSON payload:
+                  $ref: '#/components/examples/errorWrongPayload'
+                IP already used:
+                  $ref: '#/components/examples/errorIPAlreadyUsed'
+                Invalid IP:
+                  $ref: '#/components/examples/errorInvalidIP'
+  /proxies/{proxyID}:
+    parameters:
+    - name: proxyID
+      description: ID of the Proxy you're looking for
+      in: path
+      schema:
+        $ref: '#/components/schemas/proxyID'
+    get:
+      operationId: proxyGetSingle
+      summary: Describe a specific Proxy
+      tags:
+      - Proxies
+      responses:
+        '200':
+          description: Specific Proxy details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfProxies'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          description: Proxy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_error'
+              examples:
+                Proxy not found:
+                  $ref: '#/components/examples/errorNotFound'
+    patch:
+      operationId: proxyUpdate
+      summary: Update a proxy
+      tags:
+      - Proxies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/proxyRequestBody'
+      responses:
+        '200':
+          description: Proxy updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfProxies'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          description: Proxy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_error'
+              examples:
+                Proxy not found:
+                  $ref: '#/components/examples/errorWrongID'
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_error'
+              examples:
+                Invalid JSON payload:
+                  $ref: '#/components/examples/errorWrongPayload'
+                IP already used:
+                  $ref: '#/components/examples/errorIPAlreadyUsed'
+                Invalid IP:
+                  $ref: '#/components/examples/errorInvalidIP'
+components:
+  examples:
+    errorIPAlreadyUsed:
+      value:
+        errors:
+        - title: IP already listed.
+    errorWrongPayload:
+      value:
+        errors:
+        - title: Error loading JSON data from POST request
+    errorNotFound:
+      value:
+        errors:
+        - title: No matching proxy found
+    errorInvalidIP:
+      value:
+        errors:
+        - title: IP not valid.
+    errorWrongID:
+      value:
+        errors:
+        - title: Matching id not present in db.
+  schemas:
+    schemas_error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+          - type: object
+            properties:
+              title:
+                type: string
+    name:
+      type: string
+      minLength: 1
+    IP:
+      description: IP Address
+      type: string
+      example: 192.168.1.55
+    proxy:
+      description: Proxy
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/proxyID'
+        address:
+          $ref: '#/components/schemas/IP'
+        considerProxy:
+          type: boolean
+        source:
+          $ref: '#/components/schemas/name'
+        createdAt:
+          $ref: '#/components/schemas/isoDateMicroseconds'
+        lastUpdatedAt:
+          $ref: '#/components/schemas/isoDateMicroseconds'
+      required:
+      - id
+      - address
+      - considerProxy
+      - source
+      - createdAt
+      - lastUpdatedAt
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    proxyRequestBody:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/IP'
+        considerProxy:
+          type: boolean
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    isoDateMicroseconds:
+      description: ISO representation of a date with microseconds
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00.123456+00:00'
+    proxyID:
+      type: string
+      minLength: 32
+      maxLength: 32
+      example: 5832ba020b764c0395f774b49c03ed3b
+    resultsOfProxies:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            count:
+              $ref: '#/components/schemas/positiveInt'
+          required:
+          - count
+        proxies:
+          type: array
+          items:
+            $ref: '#/components/schemas/proxy'
+      required:
+      - meta
+      - proxies
+  responses:
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

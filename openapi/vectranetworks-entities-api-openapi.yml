@@ -1,0 +1,350 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Entities API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Entities
+paths:
+  /entities:
+    get:
+      summary: Retrieve all entities
+      operationId: getEntities
+      tags:
+      - Entities
+      parameters:
+      - name: type
+        in: query
+        schema:
+          type: string
+          enum:
+          - account
+          - host
+        description: Specifies the type of entities to retrieve (e.g., "account" or "host")
+      - name: is_prioritized
+        in: query
+        schema:
+          type: boolean
+        description: Filter entities by priority (only entities above the configured priority threshold)
+      - name: ordering
+        in: query
+        schema:
+          type: string
+        description: Specifies the order of results, e.g., by urgency_score, last timestamp, or last_modified_timestamp
+      - name: last_detection_timestamp_gte
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Only entities with a last detection timestamp greater than or equal to this time (inclusive, ISO-8601 format)
+      - name: last_detection_timestamp_lte
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Only entities with a last detection timestamp less than or equal to this time (inclusive, ISO-8601 format)
+      - name: last_modified_timestamp_gte
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Only entities with a last modified timestamp greater than or equal to this time (inclusive, ISO-8601 format)
+      - name: last_modified_timestamp_lte
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Only entities with a last modified timestamp less than or equal to this time (inclusive, ISO-8601 format)
+      - name: name
+        in: query
+        schema:
+          type: string
+        description: Filter by entity name
+      - name: note_modified_timestamp_gte
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Only entities with notes modified on or after this time (ISO-8601 format)
+      - name: page
+        in: query
+        schema:
+          type: integer
+        description: Page number for pagination
+      - name: page_size
+        in: query
+        schema:
+          type: integer
+          maximum: 5000
+        description: Number of entities per page, with a maximum of 5000
+      - name: state
+        in: query
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+        description: Filter by entity activation state (either "active" or "inactive")
+      - name: tags
+        in: query
+        schema:
+          type: string
+        description: Filter entities by tags (comma-separated list of tags, returns entities with any specified tags)
+      responses:
+        '200':
+          description: List of entities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Entity'
+  /entities/{entity_id}:
+    get:
+      summary: Get entity by ID
+      tags:
+      - Entities
+      parameters:
+      - name: entity_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - account
+          - host
+      responses:
+        '200':
+          description: Entity details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+  /entities/{entity_id}/notes:
+    get:
+      summary: Get entity notes
+      tags:
+      - Entities
+      parameters:
+      - name: entity_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - account
+          - host
+      responses:
+        '200':
+          description: List of notes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+    post:
+      summary: Add note to entity
+      tags:
+      - Entities
+      parameters:
+      - name: entity_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - account
+          - host
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+      responses:
+        '200':
+          description: Created note
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+  /entities/{entity_id}/notes/{note_id}:
+    get:
+      summary: Get specific entity note
+      tags:
+      - Entities
+      parameters:
+      - name: entity_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: note_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - account
+          - host
+      responses:
+        '200':
+          description: Note details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+    patch:
+      summary: Update entity note
+      tags:
+      - Entities
+      parameters:
+      - name: entity_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: note_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - account
+          - host
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+      responses:
+        '200':
+          description: Updated note
+    delete:
+      summary: Delete entity note
+      tags:
+      - Entities
+      parameters:
+      - name: entity_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: note_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - account
+          - host
+      responses:
+        '204':
+          description: Note deleted successfully
+components:
+  schemas:
+    Entity:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        urgency:
+          type: integer
+        importance:
+          type: integer
+        last_detection_timestamp:
+          type: string
+          format: date-time
+    Note:
+      type: object
+      properties:
+        id:
+          type: integer
+        created_by:
+          type: string
+        modified_by:
+          type: string
+        note:
+          type: string
+        date_created:
+          type: string
+          format: date-time
+        date_modified:
+          type: string
+          format: date-time
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

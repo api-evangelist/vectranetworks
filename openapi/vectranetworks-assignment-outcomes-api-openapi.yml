@@ -1,0 +1,287 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Assignment Outcomes API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Assignment Outcomes
+  description: Dedicated endpoint to Assignment Outcomes.
+paths:
+  /assignment_outcomes:
+    description: Account and Host assignment outcomes
+    get:
+      operationId: assignmentOutcomeGetSeveral
+      summary: Get all assignment outcomes
+      tags:
+      - Assignment Outcomes
+      responses:
+        '200':
+          description: All assignment outcomes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfAssignmentOutcomes'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      operationId: assignmentOutcomeCreate
+      summary: Create a new Assignment outcome
+      tags:
+      - Assignment Outcomes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/assignmentOutcomeRequestBody'
+      responses:
+        '201':
+          description: Assignment outcome created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/assignmentOutcome'
+              examples:
+                Assignment Outcome Created:
+                  $ref: '#/components/examples/assignmentOutcomeUserCreated'
+          links:
+            describe:
+              operationId: assignmentOutcomeGetSingle
+              parameters:
+                assignmentOutcomeID: $response.body#/id
+            update:
+              operationId: assignmentOutcomeUpdate
+              parameters:
+                assignmentOutcomeID: $response.body#/id
+            delete:
+              operationId: assignmentOutcomeDelete
+              parameters:
+                assignmentOutcomeID: $response.body#/id
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /assignment_outcomes/{assignmentOutcomeID}:
+    parameters:
+    - name: assignmentOutcomeID
+      description: ID of the Assignment Outcome you're working on
+      in: path
+      schema:
+        $ref: '#/components/schemas/ID'
+    get:
+      operationId: assignmentOutcomeGetSingle
+      summary: Describe assignment outcome
+      tags:
+      - Assignment Outcomes
+      responses:
+        '200':
+          description: Assignment outcome details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/assignmentOutcome'
+              examples:
+                Builtin Benign True positive:
+                  $ref: '#/components/examples/assignmentOutcomeBuiltin'
+                User Created False Positive:
+                  $ref: '#/components/examples/assignmentOutcomeUserCreated'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          $ref: '#/components/responses/notFound'
+    put:
+      operationId: assignmentOutcomeUpdate
+      summary: 'Modify an assignment outcome. Title can always be modified. Category can only be modified if assignment outcome has not been used as an outcome for assignment.
+
+        '
+      tags:
+      - Assignment Outcomes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/assignmentOutcomeRequestBody'
+      responses:
+        '200':
+          description: Modified
+        '400':
+          description: Error during modification
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: array
+                    items:
+                      type: string
+                      example: This field may not be blank.
+                  category:
+                    type: array
+                    items:
+                      type: string
+                      example: Dummy is not a valid choice.
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    delete:
+      operationId: assignmentOutcomeDelete
+      summary: Delete an assignment outcome
+      tags:
+      - Assignment Outcomes
+      responses:
+        '204':
+          description: Successfully deleted the assignment outcome
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          description: Error during outcome deletion
+components:
+  schemas:
+    resultsOfAssignmentOutcomes:
+      allOf:
+      - $ref: '#/components/schemas/results'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/assignmentOutcome'
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    results:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/positiveInt'
+        next:
+          $ref: '#/components/schemas/link'
+        previous:
+          $ref: '#/components/schemas/link'
+    assignmentOutcome:
+      description: Label resolution outcome for an assignment
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        builtin:
+          type: boolean
+        user_selectable:
+          type: boolean
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/assignmentOutcomeCategory'
+      required:
+      - id
+      - builtin
+      - user_selectable
+      - title
+      - category
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    assignmentOutcomeCategory:
+      title: Assignment Outcome allowed categories
+      type: string
+      enum:
+      - benign_true_positive
+      - malicious_true_positive
+      - false_positive
+    link:
+      description: URL Link
+      type: string
+      nullable: true
+      format: uri
+      example: https://dummy.link
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    assignmentOutcomeRequestBody:
+      type: object
+      properties:
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/assignmentOutcomeCategory'
+  responses:
+    notFound:
+      description: Object not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            detail: Not Found.
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+  examples:
+    assignmentOutcomeUserCreated:
+      value:
+        id: 8
+        builtin: false
+        user_selectable: true
+        title: User created outcome
+        category: false_positive
+    assignmentOutcomeBuiltin:
+      value:
+        id: 1
+        builtin: true
+        user_selectable: true
+        title: Benign True Positive
+        category: benign_true_positive
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

@@ -1,0 +1,58 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Lockdown API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Lockdown
+paths:
+  /lockdown:
+    get:
+      summary: Retrieve entities in lockdown mode
+      operationId: getLockdownEntities
+      tags:
+      - Lockdown
+      responses:
+        '200':
+          description: List of entities in lockdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lockdown'
+components:
+  schemas:
+    Lockdown:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+          description: Type of the entity in lockdown (e.g., "account", "host")
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header

@@ -1,0 +1,269 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect Accounts Match API
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+servers:
+- url: https://{fqdn}/api/{apiVersion}
+  description: Vectra Detect API
+  variables:
+    fqdn:
+      description: The FQDN or IP to join the Vectra Detect instance
+      default: detect-api.demo.vectra.io
+    apiVersion:
+      description: The API version to use
+      default: v2.3
+security:
+- VectraToken: []
+tags:
+- name: Match
+paths:
+  /vectra-match/enablement:
+    get:
+      summary: Retrieve Vectra Match enablement status
+      operationId: getVectraMatchEnablement
+      tags:
+      - Match
+      responses:
+        '200':
+          description: Vectra Match enablement status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchEnablement'
+    post:
+      summary: Enable/disable Vectra Match
+      tags:
+      - Match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_serial:
+                  type: string
+                desired_state:
+                  type: boolean
+      responses:
+        '200':
+          description: Updated enablement status
+  /vectra-match/stats:
+    get:
+      summary: Retrieve Vectra Match statistics
+      operationId: getVectraMatchStats
+      tags:
+      - Match
+      responses:
+        '200':
+          description: Vectra Match statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchStats'
+  /vectra-match/alert-stats:
+    get:
+      summary: Retrieve Vectra Match alert statistics
+      operationId: getVectraMatchAlertStats
+      tags:
+      - Match
+      responses:
+        '200':
+          description: Vectra Match alert statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchAlertStats'
+  /vectra-match/status:
+    get:
+      summary: Retrieve Vectra Match status
+      operationId: getVectraMatchStatus
+      tags:
+      - Match
+      responses:
+        '200':
+          description: Vectra Match status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchStatus'
+  /vectra-match/available-devices:
+    get:
+      summary: Retrieve available devices for Vectra Match
+      operationId: getVectraMatchAvailableDevices
+      tags:
+      - Match
+      responses:
+        '200':
+          description: List of available devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchAvailableDevices'
+  /vectra-match/rules:
+    get:
+      summary: Retrieve Vectra Match rules
+      operationId: getVectraMatchRules
+      tags:
+      - Match
+      responses:
+        '200':
+          description: List of Vectra Match rules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VectraMatchRule'
+    post:
+      summary: Create or upload Vectra Match rules
+      operationId: uploadVectraMatchRules
+      tags:
+      - Match
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Rules file to upload
+      responses:
+        '201':
+          description: Vectra Match rules uploaded successfully
+  /vectra-match/assignment:
+    get:
+      summary: Retrieve Vectra Match assignment details
+      operationId: getVectraMatchAssignment
+      tags:
+      - Match
+      responses:
+        '200':
+          description: Vectra Match assignment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchAssignment'
+    post:
+      summary: Assign devices to Vectra Match
+      operationId: assignVectraMatchDevices
+      tags:
+      - Match
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_ids:
+                  type: array
+                  items:
+                    type: integer
+                  description: List of device IDs to assign
+      responses:
+        '201':
+          description: Devices assigned successfully
+components:
+  schemas:
+    VectraMatchStats:
+      type: object
+      properties:
+        total_rules:
+          type: integer
+          description: Total number of rules
+        active_rules:
+          type: integer
+          description: Number of active rules
+        matched_events:
+          type: integer
+          description: Total matched events
+    VectraMatchAlertStats:
+      type: object
+      properties:
+        total_alerts:
+          type: integer
+          description: Total number of alerts
+        critical_alerts:
+          type: integer
+          description: Number of critical alerts
+        high_alerts:
+          type: integer
+          description: Number of high alerts
+        medium_alerts:
+          type: integer
+          description: Number of medium alerts
+        low_alerts:
+          type: integer
+          description: Number of low alerts
+    VectraMatchRule:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        enabled:
+          type: boolean
+        created_timestamp:
+          type: string
+          format: date-time
+    Device:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+          description: Device status (e.g., "available", "assigned")
+    VectraMatchStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Current status of Vectra Match
+        last_updated:
+          type: string
+          format: date-time
+          description: Timestamp of the last status update
+    VectraMatchAssignment:
+      type: object
+      properties:
+        assigned_devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
+        unassigned_devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
+    VectraMatchEnablement:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if Vectra Match is enabled
+    VectraMatchAvailableDevices:
+      type: object
+      properties:
+        devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header
