@@ -1,0 +1,96 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vectranetworks-rux-v3.3-openapi.yml
+status: candidate
+description: >-
+  No official hosted or remote MCP server was found for Vectra AI — the
+  vectranetworks GitHub organization (57 public repos) ships SIEM/SOAR
+  integrations (Microsoft Sentinel, Splunk SOAR, Google SecOps, Palo Alto
+  XSOAR) but no MCP server, and no Vectra entry exists in the public MCP
+  registries checked. This is a DERIVED candidate tool list drawn from the
+  Vectra Platform API (RUX) v3.3 OpenAPI operations, grouped around the SOC
+  workflows the API serves.
+server:
+  name: vectranetworks
+  transport: candidate
+  authentication: OAuth2 client credentials (POST https://{vectra_portal_url}/oauth2/token)
+tools:
+- name: get_entities
+  operationId: getEntities
+  method: GET
+  path: /entities
+  description: List prioritized accounts and hosts (entities) with urgency scores, filterable by type, priority, and last-detection timestamps.
+- name: get_entity
+  method: GET
+  path: /entities/{entity_id}
+  description: Retrieve a single entity with its scoring, detection set, and tags.
+- name: get_detections
+  operationId: getDetections
+  method: GET
+  path: /detections
+  description: List detections filtered by category, state, certainty, and threat score.
+- name: get_detection
+  operationId: getDetectionById
+  method: GET
+  path: /detections/{detection_id}
+  description: Retrieve full detail for one detection.
+- name: mark_detections_fixed
+  operationId: markDetectionsAsFixed
+  method: PATCH
+  path: /detections
+  description: Mark one or more detections as fixed.
+- name: download_pcap
+  operationId: getPCAP
+  method: GET
+  path: /detections/{id}/pcap
+  description: Download the PCAP for a detection for packet-level investigation.
+- name: get_entity_scoring_events
+  operationId: getEntityScoringEvents
+  method: GET
+  path: /events/entity_scoring
+  description: Stream entity scoring change events from a checkpoint cursor.
+- name: get_detection_events
+  operationId: getDetectionEvents
+  method: GET
+  path: /events/detections
+  description: Stream detection events from a checkpoint cursor.
+- name: get_audit_events
+  operationId: getAuditEvents
+  method: GET
+  path: /events/audits
+  description: Stream audit-log events for platform activity.
+- name: get_assignments
+  operationId: getAssignments
+  method: GET
+  path: /assignments
+  description: List analyst assignments for entities under investigation.
+- name: resolve_assignment
+  operationId: resolveAssignment
+  method: PATCH
+  path: /assignments/{assignment_id}
+  description: Resolve an analyst assignment with an outcome.
+- name: get_threat_feeds
+  operationId: getThreatFeeds
+  method: GET
+  path: /threatFeeds
+  description: List configured threat intelligence feeds.
+- name: create_threat_feed
+  operationId: createThreatFeed
+  method: POST
+  path: /threatFeeds
+  description: Create a STIX threat intelligence feed.
+- name: get_lockdown
+  operationId: getLockdownEntities
+  method: GET
+  path: /lockdown
+  description: List entities currently in lockdown (automated response).
+- name: get_health
+  operationId: getHealthData
+  method: GET
+  path: /health
+  description: Retrieve platform health, sensor, and connectivity data.
+- name: add_detection_tags
+  operationId: addDetectionTags
+  method: POST
+  path: /tagging/detection/{detection_id}
+  description: Add triage tags to a detection.

@@ -1,0 +1,1651 @@
+openapi: 3.0.1
+info:
+  title: Vectra Platform API
+  description: Comprehensive API documentation for Vectra's breach detection data, platform configuration, and health information.
+  version: "3.3"
+  contact:
+    name: Vectra AI Support
+    url: https://vectra.ai/support
+
+servers:
+  - url: https://{vectra_portal_url}/api/v3.3
+    description: Vectra Platform API Server
+    variables:
+      vectra_portal_url:
+        default: "platform.vectra.ai"
+
+security:
+  - oauth2: []
+
+paths:
+  /entities:
+    get:
+      summary: Retrieve all entities
+      operationId: getEntities
+      tags:
+        - Entities
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [account, host]
+          description: Specifies the type of entities to retrieve (e.g., "account" or "host")
+        - name: is_prioritized
+          in: query
+          schema:
+            type: boolean
+          description: Filter entities by priority (only entities above the configured priority threshold)
+        - name: ordering
+          in: query
+          schema:
+            type: string
+          description: Specifies the order of results, e.g., by urgency_score, last timestamp, or last_modified_timestamp
+        - name: last_detection_timestamp_gte
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Only entities with a last detection timestamp greater than or equal to this time (inclusive, ISO-8601 format)
+        - name: last_detection_timestamp_lte
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Only entities with a last detection timestamp less than or equal to this time (inclusive, ISO-8601 format)
+        - name: last_modified_timestamp_gte
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Only entities with a last modified timestamp greater than or equal to this time (inclusive, ISO-8601 format)
+        - name: last_modified_timestamp_lte
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Only entities with a last modified timestamp less than or equal to this time (inclusive, ISO-8601 format)
+        - name: name
+          in: query
+          schema:
+            type: string
+          description: Filter by entity name
+        - name: note_modified_timestamp_gte
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Only entities with notes modified on or after this time (ISO-8601 format)
+        - name: page
+          in: query
+          schema:
+            type: integer
+          description: Page number for pagination
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            maximum: 5000
+          description: Number of entities per page, with a maximum of 5000
+        - name: state
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive]
+          description: Filter by entity activation state (either "active" or "inactive")
+        - name: tags
+          in: query
+          schema:
+            type: string
+          description: Filter entities by tags (comma-separated list of tags, returns entities with any specified tags)
+      responses:
+        '200':
+          description: List of entities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Entity'
+                      
+  /entities/{entity_id}:
+    get:
+      summary: Get entity by ID
+      tags:
+        - Entities
+      parameters:
+        - name: entity_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [account, host]
+      responses:
+        '200':
+          description: Entity details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+  
+  /entities/{entity_id}/notes:
+    get:
+      summary: Get entity notes
+      tags:
+        - Entities
+      parameters:
+        - name: entity_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [account, host]
+      responses:
+        '200':
+          description: List of notes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+    post:
+      summary: Add note to entity
+      tags:
+        - Entities
+      parameters:
+        - name: entity_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [account, host]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+      responses:
+        '200':
+          description: Created note
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+
+  /entities/{entity_id}/notes/{note_id}:
+    get:
+      summary: Get specific entity note
+      tags:
+        - Entities
+      parameters:
+        - name: entity_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: note_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [account, host]
+      responses:
+        '200':
+          description: Note details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+    patch:
+      summary: Update entity note
+      tags:
+        - Entities
+      parameters:
+        - name: entity_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: note_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [account, host]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+      responses:
+        '200':
+          description: Updated note
+    delete:
+      summary: Delete entity note
+      tags:
+        - Entities
+      parameters:
+        - name: entity_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: note_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [account, host]
+      responses:
+        '204':
+          description: Note deleted successfully
+          
+  /detections:
+    get:
+      summary: Retrieve all detection events
+      operationId: getDetections
+      tags:
+        - Detections
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            maximum: 5000
+        - name: ordering
+          in: query
+          schema:
+            type: string
+        - name: state
+          in: query
+          schema:
+            type: string
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: threat_gte
+          in: query
+          schema:
+            type: integer
+        - name: certainty_gte
+          in: query
+          schema:
+            type: integer
+        - name: canonicalize
+          in: query
+          schema:
+            type: boolean
+          description: Ordering options by timestamp or score
+      responses:
+        '200':
+          description: List of detections
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Detection'
+                      
+    patch:
+      summary: Mark/unmark detections as fixed
+      operationId: markDetectionsAsFixed
+      tags:
+        - Detections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                detectionIdList:
+                  type: array
+                  items:
+                    type: integer
+                mark_as_fixed:
+                  type: boolean
+      responses:
+        '200':
+          description: Success response
+
+  /detections/{detection_id}:
+    get:
+      summary: Retrieve a single detection event
+      operationId: getDetectionById
+      tags:
+        - Detections
+      parameters:
+        - name: detection_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Unique ID for the detection
+      responses:
+        "200":
+          description: Detection event details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Detection'
+    patch:
+      summary: Mark detection as fixed
+      operationId: markDetectionAsFixed
+      tags:
+        - Detections
+      parameters:
+        - name: detection_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Unique ID for the detection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                detectionIdList:
+                  type: array
+                  items:
+                    type: integer
+                  description: List of detection IDs to mark as fixed
+                mark_as_fixed:
+                  type: boolean
+                  description: Boolean to mark detection as fixed
+      responses:
+        "204":
+          description: Detection marked as fixed successfully
+  
+  /detections/{id}/pcap:
+    get:
+      summary: Download PCAP data for detection
+      operationId: getPCAP
+      tags:
+        - Detections
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: PCAP file
+          content:
+            application/vnd.tcpdump.pcap:
+              schema:
+                type: string
+                format: binary
+                
+  /detections/{id}/notes:
+    get:
+      summary: Get detection notes
+      tags:
+        - Detections
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of notes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+    post:
+      summary: Add note to detection
+      tags:
+        - Detections
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+      responses:
+        '200':
+          description: Created note
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+
+  /accounts:
+    get:
+      summary: Retrieve all accounts
+      operationId: getAccounts
+      tags:
+        - Accounts
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            maximum: 5000
+        - name: ordering
+          in: query
+          schema:
+            type: string
+        - name: state
+          in: query
+          schema:
+            type: string
+        - name: threat_gte
+          in: query
+          schema:
+            type: integer
+        - name: certainty_gte
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+
+  /accounts/{account_id}:
+    get:
+      summary: Retrieve single account details
+      operationId: getAccountById
+      tags:
+        - Accounts
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Unique ID for the account
+      responses:
+        "200":
+          description: Account details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+                
+    post:
+      summary: Add note to account
+      tags:
+        - Accounts
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+      responses:
+        '200':
+          description: Created note
+                
+  /accounts/{id}/notes:
+    get:
+      summary: Get account notes
+      tags:
+        - Accounts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of notes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+
+  /health:
+    get:
+      summary: Retrieve health data of the appliance
+      operationId: getHealthData
+      tags:
+        - Health
+      responses:
+        "200":
+          description: Health data of the appliance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+
+  /tagging/detection/{detection_id}:
+    get:
+      summary: Retrieve tags for a specific detection
+      operationId: getDetectionTags
+      tags:
+        - Tagging
+      parameters:
+        - name: detection_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Unique ID for the detection
+      responses:
+        "200":
+          description: Detection tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+    post:
+      summary: Add tags to a detection
+      operationId: addDetectionTags
+      tags:
+        - Tagging
+      parameters:
+        - name: detection_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Unique ID for the detection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: List of tags to add to the detection
+      responses:
+        "201":
+          description: Tags added successfully
+
+  /threatFeeds:
+    get:
+      summary: Retrieve all threat feeds
+      operationId: getThreatFeeds
+      tags:
+        - Threat Feeds
+      responses:
+        '200':
+          description: List of threat feeds
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ThreatFeed'
+    post:
+      summary: Create a new threat feed
+      operationId: createThreatFeed
+      tags:
+        - Threat Feeds
+      responses:
+        "201":
+          description: Threat feed created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatFeed'
+
+  /threatFeeds/{id}:
+    get:
+      summary: Retrieve a specific threat feed
+      operationId: getThreatFeedById
+      tags:
+        - Threat Feeds
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Unique ID for the threat feed
+      responses:
+        "200":
+          description: Threat feed details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatFeed'
+    patch:
+      summary: Update a threat feed
+      operationId: updateThreatFeed
+      tags:
+        - Threat Feeds
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThreatFeed'
+      responses:
+        "204":
+          description: Threat feed updated successfully
+
+  /assignments:
+    get:
+      summary: Retrieve all assignments
+      operationId: getAssignments
+      tags:
+        - Assignments
+      parameters:
+        - name: resolved
+          in: query
+          schema:
+            type: boolean
+          description: Filter by resolved status
+      responses:
+        "200":
+          description: A list of assignments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assignment'
+
+  /assignments/{assignment_id}:
+    get:
+      summary: Retrieve specific assignment details
+      operationId: getAssignmentById
+      tags:
+        - Assignments
+      parameters:
+        - name: assignment_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Unique ID for the assignment
+      responses:
+        "200":
+          description: Assignment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment'
+    patch:
+      summary: Resolve an assignment
+      operationId: resolveAssignment
+      tags:
+        - Assignments
+      parameters:
+        - name: assignment_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                outcome:
+                  type: integer
+                  description: Outcome of the assignment
+                note:
+                  type: string
+                  description: Additional notes for assignment resolution
+      responses:
+        "204":
+          description: Assignment resolved successfully
+
+  /events/entity_scoring:
+    get:
+      summary: Retrieve entity scoring events
+      operationId: getEntityScoringEvents
+      tags:
+        - Events  
+      parameters:
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [account, host]
+          description: Specifies the type of entity scoring events (e.g., "account" or "host")
+        - name: from
+          in: query
+          schema:
+            type: integer
+          description: Starting checkpoint for filtering scoring events
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            maximum: 1000
+          description: Maximum number of events to return, with a default of 500 if unspecified
+        - name: event_timestamp_gte
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Start date/time for scoring events (inclusive, ISO-8601 format)
+        - name: event_timestamp_lte
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: End date/time for scoring events (inclusive, ISO-8601 format)
+        - name: include_score_decreases
+          in: query
+          schema:
+            type: boolean
+          description: Whether to include events that reflect score decreases
+      responses:
+        "200":
+          description: A list of entity scoring events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EntityScoring'
+
+  /events/detections:
+    get:
+      summary: Retrieve detection events
+      operationId: getDetectionEvents
+      tags:
+        - Events
+      parameters:
+        - name: from
+          in: query
+          schema:
+            type: integer
+          description: Starting checkpoint for filtering detection events
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            maximum: 1000
+          description: Maximum number of detection events to return, default is 500
+        - name: event_timestamp_gte
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Start date/time for detection events (inclusive, ISO-8601 format)
+        - name: event_timestamp_lte
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: End date/time for detection events (inclusive, ISO-8601 format)
+        - name: entity_type
+          in: query
+          schema:
+            type: string
+            enum: [account, host]
+          description: Type of the related entity ("account" or "host")
+        - name: detection_id
+          in: query
+          schema:
+            type: integer
+          description: Filter by a specific Detection ID
+        - name: ordering
+          in: query
+          schema:
+            type: string
+            enum: ["event_timestamp", "-event_timestamp"]
+          description: Ordering options, with default ascending by "event_timestamp"
+      responses:
+        '200':
+          description: List of detection events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      type: object
+                  next_checkpoint:
+                    type: integer
+                  remaining_count:
+                    type: integer
+                
+  /events/audits:
+    get:
+      summary: Retrieve audit log events
+      operationId: getAuditEvents
+      tags:
+        - Events
+      parameters:
+        - name: from
+          in: query
+          schema:
+            type: integer
+          description: Starting checkpoint for filtering
+        - name: event_timestamp_gte
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: Maximum number of events to return
+      responses:
+        "200":
+          description: Audit log events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditLogEvent'
+
+  /groups:
+    get:
+      summary: Retrieve all groups
+      operationId: getGroups
+      tags:
+        - Groups
+      responses:
+        '200':
+          description: List of groups
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Group'
+    post:
+      summary: Create new group
+      tags:
+        - Groups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                type:
+                  type: string
+                members:
+                  type: array
+                  items:
+                    type: string
+                description:
+                  type: string
+                importance:
+                  type: string
+      responses:
+        '200':
+          description: Created group
+                
+  /lockdown:
+    get:
+      summary: Retrieve entities in lockdown mode
+      operationId: getLockdownEntities
+      tags:
+        - Lockdown
+      responses:
+        "200":
+          description: List of entities in lockdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lockdown'
+
+  /hosts:
+    get:
+      summary: Retrieve all hosts
+      operationId: getHosts
+      tags:
+        - Hosts
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+        - name: state
+          in: query
+          schema:
+            type: string
+        - name: threat_gte
+          in: query
+          schema:
+            type: integer
+        - name: certainty_gte
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of hosts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Host'
+
+  /hosts/{host_id}:
+    get:
+      summary: Retrieve single host details
+      operationId: getHostById
+      tags:
+        - Hosts
+      parameters:
+        - name: host_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Unique ID for the host
+      responses:
+        "200":
+          description: Host details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Host'
+
+  /users:
+    get:
+      summary: Retrieve all users
+      operationId: getUsers
+      tags:
+        - Users
+      responses:
+        "200":
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                
+  /vectra-match/enablement:
+    get:
+      summary: Retrieve Vectra Match enablement status
+      operationId: getVectraMatchEnablement
+      tags:
+        - Match
+      responses:
+        "200":
+          description: Vectra Match enablement status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchEnablement'
+                
+    post:
+      summary: Enable/disable Vectra Match
+      tags:
+        - Match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_serial:
+                  type: string
+                desired_state:
+                  type: boolean
+      responses:
+        '200':
+          description: Updated enablement status
+
+  /vectra-match/stats:
+    get:
+      summary: Retrieve Vectra Match statistics
+      operationId: getVectraMatchStats
+      tags:
+        - Match
+      responses:
+        "200":
+          description: Vectra Match statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchStats'
+
+  /vectra-match/alert-stats:
+    get:
+      summary: Retrieve Vectra Match alert statistics
+      operationId: getVectraMatchAlertStats
+      tags:
+        - Match
+      responses:
+        "200":
+          description: Vectra Match alert statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchAlertStats'
+
+  /vectra-match/status:
+    get:
+      summary: Retrieve Vectra Match status
+      operationId: getVectraMatchStatus
+      tags:
+        - Match
+      responses:
+        "200":
+          description: Vectra Match status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchStatus'
+
+  /vectra-match/available-devices:
+    get:
+      summary: Retrieve available devices for Vectra Match
+      operationId: getVectraMatchAvailableDevices
+      tags:
+        - Match
+      responses:
+        "200":
+          description: List of available devices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchAvailableDevices'
+
+  /vectra-match/rules:
+    get:
+      summary: Retrieve Vectra Match rules
+      operationId: getVectraMatchRules
+      tags:
+        - Match
+      responses:
+        "200":
+          description: List of Vectra Match rules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VectraMatchRule'
+    post:
+      summary: Create or upload Vectra Match rules
+      operationId: uploadVectraMatchRules
+      tags:
+        - Match
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Rules file to upload
+      responses:
+        "201":
+          description: Vectra Match rules uploaded successfully
+
+  /vectra-match/assignment:
+    get:
+      summary: Retrieve Vectra Match assignment details
+      operationId: getVectraMatchAssignment
+      tags:
+        - Match
+      responses:
+        "200":
+          description: Vectra Match assignment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectraMatchAssignment'
+    post:
+      summary: Assign devices to Vectra Match
+      operationId: assignVectraMatchDevices
+      tags:
+        - Match
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_ids:
+                  type: array
+                  items:
+                    type: integer
+                  description: List of device IDs to assign
+      responses:
+        "201":
+          description: Devices assigned successfully
+
+
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{vectra_portal_url}/oauth2/token
+          scopes: {}
+          
+  schemas:
+
+    Detection:
+      type: object
+      properties:
+        id:
+          type: integer
+        detection:
+          type: string
+        category:
+          type: string
+        src_ip:
+          type: string
+        state:
+          type: string
+        threat:
+          type: integer
+        certainty:
+          type: integer
+        first_timestamp:
+          type: string
+          format: date-time
+        last_timestamp:
+          type: string
+          format: date-time
+
+    Account:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        state:
+          type: string
+        threat:
+          type: integer
+        certainty:
+          type: integer
+        last_detection_timestamp:
+          type: string
+          format: date-time
+
+    Health:
+      type: object
+      properties:
+        status:
+          type: string
+        components:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              status:
+                type: string
+
+    ThreatFeed:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        severity:
+          type: string
+        file:
+          type: string
+          format: uri
+          description: URI of the threat feed file
+
+    Entity:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        urgency:
+          type: integer
+        importance:
+          type: integer
+        last_detection_timestamp:
+          type: string
+          format: date-time
+
+    Assignment:
+      type: object
+      properties:
+        id:
+          type: integer
+        assigned_by:
+          type: string
+        assigned_to:
+          type: string
+        date_assigned:
+          type: string
+          format: date-time
+        date_resolved:
+          type: string
+          format: date-time
+        outcome:
+          type: integer
+
+    AuditLogEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        username:
+          type: string
+        event_timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+        result_status:
+          type: string
+        event_action:
+          type: string
+
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        importance:
+          type: string
+        members:
+          type: array
+          items:
+            type: string
+
+    Lockdown:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+          description: Type of the entity in lockdown (e.g., "account", "host")
+
+    Host:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        state:
+          type: string
+        threat:
+          type: integer
+        certainty:
+          type: integer
+        ip:
+          type: string
+        last_detection_timestamp:
+          type: string
+          format: date-time
+
+    Note:
+      type: object
+      properties:
+        id:
+          type: integer
+        created_by:
+          type: string
+        modified_by:
+          type: string
+        note:
+          type: string
+        date_created:
+          type: string
+          format: date-time
+        date_modified:
+          type: string
+          format: date-time
+
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        last_login_timestamp:
+          type: string
+          format: date-time
+          
+    VectraMatchEnablement:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if Vectra Match is enabled
+
+    VectraMatchStats:
+      type: object
+      properties:
+        total_rules:
+          type: integer
+          description: Total number of rules
+        active_rules:
+          type: integer
+          description: Number of active rules
+        matched_events:
+          type: integer
+          description: Total matched events
+
+    VectraMatchAlertStats:
+      type: object
+      properties:
+        total_alerts:
+          type: integer
+          description: Total number of alerts
+        critical_alerts:
+          type: integer
+          description: Number of critical alerts
+        high_alerts:
+          type: integer
+          description: Number of high alerts
+        medium_alerts:
+          type: integer
+          description: Number of medium alerts
+        low_alerts:
+          type: integer
+          description: Number of low alerts
+
+    VectraMatchStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Current status of Vectra Match
+        last_updated:
+          type: string
+          format: date-time
+          description: Timestamp of the last status update
+
+    VectraMatchAvailableDevices:
+      type: object
+      properties:
+        devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
+
+    Device:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+          description: Device status (e.g., "available", "assigned")
+
+    VectraMatchRule:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        enabled:
+          type: boolean
+        created_timestamp:
+          type: string
+          format: date-time
+
+    VectraMatchAssignment:
+      type: object
+      properties:
+        assigned_devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
+        unassigned_devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
+        
+
+    EntityScoring:
+      type: object
+      properties:
+        entity_id:
+          type: integer
+        entity_type:
+          type: string
+        urgency_score:
+          type: integer
+        event_timestamp:
+          type: string
+          format: date-time
+        name:
+          type: string
+        last_detection_id:
+          type: integer
+        severity:
+          type: string
+          enum: ["Low", "Medium", "High"]
+
+
+    DetectionEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+        detection_id:
+          type: integer
+        category:
+          type: string
+        threat:
+          type: integer
+        certainty:
+          type: integer
+        event_timestamp:
+          type: string
+          format: date-time
+        severity:
+          type: string
+          enum: ["Low", "Medium", "High", "Critical"]
+        detection_type:
+          type: string
+        entity_type:
+          type: string
+          enum: ["Account", "Host"]
+        mitre:
+          type: string
+          description: MITRE ATT&CK technique associated with the detection
+          
+    Tag:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success, failure]
+          description: Status of tagging request
+        tag_id:
+          type: string
+          description: Corresponds to the account, host, or detection id of the object being tagged
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of tags for the host or detection object
+        message:
+          type: string
+          description: Error message if operation was unsuccessful. Only present when status is 'failure'
+        invalid_tags:
+          type: array
+          items:
+            type: string
+          description: List of tags which are invalid. Only present when status is 'failure'

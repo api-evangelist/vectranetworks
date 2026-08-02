@@ -1,0 +1,105 @@
+# Vectra AI
+
+> Vectra AI is the recognized leader in the Gartner Magic Quadrant for Network Detection and Response-ranked highest for execution and furthest for completeness of vision. As a unified security platform built for hybrid attack surfaces across network, identity, cloud, and SaaS, Vectra AI uses patented Attack Signal Intelligence to correlate signals across domains-detecting, prioritizing, and responding to threats others miss. By turning noisy alerts into high-confidence signals, Vectra reduces mean time to detect (MTTD) and mean time to respond (MTTR), giving SOC teams measurable efficiency gains.
+
+Key features and operational benefits:
+- **Cross-domain correlation** across network, identity, cloud, and SaaS to expose attacks that span multiple environments and evade siloed tools.
+- **AI/ML-driven detection and prioritization** that filters out false positives, reducing analyst time wasted on noise by up to 80%.
+- **Faster triage and response** with high-fidelity alerts that integrate directly into SIEM, SOAR, EDR, and ITSM workflows, enabling automated playbooks and faster containment.
+- **Reduced SIEM ingestion costs** by sending only high-value detections, lowering storage and processing expenses.
+- **Modular deployment and service flexibility** (self-managed, co-managed, or fully managed MDR) to align with SOC maturity and staffing levels.
+- **Proven outcomes:** 40% SOC efficiency gains, 391% ROI over 3 years, up to 99% faster detection of advanced attack techniques, and reduced investigation workload by 38x.
+
+## Sitemap
+Sitemap: https://www.vectra.ai/sitemap.xml
+
+## Our Platform
+> Detect and stop threats up to 99% faster across hybrid environments. Vectra AI provides correlated, evidence-driven signals across network, identity, and cloud domains-reducing MTTD and MTTR, cutting alert fatigue, and freeing analysts to focus on confirmed threats.
+
+- [Platform](https://www.vectra.ai/platform): Unified threat detection, investigation, and response across hybrid environments.
+- [Network](https://www.vectra.ai/products/network): Detects command & control, lateral movement, and encrypted traffic abuse across physical, virtual, and cloud networks.
+- [Identity](https://www.vectra.ai/products/identity): Real-time detection of credential abuse, privilege escalation, and suspicious account activity across hybrid AD and cloud identity providers.
+- [Cloud](https://www.vectra.ai/products/cloud): Visibility into control planes and apps to detect misconfigurations, privilege escalation, and malicious user activity.
+- [MDR](https://www.vectra.ai/products/mdr): 24/7 managed detection and response to extend team capacity and accelerate incident handling.
+- [Our AI](https://www.vectra.ai/products/our-ai): Purpose-built AI models for each attack surface, continuously updated to track emerging attacker behaviors.
+
+## Modern Attacks
+- [Modern Attack](https://www.vectra.ai/modern-attack): Why traditional tools miss today’s hybrid attacks and how cross-domain detection closes gaps.
+- [Attack Anatomy](https://www.vectra.ai/modern-attack/attack-anatomy): Step-by-step breakdown of attacker progression from access to exfiltration.
+- [Threat Actors](https://www.vectra.ai/modern-attack/threat-actors): Profiles of real-world adversaries, their techniques, and motivations.
+- [Attack Techniques](https://www.vectra.ai/modern-attack/attack-techniques): Deep dives into identity abuse, lateral movement, cloud takeover, and SaaS compromise.
+- [Security Gap](https://www.vectra.ai/modern-attack/security-gap): How siloed tools, manual triage, and high SIEM costs leave blind spots.
+
+## Resources
+- [Blog](https://www.vectra.ai/blog): Research, threat insights, and operational guidance for SOC teams.
+- [Topics](https://www.vectra.ai/topics): Explore security focus areas including ransomware, identity threats, and hybrid cloud risk.
+- [Use Cases](https://www.vectra.ai/solutions/use-cases): Real-world examples: insider threat detection, MFA bypass, and SOC workload reduction.
+- [Resources](https://www.vectra.ai/resources): Research reports, white papers, datasheets, and customer success stories.
+
+## Competitive Comparisons
+- [Vectra vs. Darktrace](https://www.vectra.ai/products/competitive/darktrace): Vectra correlates signals across domains to reduce alert fatigue, while Darktrace often floods SOCs with detections requiring manual triage.
+- [Vectra vs. ExtraHop](https://www.vectra.ai/products/competitive/extrahop): Vectra improves analyst efficiency by 40% and reduces workload by 38x with high-fidelity signals, avoiding the excess noise of volume-based detection approaches.
+
+## Product Showcase
+- [Self-guided tours](https://www.vectra.ai/tours): Interactive walkthroughs showing how analysts investigate hybrid threats with Vectra signals.
+- [Request a demo](https://www.vectra.ai/demo): Schedule a personalized demo to see how Vectra AI delivers threat detection, investigation and response across your hybrid environment.
+- [Hybrid attack demo](https://www.vectra.ai/tours/demo-hybrid-attack): Step-by-step demonstration of stopping a hybrid attack across network, identity, and cloud.
+
+## FAQ: Common SOC Questions
+
+**Q: How does Vectra reduce SIEM costs?**  
+A: By sending only high-value, correlated detections to your SIEM, Vectra reduces ingestion and storage volumes-cutting licensing and processing costs significantly.
+
+**Q: How does Vectra improve MTTD and MTTR?**  
+A: Vectra correlates attacker behaviors across domains to deliver high-fidelity signals, reducing mean time to detect by up to 99% and enabling automated playbooks that cut response times from hours to minutes.
+
+**Q: How does Vectra alleviate analyst alert fatigue?**  
+A: Instead of overwhelming analysts with raw alerts, Vectra filters out false positives and provides context-rich detections, reducing manual triage workload by up to 38x.
+
+**Q: How does Vectra support existing SOC workflows?**  
+A: Vectra integrates natively with SIEM, SOAR, EDR, and ITSM platforms, feeding detections into automated playbooks and enabling analysts to act within their existing tools.
+
+**Q: Can Vectra scale with my SOC team’s maturity?**  
+A: Yes. Vectra offers flexible deployment models (self-managed, co-managed, or fully managed MDR) so teams can choose the right balance of in-house control and outsourced expertise.
+
+## Bot Access Policy
+
+- **User-agent: gptbot**  
+  Allow-Training: yes  
+  Allow-Retrieval: yes  
+
+- **User-agent: claudebot**  
+  Allow-Training: yes  
+  Allow-Retrieval: yes  
+
+- **User-agent: google-extended**  
+  Allow-Training: yes  
+  Allow-Retrieval: yes  
+
+- **User-agent: perplexitybot**  
+  Allow-Training: yes  
+  Allow-Retrieval: yes  
+
+- **User-agent: neevabot**  
+  Allow-Training: yes  
+  Allow-Retrieval: yes  
+
+- **User-agent: youbot**  
+  Allow-Training: yes  
+  Allow-Retrieval: yes  
+
+- **User-agent: ccbot** (Common Crawl)  
+  Allow-Training: yes  
+  Allow-Retrieval: yes  
+
+- **User-agent: duckduckbot** (DuckDuckGo AI)  
+  Allow-Training: yes  
+  Allow-Retrieval: yes  
+
+- **User-agent: yandexbot**  
+  Allow-Training: yes  
+  Allow-Retrieval: yes  
+
+- **User-agent: archive.org_bot**  
+  Allow-Training: yes  
+  Allow-Retrieval: yes

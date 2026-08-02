@@ -1,0 +1,28 @@
+generated: '2026-07-21'
+method: searched
+source: https://pypi.org/pypi/vectra-api-tools/json, https://registry.npmjs.org/-/v1/search?text=vectra, https://github.com/vectranetworks
+description: >-
+  Client libraries for the Vectra AI Platform (RUX) and Detect APIs, verified
+  against PyPI, the npm registry, and the official vectranetworks GitHub
+  organization. vectra-api-tools is described upstream as community-driven but
+  is developed and published from the official Vectra org, so it is marked
+  official. No first-party packages were found on Maven Central, NuGet,
+  pkg.go.dev, RubyGems, Packagist, or crates.io.
+packages:
+- language: python
+  registry: pypi
+  name: vectra-api-tools
+  version: 3.3.1
+  url: https://pypi.org/project/vectra-api-tools/
+  source: https://github.com/vectranetworks/vectra_api_tools
+  install: pip install vectra-api-tools
+  official: true
+  notes: Python client library and utilities for the Vectra Detect and Platform APIs, maintained in the official vectranetworks GitHub org.
+- language: javascript
+  registry: npm
+  name: vectra-saas-api-client
+  url: https://www.npmjs.com/package/vectra-saas-api-client
+  source: https://github.com/vectranetworks/nodejs-saas-api
+  install: npm install vectra-saas-api-client
+  official: true
+  notes: Node.js API client for the Vectra Detect SaaS API, maintained in the official vectranetworks GitHub org.

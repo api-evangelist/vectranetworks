@@ -1,0 +1,34 @@
+# generated: 2026-07-21 | method: generated | source: openapi/vectranetworks-rux-v3.3-openapi.yml
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Vectra AI Platform API (RUX) v3.3
+  version: 1.0.0
+extends: vectranetworks-rux-v3.3-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apis-json:
+      aid: vectranetworks
+      provider: Vectra AI
+      artifact: openapi/vectranetworks-rux-v3.3-openapi.yml
+    x-links:
+      website: https://www.vectra.ai/
+      apiReference: https://vectranetworks.github.io/openapi-rux/
+      support: https://support.vectra.ai/
+      statusPage: https://status.vectra.ai/
+      gitHubOrganization: https://github.com/vectranetworks
+- target: $.info.description
+  update: >-
+    Comprehensive API documentation for Vectra's breach detection data,
+    platform configuration, and health information. Authentication is OAuth 2.0
+    client credentials against https://{vectra_portal_url}/oauth2/token; list
+    endpoints paginate with page/page_size and return a
+    count/next/previous/results envelope; the /events/* endpoints are
+    checkpoint-cursor streams (from parameter) suited to SIEM/SOAR ingestion.
+- target: $.components.securitySchemes.oauth2
+  update:
+    description: >-
+      OAuth 2.0 client-credentials flow. API clients are created in the Vectra
+      portal under Manage > API Clients; access is governed by the API client's
+      assigned role rather than granular OAuth scopes (the token request takes
+      no scope parameter).

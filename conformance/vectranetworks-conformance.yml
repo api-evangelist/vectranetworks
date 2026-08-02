@@ -1,0 +1,44 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vectranetworks-rux-v3.3-openapi.yml, openapi/vectranetworks-detect-v2.3-openapi.yml, live probes of www.vectra.ai
+description: >-
+  Industry and cross-cutting standards conformance for the Vectra AI Platform
+  (RUX) and Detect APIs, derived from the published OpenAPI documents and live
+  probes. Evidence cites the spec or probe that supports each assertion.
+standards:
+- id: oauth2
+  conforms: true
+  evidence: RUX v3.3 spec declares an oauth2 securityScheme with the clientCredentials flow (tokenUrl https://{vectra_portal_url}/oauth2/token).
+- id: oidc
+  conforms: false
+  evidence: No openIdConnect securityScheme in either spec; /.well-known/openid-configuration returns 404 on www.vectra.ai.
+- id: pagination
+  conforms: true
+  evidence: List operations in both specs take page/page_size (RUX) query params and return a count/next/previous/results envelope (DRF-style cursor links).
+- id: rfc9457
+  conforms: false
+  evidence: Detect v2.3 error responses are application/json with a detail/details object, not application/problem+json; RUX v3.3 documents no 4xx/5xx response bodies.
+- id: idempotency
+  conforms: false
+  evidence: Neither spec declares an Idempotency-Key header or documents idempotent retry semantics for mutating operations.
+- id: fapi
+  conforms: false
+  evidence: Not a financial-grade API; no FAPI profile claims in the specs or developer materials found.
+- id: scim
+  conforms: false
+  evidence: User management endpoints (/users) are proprietary shapes, not SCIM 2.0 resources.
+- id: odata
+  conforms: false
+  evidence: No OData conventions; filtering uses bespoke query params (e.g. threat_gte, certainty_gte, query_string Lucene search on Detect).
+- id: json:api
+  conforms: false
+  evidence: Response envelopes are count/next/previous/results, not JSON:API document structure.
+- id: fhir
+  conforms: false
+  evidence: Not a healthcare API; no FHIR resources.
+- id: psd2
+  conforms: false
+  evidence: Not a payments API; PSD2 does not apply.
+- id: stix
+  conforms: true
+  evidence: Threat feed endpoints (/threatFeeds) ingest STIX threat intelligence feeds per the RUX spec's Threat Feeds operations and schema (indicatorType, STIX file upload).

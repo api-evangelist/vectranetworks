@@ -1,0 +1,39 @@
+generated: '2026-07-21'
+method: searched
+source: https://status.vectra.ai/, https://github.com/vectranetworks/openapi-rux, https://github.com/vectranetworks/detect-openapi, openapi servers[]
+description: >-
+  Lifecycle posture for the Vectra AI APIs assembled from the live status page,
+  the published OpenAPI documents, and the official GitHub org. Versioning is
+  URL-path based: the Detect API iterates v2.x (spec published at v2.3, portal
+  clients target up to v2.5) on the brain FQDN, and the Platform (RUX) API
+  iterates v3.x (spec published at v3.3) on the tenant portal. No public
+  deprecation-policy document or Sunset/Deprecation (RFC 8594) header usage was
+  found, so no deprecation policy is asserted.
+versioning:
+  scheme: url-path
+  pattern: /api/{version}
+  current:
+  - api: Vectra AI Platform API (RUX)
+    version: '3.3'
+    server: https://{vectra_portal_url}/api/v3.3
+  - api: Vectra Detect API
+    version: '2.3'
+    server: https://{fqdn}/api/{apiVersion}
+status_page:
+  url: https://status.vectra.ai/
+  platform: PagerDuty Status Pages
+  components:
+  - Ingestion Services (US, CA and other regional ingestion)
+  subscribe: [email, slack, webhook]
+  support_link: https://support.vectra.ai/s/contactsupport
+release_notes:
+  product_announcements: https://support.vectra.ai/s/topic/0TO6S000000J745WAC/product-announcements
+  note: Release/product announcements live in the Salesforce-based support portal; no public dated JSON/RSS changelog.
+deprecation:
+  policy_url: null
+  rfc8594_headers: false
+  deprecated_operations: []
+  note: Neither OpenAPI document flags any operation deprecated:true; no public deprecation policy page found.
+sla:
+  published: false
+  note: No public SLA page found; service commitments are handled contractually.

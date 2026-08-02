@@ -1,0 +1,36 @@
+# generated: 2026-07-21 | method: generated | source: openapi/vectranetworks-detect-v2.3-openapi.yml
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Vectra Detect API v2.3
+  version: 1.0.0
+extends: vectranetworks-detect-v2.3-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apis-json:
+      aid: vectranetworks
+      provider: Vectra AI
+      artifact: openapi/vectranetworks-detect-v2.3-openapi.yml
+    x-links:
+      website: https://www.vectra.ai/
+      apiReference: https://vectranetworks.github.io/detect-openapi/
+      support: https://support.vectra.ai/
+      statusPage: https://status.vectra.ai/
+      gitHubOrganization: https://github.com/vectranetworks
+      pythonClient: https://pypi.org/project/vectra-api-tools/
+      nodeClient: https://www.npmjs.com/package/vectra-saas-api-client
+- target: $.info.description
+  update: >-
+    Vectra Detect API v2.x (Quadrant UX) for hosts, accounts, detections,
+    assignments, threat feeds, tagging, search, proxies, and users on a Vectra
+    Detect brain. Authenticate with a personal API token sent as
+    `Authorization: Token <token>`; list endpoints return a
+    count/next/previous/results envelope and errors carry a detail/details
+    JSON body. The server URL is the customer brain FQDN
+    (https://{fqdn}/api/{apiVersion}).
+- target: $.components.securitySchemes.VectraToken
+  update:
+    description: >-
+      Personal API token generated per user in the Detect UI (My Profile >
+      General > API Token), sent in the authorization header as
+      "Token <token>".

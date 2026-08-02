@@ -1,0 +1,53 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vectranetworks-rux-v3.3-openapi.yml, openapi/vectranetworks-detect-v2.3-openapi.yml
+description: >-
+  Cross-cutting request/response conventions of the Vectra AI APIs, derived
+  from the two published OpenAPI documents. The Platform (RUX) v3.x API and the
+  Detect v2.x API share a DRF-style envelope but differ in authentication and
+  filtering. See also authentication/vectranetworks-authentication.yml,
+  errors/vectranetworks-problem-types.yml, and
+  lifecycle/vectranetworks-lifecycle.yml.
+api_style: REST over HTTPS, JSON requests and responses
+authentication:
+  platform_rux: OAuth 2.0 client credentials against https://{vectra_portal_url}/oauth2/token; bearer access token; API clients are role-scoped (no granular OAuth scopes).
+  detect_v2: 'Personal API token in the authorization header as "Token <token>" (securityScheme VectraToken).'
+  cross_link: authentication/vectranetworks-authentication.yml
+idempotency:
+  supported: false
+  note: No Idempotency-Key header or documented retry-safety semantics in either spec.
+pagination:
+  style: page-number (DRF)
+  request_params: [page, page_size]
+  response_fields: [count, next, previous, results]
+  note: next/previous are absolute URI links (nullable); RUX /events/* endpoints instead use a checkpoint cursor via the `from` parameter with `limit`.
+event_streams:
+  style: checkpoint cursor
+  endpoints: [/events/entity_scoring, /events/detections, /events/audits]
+  params: [from, limit, event_timestamp_gte, event_timestamp_lte]
+  note: Callers persist the returned checkpoint and poll from it; designed for SIEM/SOAR ingestion.
+filtering:
+  platform_rux: threshold params (threat_gte, certainty_gte), timestamp windows (*_timestamp_gte/lte), state, type, is_prioritized, tags, ordering
+  detect_v2: resource-specific params plus Lucene-style query_string on /search/{accounts,detections,hosts}
+sparse_fields:
+  supported: true
+  param: fields
+  note: Detect v2 list/search endpoints accept a `fields` query param (queryAccountFields/queryDetectionFields/queryHostFields enums) to trim the response.
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+  note: No free-form metadata object; tagging (/tagging/*) is the analog for annotating detections, hosts, and accounts.
+request_tracing:
+  supported: false
+  note: No documented request-id header in either spec.
+versioning:
+  scheme: url-path (/api/v2.x on Detect brains, /api/v3.x on the platform portal)
+  cross_link: lifecycle/vectranetworks-lifecycle.yml
+error_envelope:
+  content_type: application/json
+  shape: '{detail | details: human-readable message}; some validation errors return {errors: [{title}]}'
+  cross_link: errors/vectranetworks-problem-types.yml
+rate_limit_signaling:
+  documented: false
+  note: Neither spec documents 429 responses or rate-limit headers.

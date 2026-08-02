@@ -1,0 +1,10 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vectranetworks-rux-v3.3-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/vectranetworks-rux-v3.3-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+scopes: []

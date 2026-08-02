@@ -1,0 +1,3180 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Vectra Detect
+  contact:
+    name: Vectra TME
+    email: tme@vectra.ai
+  description: Vectra Detect on-prem instance API
+  license:
+    name: TME Custom °-.-°
+    url: https://vectra.ai
+tags:
+  - name: Accounts
+    description: Dedicated endpoint to Accounts.
+  - name: Assignments
+    description: Dedicated endpoint to Assignments.
+  - name: Assignment Outcomes
+    description: Dedicated endpoint to Assignment Outcomes.
+  - name: Detections
+    description: Dedicated endpoint to Detections.
+  - name: Hosts
+    description: Dedicated endpoint to Hosts.
+  - name: Notes
+    description: Manage entities notes
+  - name: Proxies
+    description: Dedicated endpoint to Proxies
+  - name: Search
+    description: Dedicated endpoint to run searches among entities
+  - name: Tagging
+    description: Dedicated endpoint to manage entities's tags
+  - name: Threat Feeds
+    description: The threatFeeds endpoint can be used to automate the upload of STIX files for threat intelligence matching. This endpoint can also be used to retrieve the current list of threatFeed objects already configured in the system.
+  - name: Users
+    description: Dedicated endpoint to Users.
+servers:
+  - url: https://{fqdn}/api/{apiVersion}
+    description: Vectra Detect API
+    variables:
+      fqdn:
+        description: The FQDN or IP to join the Vectra Detect instance
+        default: detect-api.demo.vectra.io
+      apiVersion:
+        description: The API version to use
+        default: v2.3
+paths:
+  /accounts:
+    description: Accounts objects.
+    get:
+      operationId: accountGetSeveral
+      summary: Get several Accounts
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/ordering'
+        - $ref: '#/components/parameters/state'
+        - $ref: '#/components/parameters/oneOfTags'
+        - $ref: '#/components/parameters/certaintyScore'
+        - $ref: '#/components/parameters/certaintyScoreGte'
+        - $ref: '#/components/parameters/maxID'
+        - $ref: '#/components/parameters/minID'
+        - $ref: '#/components/parameters/name'
+        - $ref: '#/components/parameters/noteModifiedTimestampGte'
+        - $ref: '#/components/parameters/privilegeCategory'
+        - $ref: '#/components/parameters/privilegeLevel'
+        - $ref: '#/components/parameters/privilegeLevelGte'
+        - $ref: '#/components/parameters/threatScore'
+        - $ref: '#/components/parameters/threatScoreGte'
+        - name: fields
+          description: Filters returned attributes
+          in: query
+          schema:
+            $ref: '#/components/schemas/queryAccountFields'
+          style: form
+          explode: false
+        - name: all
+          description: No filter, returns all objects
+          in: query
+          schema:
+            type: boolean
+          allowEmptyValue: true
+          deprecated: true
+      responses:
+        '200':
+          description: Retrieved Accounts successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfAccounts'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /accounts/{accountID}:
+    parameters:
+      - name: accountID
+        description: ID of the Account you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: accountGetSingle
+      summary: Describe a specific Account
+      tags:
+        - Accounts
+      parameters:
+        - name: fields
+          description: Filters returned attributes
+          in: query
+          schema:
+            $ref: '#/components/schemas/queryAccountFields'
+          style: form
+          explode: false
+      responses:
+        '200':
+          description: Describe a specific Account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /accounts/{accountID}/notes:
+    parameters:
+      - name: accountID
+        description: ID of the Account notes you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: accountNotesGetSeveral
+      summary: Get all account notes
+      tags:
+        - Accounts
+        - Notes
+      responses:
+        '200':
+          description: Retrieved account notes successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      operationId: accountNoteCreate
+      summary: Create a new Account note
+      tags:
+        - Accounts
+        - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Account note created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /accounts/{accountID}/notes/{noteID}:
+    parameters:
+      - name: accountID
+        description: ID of the Account you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+      - name: noteID
+        description: ID of the Note you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: accountNoteGetSingle
+      summary: Get a single Account note
+      tags:
+        - Accounts
+        - Notes
+      responses:
+        '200':
+          description: Retrieved account note successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: accountNoteUpdate
+      summary: Update an existing Account note
+      tags:
+        - Accounts
+        - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Account note updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    delete:
+      operationId: accountNoteDelete
+      summary: Delete an existing Account note
+      tags:
+        - Accounts
+        - Notes
+      responses:
+        '200':
+          description: Account note deleted
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /assignments:
+    description: Assignments are used to assign account or host entities to analysts for investigation.
+    get:
+      operationId: assignmentGetSeveral
+      summary: Get all assignments
+      tags:
+        - Assignments
+      parameters:
+        - name: accounts
+          description: Filter by Accounts (list of Account IDs)
+          in: query
+          schema:
+            $ref: '#/components/schemas/arrayOfIDs'
+          style: form
+          explode: false
+        - name: assignees
+          description: Filter by Assignees (list of User IDs)
+          in: query
+          schema:
+            $ref: '#/components/schemas/arrayOfIDs'
+          style: form
+          explode: false
+        - name: created_after
+          description: Filter by creation timestamp (ISO Timestamp)
+          in: query
+          schema:
+            $ref: '#/components/schemas/isoDate'
+        - name: hosts
+          description: Filter by Hosts (list of Host IDs)
+          in: query
+          schema:
+            $ref: '#/components/schemas/arrayOfIDs'
+          style: form
+          explode: false
+        - name: resolution
+          description: Filter by Outcomes (list of Assignment outcome IDs)
+          in: query
+          schema:
+            $ref: '#/components/schemas/arrayOfIDs'
+          style: form
+          explode: false
+        - name: resolved
+          description: Filter by resolution status (true or false)
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Retrieved assignments successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfAssignments'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      operationId: assignmentAssign
+      summary: Used to assign an entity to a user
+      tags:
+        - Assignments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/assignmentAccountRequestBody'
+                - $ref: '#/components/schemas/assignmentHostRequestBody'
+      responses:
+        '201':
+          description: Assignment created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assignment:
+                    $ref: '#/components/schemas/assignment'
+              examples:
+                Created Assignment:
+                  $ref: '#/components/examples/assignmentCreated'
+        '400':
+          description: Invalid Assigned User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+              examples:
+                Bad User:
+                  $ref: '#/components/examples/userCannotBeAssigned'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '409':
+          description: Assignment already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              example:
+                detail: Entity already has an open assignment.
+  /assignment/{assignmentID}:
+    parameters:
+      - name: assignmentID
+        description: ID of the Assignment you're working on
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: assignmentGetSingle
+      summary: Describe a specific assignment
+      tags:
+        - Assignments
+      responses:
+        '200':
+          description: Describe a specific Assignment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assignment:
+                    $ref: '#/components/schemas/assignment'
+              examples:
+                Created Assignment:
+                  $ref: '#/components/examples/assignmentCreated'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          $ref: '#/components/responses/notFound'
+    put:
+      operationId: assignmentUpdate
+      summary: Reassign an assignment
+      tags:
+        - Assignments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/assignmentUpdateRequestBody'
+      responses:
+        '200':
+          description: Assignment successfully reassigned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assignment:
+                    $ref: '#/components/schemas/assignment'
+              examples:
+                Created Assignment:
+                  $ref: '#/components/examples/assignmentReassigned'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    delete:
+      operationId: assignmentDelete
+      summary: Delete an assignment
+      tags:
+        - Assignments
+      responses:
+        '204':
+          description: Assignment successfully deleted
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /assignment/{assignmentID}/resolve:
+    parameters:
+      - name: assignmentID
+        description: ID of the Assignment you're working on
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    put:
+      operationId: assignmentResolve
+      summary: Resolve an assignment
+      tags:
+        - Assignments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/assignmentResolveRequestBody'
+            examples:
+              False Positive No Triage:
+                $ref: '#/components/examples/assignmentFalsePositiveResolveNoTriageRequestBody'
+              Benign Positive With Triage:
+                $ref: '#/components/examples/assignmentBenignPositiveResolveWithTriageRequestBody'
+              True Positive With Mark as fixed:
+                $ref: '#/components/examples/assignmentTruePositiveResolveWithMarkAsFixedRequestBody'
+      responses:
+        '200':
+          description: Assignment resolved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assignment:
+                    $ref: '#/components/schemas/assignment'
+              examples:
+                Simple Resolution:
+                  $ref: '#/components/examples/assignmentSimpleResolution'
+                Triageg Resolution:
+                  $ref: '#/components/examples/assignmentTriagedResolution'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '409':
+          description: Assignment already resolved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              example:
+                detail: Assignment has already been resolved.
+  /assignment_outcomes:
+    description: Account and Host assignment outcomes
+    get:
+      operationId: assignmentOutcomeGetSeveral
+      summary: Get all assignment outcomes
+      tags:
+        - Assignment Outcomes
+      responses:
+        '200':
+          description: All assignment outcomes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfAssignmentOutcomes'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      operationId: assignmentOutcomeCreate
+      summary: Create a new Assignment outcome
+      tags:
+        - Assignment Outcomes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/assignmentOutcomeRequestBody'
+      responses:
+        '201':
+          description: Assignment outcome created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/assignmentOutcome'
+              examples:
+                Assignment Outcome Created:
+                  $ref: '#/components/examples/assignmentOutcomeUserCreated'
+          links:
+            describe:
+              operationId: assignmentOutcomeGetSingle
+              parameters:
+                assignmentOutcomeID: $response.body#/id
+            update:
+              operationId: assignmentOutcomeUpdate
+              parameters:
+                assignmentOutcomeID: $response.body#/id
+            delete:
+              operationId: assignmentOutcomeDelete
+              parameters:
+                assignmentOutcomeID: $response.body#/id
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /assignment_outcomes/{assignmentOutcomeID}:
+    parameters:
+      - name: assignmentOutcomeID
+        description: ID of the Assignment Outcome you're working on
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: assignmentOutcomeGetSingle
+      summary: Describe assignment outcome
+      tags:
+        - Assignment Outcomes
+      responses:
+        '200':
+          description: Assignment outcome details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/assignmentOutcome'
+              examples:
+                Builtin Benign True positive:
+                  $ref: '#/components/examples/assignmentOutcomeBuiltin'
+                User Created False Positive:
+                  $ref: '#/components/examples/assignmentOutcomeUserCreated'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          $ref: '#/components/responses/notFound'
+    put:
+      operationId: assignmentOutcomeUpdate
+      summary: |
+        Modify an assignment outcome. Title can always be modified. Category can only be modified if assignment outcome has not been used as an outcome for assignment.
+      tags:
+        - Assignment Outcomes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/assignmentOutcomeRequestBody'
+      responses:
+        '200':
+          description: Modified
+        '400':
+          description: Error during modification
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: array
+                    items:
+                      type: string
+                      example: This field may not be blank.
+                  category:
+                    type: array
+                    items:
+                      type: string
+                      example: Dummy is not a valid choice.
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    delete:
+      operationId: assignmentOutcomeDelete
+      summary: Delete an assignment outcome
+      tags:
+        - Assignment Outcomes
+      responses:
+        '204':
+          description: Successfully deleted the assignment outcome
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          description: Error during outcome deletion
+  /detections:
+    description: Detection objects contain all the information related to security events detected on the network.
+    get:
+      operationId: detectionGetSeveral
+      summary: Get all detections
+      tags:
+        - Detections
+      parameters:
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/ordering'
+        - $ref: '#/components/parameters/state'
+        - $ref: '#/components/parameters/oneOfTags'
+        - $ref: '#/components/parameters/certainty'
+        - $ref: '#/components/parameters/certaintyGte'
+        - $ref: '#/components/parameters/certaintyScore'
+        - $ref: '#/components/parameters/certaintyScoreGte'
+        - $ref: '#/components/parameters/maxID'
+        - $ref: '#/components/parameters/minID'
+        - $ref: '#/components/parameters/noteModifiedTimestampGte'
+        - $ref: '#/components/parameters/threat'
+        - $ref: '#/components/parameters/threatGte'
+        - $ref: '#/components/parameters/threatScore'
+        - $ref: '#/components/parameters/threatScoreGte'
+        - name: fields
+          description: Filters returned attributes
+          in: query
+          schema:
+            $ref: '#/components/schemas/queryDetectionFields'
+          style: form
+          explode: false
+        - name: category
+          description: Filters by detection category
+          in: query
+          schema:
+            $ref: '#/components/schemas/queryDetectionCategory'
+        - name: detection_category
+          description: Filters by detection category
+          in: query
+          schema:
+            $ref: '#/components/schemas/queryDetectionCategory'
+        - name: detection_type
+          description: Filters by the name of the detected threat
+          in: query
+          schema:
+            type: string
+        - name: src_ip
+          description: Filters by source (IP address)
+          in: query
+          schema:
+            $ref: '#/components/schemas/IP'
+        - name: last_timestamp
+          in: query
+          schema:
+            type: string
+        - name: last_timestamp_gte
+          in: query
+          schema:
+            type: string
+        - name: host_id
+          description: Filters by the ID of the host object the detection is attributed to
+          in: query
+          schema:
+            $ref: '#/components/schemas/ID'
+        - name: destination
+          description: Filters by the destination in the detection details set
+          in: query
+          schema:
+            type: string
+        - name: proto
+          description: Filters by the protocol in the detection details set
+          in: query
+          schema:
+            type: string
+        - name: is_targeting_key_asset
+          description: Filters on detections targeting key assets
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Retrieved detections successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfDetections'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: detectionMarkSeveral
+      summary: Mark/Unmark several Detections as fixed
+      tags:
+        - Detections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/detectionMarkRequestBody'
+      responses:
+        '200':
+          description: Mark/Unmark as fixed several detections successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _meta:
+                    type: object
+                    properties:
+                      level:
+                        type: string
+                        example: Success
+                      message:
+                        type: string
+                        example: Successfully marked detections
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /detections/{detectionID}:
+    parameters:
+      - name: detectionID
+        description: ID of the Detection you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: detectionGetSingle
+      summary: Describe a specific detection
+      tags:
+        - Detections
+      parameters:
+        - name: fields
+          description: Filters returned attributes
+          in: query
+          schema:
+            $ref: '#/components/schemas/queryDetectionFields'
+          style: form
+          explode: false
+      responses:
+        '200':
+          description: Describe a specific Detection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/detection'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /detections/{detectionID}/notes:
+    parameters:
+      - name: detectionID
+        description: ID of the Detection notes you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: detectionNotesGetSeveral
+      summary: Get all Detection notes
+      tags:
+        - Detections
+        - Notes
+      responses:
+        '200':
+          description: Retrieved Detection notes successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      operationId: detectionNoteCreate
+      summary: Create a new Detection note
+      tags:
+        - Detections
+        - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Detection note created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /detections/{detectionID}/notes/{noteID}:
+    parameters:
+      - name: detectionID
+        description: ID of the Detection you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+      - name: noteID
+        description: ID of the Note you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: detectionNoteGetSingle
+      summary: Get a single Detection note
+      tags:
+        - Detections
+        - Notes
+      responses:
+        '200':
+          description: Retrieved Detection note successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: detectionNoteUpdate
+      summary: Update an existing Detection note
+      tags:
+        - Detections
+        - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Detection note updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    delete:
+      operationId: detectionNoteDelete
+      summary: Delete an existing Detection note
+      tags:
+        - Detections
+        - Notes
+      responses:
+        '200':
+          description: Detection note deleted
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /detections/{detectionID}/pcap:
+    parameters:
+      - name: detectionID
+        description: ID of the Detection you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: detectionDownloadPCAP
+      summary: Download a Detection PCAP
+      tags:
+        - Detections
+      responses:
+        '200':
+          description: Detection PCAP retrieved
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /hosts:
+    description: Hosts objects.
+    get:
+      operationId: hostGetSeveral
+      summary: Get several Hosts
+      tags:
+        - Hosts
+      parameters:
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/ordering'
+        - $ref: '#/components/parameters/state'
+        - $ref: '#/components/parameters/oneOfTags'
+        - $ref: '#/components/parameters/certaintyScore'
+        - $ref: '#/components/parameters/certaintyScoreGte'
+        - $ref: '#/components/parameters/maxID'
+        - $ref: '#/components/parameters/minID'
+        - $ref: '#/components/parameters/name'
+        - $ref: '#/components/parameters/noteModifiedTimestampGte'
+        - $ref: '#/components/parameters/privilegeCategory'
+        - $ref: '#/components/parameters/privilegeLevel'
+        - $ref: '#/components/parameters/privilegeLevelGte'
+        - $ref: '#/components/parameters/threatScore'
+        - $ref: '#/components/parameters/threatScoreGte'
+        - name: fields
+          description: Filters returned attributes
+          in: query
+          schema:
+            $ref: '#/components/schemas/queryHostFields'
+          style: form
+          explode: false
+        - name: last_source
+          description: Filters by last source (IP address)
+          in: query
+          schema:
+            $ref: '#/components/schemas/IP'
+        - name: last_detection_timestamp
+          description: Filters by the last seen detection timestamp (should be exactly the same)
+          in: query
+          schema:
+            type: string
+        - name: all
+          description: No filter, returns all host objects
+          in: query
+          schema:
+            type: boolean
+          allowEmptyValue: true
+          deprecated: true
+        - name: key_asset
+          description: Filters key asset
+          in: query
+          schema:
+            type: boolean
+        - name: target_key_asset
+          description: Filters Hosts targeting key assets
+          in: query
+          schema:
+            type: boolean
+        - name: active_traffic
+          description: Filters Hosts that have generated active traffic within the last 2 hours
+          in: query
+          schema:
+            type: boolean
+        - name: mac_address
+          description: Fitlers Hosts having the given MAC Address
+          in: query
+          schema:
+            $ref: '#/components/schemas/macAddress'
+      responses:
+        '200':
+          description: Retrieved Hosts successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfHosts'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /hosts/{hostID}:
+    parameters:
+      - name: hostID
+        description: ID of the Host you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: hostGetSingle
+      summary: Describe a specific Host
+      tags:
+        - Hosts
+      parameters:
+        - name: fields
+          description: Filters returned attributes
+          in: query
+          schema:
+            $ref: '#/components/schemas/queryHostFields'
+          style: form
+          explode: false
+      responses:
+        '200':
+          description: Describe a specific Host
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/host'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /hosts/{hostID}/notes:
+    parameters:
+      - name: hostID
+        description: ID of the Host notes you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: hostNotesGetSeveral
+      summary: Get all Host notes
+      tags:
+        - Hosts
+        - Notes
+      responses:
+        '200':
+          description: Retrieved Host notes successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      operationId: hostNoteCreate
+      summary: Create a new Host note
+      tags:
+        - Hosts
+        - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Host note created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /hosts/{hostID}/notes/{noteID}:
+    parameters:
+      - name: hostID
+        description: ID of the Host you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+      - name: noteID
+        description: ID of the Note you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: hostNoteGetSingle
+      summary: Get a single Host note
+      tags:
+        - Hosts
+        - Notes
+      responses:
+        '200':
+          description: Retrieved Host note successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: hostNoteUpdate
+      summary: Update an existing Host note
+      tags:
+        - Hosts
+        - Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/noteRequestBody'
+      responses:
+        '200':
+          description: Host note updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/note'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    delete:
+      operationId: hostNoteDelete
+      summary: Delete an existing Host note
+      tags:
+        - Hosts
+        - Notes
+      responses:
+        '200':
+          description: Host note deleted
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /proxies:
+    description: The proxies endpoint can be used to manage proxy IP addresses (internal or external).
+    get:
+      operationId: proxyGetSeveral
+      summary: Get all Proxies
+      tags:
+        - Proxies
+      responses:
+        '200':
+          description: Retrieved Proxies successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfProxies'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    post:
+      operationId: proxyCreate
+      summary: Create a proxy
+      tags:
+        - Proxies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/proxyRequestBody'
+      responses:
+        '200':
+          description: Proxy created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfProxies'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_error'
+              examples:
+                Invalid JSON payload:
+                  $ref: '#/components/examples/errorWrongPayload'
+                IP already used:
+                  $ref: '#/components/examples/errorIPAlreadyUsed'
+                Invalid IP:
+                  $ref: '#/components/examples/errorInvalidIP'
+  /proxies/{proxyID}:
+    parameters:
+      - name: proxyID
+        description: ID of the Proxy you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/proxyID'
+    get:
+      operationId: proxyGetSingle
+      summary: Describe a specific Proxy
+      tags:
+        - Proxies
+      responses:
+        '200':
+          description: Specific Proxy details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfProxies'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          description: Proxy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_error'
+              examples:
+                Proxy not found:
+                  $ref: '#/components/examples/errorNotFound'
+    patch:
+      operationId: proxyUpdate
+      summary: Update a proxy
+      tags:
+        - Proxies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/proxyRequestBody'
+      responses:
+        '200':
+          description: Proxy updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfProxies'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          description: Proxy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_error'
+              examples:
+                Proxy not found:
+                  $ref: '#/components/examples/errorWrongID'
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/schemas_error'
+              examples:
+                Invalid JSON payload:
+                  $ref: '#/components/examples/errorWrongPayload'
+                IP already used:
+                  $ref: '#/components/examples/errorIPAlreadyUsed'
+                Invalid IP:
+                  $ref: '#/components/examples/errorInvalidIP'
+  /search/accounts:
+    description: Search for accounts objects.
+    get:
+      operationId: searchAccounts
+      summary: Search for Accounts
+      tags:
+        - Search
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
+        - name: query_string
+          description: The Lucene search query
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retrieved Hosts successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /search/detections:
+    description: Search for detections objects.
+    get:
+      operationId: searchDetections
+      summary: Search for Detections
+      tags:
+        - Search
+        - Detections
+      parameters:
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
+        - name: query_string
+          description: The Lucene search query
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retrieved Hosts successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /search/hosts:
+    description: Search for hosts objects.
+    get:
+      operationId: searchHosts
+      summary: Search for Hosts
+      tags:
+        - Search
+        - Hosts
+      parameters:
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
+        - name: query_string
+          description: The Lucene search query
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retrieved Hosts successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /tagging/account/{accountID}:
+    description: The tagging endpoint can be used to manage Account tags
+    parameters:
+      - name: accountID
+        description: ID of the Account you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: accountTagsGetAll
+      summary: Get all Account's tags
+      tags:
+        - Tagging
+        - Accounts
+      responses:
+        '200':
+          description: Retrieved tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: accountTagsReplace
+      summary: Replace all Account's tags
+      tags:
+        - Tagging
+        - Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tagsRequestBody'
+      responses:
+        '200':
+          description: Replaced tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /tagging/detection/{detectionID}:
+    description: The tagging endpoint can be used to manage Detection tags
+    parameters:
+      - name: detectionID
+        description: ID of the Detection you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: detectionTagsGetAll
+      summary: Get all Detection's tags
+      tags:
+        - Tagging
+        - Detections
+      responses:
+        '200':
+          description: Retrieved tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: detectionTagsReplace
+      summary: Replace all Detection's tags
+      tags:
+        - Tagging
+        - Detections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tagsRequestBody'
+      responses:
+        '200':
+          description: Replaced tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /tagging/host/{hostID}:
+    description: The tagging endpoint can be used to manage Host tags
+    parameters:
+      - name: hostID
+        description: ID of the Host you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: hostTagsGetAll
+      summary: Get all Host's tags
+      tags:
+        - Tagging
+        - Hosts
+      responses:
+        '200':
+          description: Retrieved tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+    patch:
+      operationId: hostTagsReplace
+      summary: Replace all Host's tags
+      tags:
+        - Tagging
+        - Hosts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tagsRequestBody'
+      responses:
+        '200':
+          description: Replaced tags successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tags'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /threatFeeds:
+    description: The threatFeeds endpoint can be used to automate the upload of STIX files for threat intelligence matching.
+    get:
+      operationId: threatFeedGetSeveral
+      summary: Get all Threat Feeds
+      tags:
+        - Threat Feeds
+      responses:
+        '200':
+          description: Retrieved Threat Feeds successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /threatFeeds/{threatFeedID}:
+    parameters:
+      - name: threatFeedID
+        description: ID of the Threat Feed you're looking for
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: threatFeedGetSingle
+      summary: Describe a specific Threat Feed
+      tags:
+        - Threat Feeds
+      responses:
+        '200':
+          description: Describe a specific Threat Feed
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          $ref: '#/components/responses/notFound'
+    delete:
+      operationId: threatFeedDeleteSingle
+      summary: Delete a specific Threat Feed
+      tags:
+        - Threat Feeds
+      responses:
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /users:
+    description: Work on several Vectra Users
+    parameters:
+      - name: username
+        description: Filter by user name
+        in: query
+        schema:
+          $ref: '#/components/schemas/name'
+      - name: role
+        description: Filter by role
+        in: query
+        schema:
+          $ref: '#/components/schemas/userRole'
+      - name: account_type
+        description: Filter by user type
+        in: query
+        schema:
+          $ref: '#/components/schemas/userType'
+      - name: authentication_profile
+        description: Filter by authentication profile
+        in: query
+        schema:
+          $ref: '#/components/schemas/userAuthProfile'
+      - name: last_login_gte
+        description: Filters for User's that have logged in since the given timestamp
+        in: query
+        schema:
+          $ref: '#/components/schemas/isoDate'
+    get:
+      operationId: usersGetSeveral
+      summary: Search Vectra Users
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Vectra Users search succesfull
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resultsOfUsers'
+              examples:
+                Users List:
+                  $ref: '#/components/examples/multipleExample'
+                None Users:
+                  $ref: '#/components/examples/noneUsers'
+        '400':
+          $ref: '#/components/responses/invalidQueryParameter'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+  /users/{userID}:
+    description: Work on a single Vectra User
+    parameters:
+      - name: userID
+        description: ID of the Vectra User you're working on
+        in: path
+        schema:
+          $ref: '#/components/schemas/ID'
+    get:
+      operationId: usersGetSingle
+      summary: Describe a single Vectra User
+      tags:
+        - Users
+      responses:
+        '200':
+          description: A single Vectra user response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+              examples:
+                Admin User:
+                  $ref: '#/components/examples/userAdminExample'
+                Local User:
+                  $ref: '#/components/examples/userLocalExample'
+                SAML User:
+                  $ref: '#/components/examples/userSAMLExample'
+        '401':
+          $ref: '#/components/responses/invalidToken'
+        '403':
+          $ref: '#/components/responses/invalidPermissions'
+components:
+  securitySchemes:
+    VectraToken:
+      type: apiKey
+      name: authorization
+      in: header
+  parameters:
+    pageNumber:
+      name: page
+      description: The page result to look at
+      in: query
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+      example: 1
+    pageSize:
+      name: page_size
+      description: The number of results to return per page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 5000
+      example: 50
+    ordering:
+      name: ordering
+      description: Orders results based on given attribute. Results can be sorted in descending order by prepending the query with “minus” symbol.
+      in: query
+      schema:
+        type: string
+    state:
+      name: state
+      description: Filters by state
+      in: query
+      schema:
+        $ref: '#/components/schemas/state'
+    oneOfTags:
+      name: tags
+      description: Filters by tags. Returns entries that contain any of the tags specified
+      in: query
+      schema:
+        $ref: '#/components/schemas/arrayOfNames'
+    certaintyScore:
+      name: c_score
+      description: Filters by certainty score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    certaintyScoreGte:
+      name: c_score_gte
+      description: Filters by certainty score greater than or equals the provided score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    maxID:
+      name: max_id
+      description: Filters by ID lower than or equals the provided ID
+      in: query
+      schema:
+        $ref: '#/components/schemas/ID'
+    minID:
+      name: min_id
+      description: Filters by ID greater than or equals the provided ID
+      in: query
+      schema:
+        $ref: '#/components/schemas/ID'
+    name:
+      name: name
+      description: Filters by name
+      in: query
+      schema:
+        $ref: '#/components/schemas/name'
+    noteModifiedTimestampGte:
+      name: note_modified_timestamp_gte
+      description: Filters on detection'notes modified timestamp
+      in: query
+      schema:
+        $ref: '#/components/schemas/isoDate'
+    privilegeCategory:
+      name: privilege_category
+      description: Filters by privilege category
+      in: query
+      schema:
+        $ref: '#/components/schemas/privilegeCategory'
+    privilegeLevel:
+      name: privilege_level
+      description: Filters by exact privilege level
+      in: query
+      schema:
+        $ref: '#/components/schemas/privilegeLevel'
+    privilegeLevelGte:
+      name: privilege_level_gte
+      description: Filters Account having a privilege level greater than or equal to the supplied number
+      in: query
+      schema:
+        $ref: '#/components/schemas/privilegeLevel'
+    threatScore:
+      name: t_score
+      description: Filters by threat score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    threatScoreGte:
+      name: t_score_gte
+      description: Filters by threat score greater than or equals the provided score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    certainty:
+      name: certainty
+      description: Filters by certainty score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    certaintyGte:
+      name: certainty_gte
+      description: Filters by certainty score greater than or equals the provided score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    threat:
+      name: threat
+      description: Filters by threat score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    threatGte:
+      name: threat_gte
+      description: Filters by threat score greater than or equals the provided score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+  schemas:
+    state:
+      type: string
+      enum:
+        - active
+        - inactive
+      example: active
+    name:
+      type: string
+      minLength: 1
+    arrayOfNames:
+      description: Array of names
+      type: array
+      items:
+        $ref: '#/components/schemas/name'
+    vectraScore:
+      type: number
+      minimum: 0
+      maximum: 99
+      example: 80
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    isoDate:
+      description: ISO representation of a date
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
+    privilegeCategory:
+      type: string
+      nullable: true
+      enum:
+        - null
+        - low
+        - Low
+        - medium
+        - Medium
+        - high
+        - High
+      example: Medium
+    privilegeLevel:
+      type: number
+      nullable: true
+      minimum: 1
+      maximum: 10
+      example: 8
+    queryAccountFields:
+      type: array
+      items:
+        type: string
+        enum:
+          - id
+          - url
+          - name
+          - state
+          - threat
+          - certainty
+          - severity
+          - account_type
+          - tags
+          - note
+          - notes
+          - note_modified_by
+          - note_modified_timestamp
+          - privilege_level
+          - privilege_category
+          - last_detection_timestamp
+          - detection_set
+          - probable_home
+          - detection_summaries
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    link:
+      description: URL Link
+      type: string
+      nullable: true
+      format: uri
+      example: https://dummy.link
+    results:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/positiveInt'
+        next:
+          $ref: '#/components/schemas/link'
+        previous:
+          $ref: '#/components/schemas/link'
+    severity:
+      description: Severity
+      type: string
+      enum:
+        - low
+        - Low
+        - medium
+        - Medium
+        - high
+        - High
+        - critical
+        - Critical
+      example: medium
+    accountType:
+      description: Account's type
+      type: array
+      items:
+        type: string
+        enum:
+          - kerberos
+          - o365
+        example: kerberos
+    text:
+      type: string
+    note:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        date_created:
+          oneOf:
+            - $ref: '#/components/schemas/isoDate'
+            - type: string
+              nullable: true
+        date_modified:
+          oneOf:
+            - $ref: '#/components/schemas/isoDate'
+            - type: string
+              nullable: true
+        created_by:
+          $ref: '#/components/schemas/name'
+        modified_by:
+          oneOf:
+            - $ref: '#/components/schemas/name'
+            - type: string
+              nullable: true
+        note:
+          $ref: '#/components/schemas/text'
+    arrayOfLinks:
+      description: Array of links
+      type: array
+      items:
+        $ref: '#/components/schemas/link'
+    assignmentUser:
+      description: Assignment user (tiny Vectra User)
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        username:
+          $ref: '#/components/schemas/name'
+      example:
+        id: 123
+        username: SAML:dummy@company.com
+    assignmentEventType:
+      description: Type of event that can happen to an assignment
+      type: string
+      enum:
+        - created
+        - reassigned
+        - resolved
+      example: created
+    arrayOfIDs:
+      description: Array of IDs
+      type: array
+      items:
+        $ref: '#/components/schemas/ID'
+    assignmentHistorycalEvent:
+      description: Assignment history event
+      type: object
+      properties:
+        assignment_id:
+          $ref: '#/components/schemas/ID'
+        actor:
+          $ref: '#/components/schemas/ID'
+        event_type:
+          $ref: '#/components/schemas/assignmentEventType'
+        datetime:
+          $ref: '#/components/schemas/isoDate'
+        context:
+          type: object
+          properties:
+            from:
+              $ref: '#/components/schemas/ID'
+            to:
+              $ref: '#/components/schemas/ID'
+            entity_c_score:
+              $ref: '#/components/schemas/vectraScore'
+            entity_t_score:
+              $ref: '#/components/schemas/vectraScore'
+            triage_as:
+              type: string
+              nullable: true
+            triaged_detection_ids:
+              oneOf:
+                - $ref: '#/components/schemas/arrayOfIDs'
+                - type: string
+                  nullable: true
+            fixed_detection_ids:
+              oneOf:
+                - $ref: '#/components/schemas/arrayOfIDs'
+                - type: string
+                  nullable: true
+            created_rule_ids:
+              oneOf:
+                - $ref: '#/components/schemas/arrayOfIDs'
+                - type: string
+                  nullable: true
+    assignmentOutcomeCategory:
+      title: Assignment Outcome allowed categories
+      type: string
+      enum:
+        - benign_true_positive
+        - malicious_true_positive
+        - false_positive
+    assignmentOutcome:
+      description: Label resolution outcome for an assignment
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        builtin:
+          type: boolean
+        user_selectable:
+          type: boolean
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/assignmentOutcomeCategory'
+      required:
+        - id
+        - builtin
+        - user_selectable
+        - title
+        - category
+    assignment:
+      description: Assignment
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        assigned_by:
+          $ref: '#/components/schemas/assignmentUser'
+        date_assigned:
+          $ref: '#/components/schemas/isoDate'
+        date_resolved:
+          oneOf:
+            - $ref: '#/components/schemas/isoDate'
+            - type: number
+              nullable: true
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/assignmentHistorycalEvent'
+        outcome:
+          oneOf:
+            - $ref: '#/components/schemas/assignmentOutcome'
+            - type: string
+              nullable: true
+        resolved_by:
+          oneOf:
+            - $ref: '#/components/schemas/assignmentUser'
+            - type: string
+              nullable: true
+        triaged_detections:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/ID'
+        host_id:
+          oneOf:
+            - $ref: '#/components/schemas/ID'
+            - type: string
+              nullable: true
+        account_id:
+          oneOf:
+            - $ref: '#/components/schemas/ID'
+            - type: string
+              nullable: true
+        assigned_to:
+          $ref: '#/components/schemas/assignmentUser'
+      required:
+        - id
+        - assigned_by
+        - date_assigned
+        - assigned_to
+    account:
+      description: Account
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        url:
+          $ref: '#/components/schemas/link'
+        name:
+          $ref: '#/components/schemas/name'
+        state:
+          $ref: '#/components/schemas/state'
+        threat:
+          $ref: '#/components/schemas/vectraScore'
+        certainty:
+          $ref: '#/components/schemas/vectraScore'
+        severity:
+          $ref: '#/components/schemas/severity'
+        account_type:
+          $ref: '#/components/schemas/accountType'
+        tags:
+          $ref: '#/components/schemas/arrayOfNames'
+        note:
+          oneOf:
+            - $ref: '#/components/schemas/text'
+            - type: string
+              nullable: true
+        note_modified_by:
+          oneOf:
+            - $ref: '#/components/schemas/name'
+            - type: string
+              nullable: true
+        note_modified_timestamp:
+          oneOf:
+            - $ref: '#/components/schemas/isoDate'
+            - type: string
+              nullable: true
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/note'
+        privilege_level:
+          $ref: '#/components/schemas/privilegeLevel'
+        privilege_category:
+          $ref: '#/components/schemas/privilegeCategory'
+        last_detection_timestamp:
+          $ref: '#/components/schemas/isoDate'
+        detection_set:
+          $ref: '#/components/schemas/arrayOfLinks'
+        probable_home:
+          oneOf:
+            - $ref: '#/components/schemas/text'
+            - type: string
+              nullable: true
+        assignment:
+          oneOf:
+            - $ref: '#/components/schemas/assignment'
+            - type: string
+              nullable: true
+        past_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/assignment'
+        sensors:
+          $ref: '#/components/schemas/arrayOfNames'
+    resultsOfAccounts:
+      allOf:
+        - $ref: '#/components/schemas/results'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/account'
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    noteRequestBody:
+      type: object
+      properties:
+        note:
+          $ref: '#/components/schemas/text'
+      required:
+        - note
+    resultsOfAssignments:
+      allOf:
+        - $ref: '#/components/schemas/results'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/assignment'
+    assignmentAccountRequestBody:
+      type: object
+      properties:
+        assign_account_id:
+          $ref: '#/components/schemas/ID'
+        assign_to_user_id:
+          $ref: '#/components/schemas/ID'
+      required:
+        - assign_account_id
+        - assign_to_user_id
+    assignmentHostRequestBody:
+      type: object
+      properties:
+        assign_host_id:
+          $ref: '#/components/schemas/ID'
+        assign_to_user_id:
+          $ref: '#/components/schemas/ID'
+      required:
+        - assign_host_id
+        - assign_to_user_id
+    assignmentUpdateRequestBody:
+      type: object
+      properties:
+        assign_to_user_id:
+          $ref: '#/components/schemas/ID'
+      required:
+        - assign_to_user_id
+    assignmentResolveRequestBody:
+      type: object
+      properties:
+        outcome:
+          $ref: '#/components/schemas/ID'
+        note:
+          $ref: '#/components/schemas/text'
+        triage_as:
+          $ref: '#/components/schemas/name'
+        mark_as_fixed:
+          type: boolean
+        detection_ids:
+          $ref: '#/components/schemas/arrayOfIDs'
+      required:
+        - outcome
+    resultsOfAssignmentOutcomes:
+      allOf:
+        - $ref: '#/components/schemas/results'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/assignmentOutcome'
+    assignmentOutcomeRequestBody:
+      type: object
+      properties:
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/assignmentOutcomeCategory'
+    queryDetectionFields:
+      type: array
+      items:
+        type: string
+        enum:
+          - id
+          - url
+          - detection_url
+          - category
+          - detection
+          - detection_category
+          - detection_type
+          - customer_detection
+          - description
+          - src_ip
+          - state
+          - t_score
+          - threat
+          - c_score
+          - certainty
+          - created_timestamp
+          - first_timestamp
+          - last_timestamp
+          - targets_key_asset
+          - is_targeting_key_asset
+          - src_account
+          - src_host
+          - note
+          - notes
+          - note_modified_by
+          - note_modified_timestamp
+          - sensor
+          - sensor_name
+          - tags
+          - triage_rule_id
+          - assigned_to
+          - assigned_date
+          - groups
+          - is_marked_custom
+          - is_custom_model
+          - grouped_details
+          - summary
+    queryDetectionCategory:
+      type: string
+      enum:
+        - command
+        - botnet
+        - reconnaissance
+        - lateral
+        - exfiltration
+        - info
+      example: command
+    IP:
+      description: IP Address
+      type: string
+      example: 192.168.1.55
+    detectionCategory:
+      type: string
+      enum:
+        - COMMAND & CONTROL
+        - botnet
+        - reconnaissance
+        - lateral
+        - exfiltration
+        - INFO
+      example: INFO
+    detectionType:
+      type: string
+      enum:
+        - Hidden HTTP Tunnel
+    groupType:
+      type: string
+      enum:
+        - ip
+        - host
+    port:
+      type: integer
+      format: int32
+      minimum: 0
+      maximum: 65535
+    detection:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        url:
+          $ref: '#/components/schemas/link'
+        detection_url:
+          $ref: '#/components/schemas/link'
+        category:
+          $ref: '#/components/schemas/detectionCategory'
+        detection_category:
+          $ref: '#/components/schemas/detectionCategory'
+        detection:
+          $ref: '#/components/schemas/detectionType'
+        detection_type:
+          $ref: '#/components/schemas/detectionType'
+        custom_detection:
+          oneOf:
+            - $ref: '#/components/schemas/name'
+            - type: string
+              nullable: true
+        description:
+          oneOf:
+            - $ref: '#/components/schemas/text'
+            - type: string
+              nullable: true
+        src_ip:
+          $ref: '#/components/schemas/IP'
+        state:
+          $ref: '#/components/schemas/state'
+        t_score:
+          $ref: '#/components/schemas/vectraScore'
+        threat:
+          $ref: '#/components/schemas/vectraScore'
+        c_score:
+          $ref: '#/components/schemas/vectraScore'
+        certainty:
+          $ref: '#/components/schemas/vectraScore'
+        created_timestamp:
+          $ref: '#/components/schemas/isoDate'
+        first_timestamp:
+          $ref: '#/components/schemas/isoDate'
+        last_timestamp:
+          $ref: '#/components/schemas/isoDate'
+        targets_key_asset:
+          type: boolean
+        is_targeting_key_asset:
+          type: boolean
+        src_account:
+          type: object
+        src_host:
+          oneOf:
+            - type: object
+              properties:
+                id:
+                  $ref: '#/components/schemas/ID'
+                ip:
+                  $ref: '#/components/schemas/IP'
+                name:
+                  $ref: '#/components/schemas/name'
+                url:
+                  $ref: '#/components/schemas/link'
+                is_key_asset:
+                  type: boolean
+                threat:
+                  $ref: '#/components/schemas/vectraScore'
+                certainty:
+                  $ref: '#/components/schemas/vectraScore'
+                groups:
+                  type: array
+                  items:
+                    - type: object
+                      properties:
+                        id:
+                          $ref: '#/components/schemas/ID'
+                        name:
+                          $ref: '#/components/schemas/name'
+                        description:
+                          $ref: '#/components/schemas/text'
+                        last_modified:
+                          $ref: '#/components/schemas/isoDate'
+                        last_modified_by:
+                          $ref: '#/components/schemas/name'
+                        type:
+                          $ref: '#/components/schemas/groupType'
+            - type: string
+              nullable: true
+        note:
+          oneOf:
+            - $ref: '#/components/schemas/text'
+            - type: string
+              nullable: true
+        note_modified_by:
+          oneOf:
+            - $ref: '#/components/schemas/name'
+            - type: string
+              nullable: true
+        note_modified_timestamp:
+          oneOf:
+            - $ref: '#/components/schemas/isoDate'
+            - type: string
+              nullable: true
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/note'
+        sensor:
+          $ref: '#/components/schemas/vectraScore'
+        sensor_name:
+          $ref: '#/components/schemas/vectraScore'
+        tags:
+          $ref: '#/components/schemas/arrayOfNames'
+        triage_rule_id:
+          oneOf:
+            - $ref: '#/components/schemas/positiveInt'
+            - type: string
+              nullable: true
+        assigned_to:
+          oneOf:
+            - $ref: '#/components/schemas/name'
+            - type: string
+              nullable: true
+        assigned_date:
+          oneOf:
+            - $ref: '#/components/schemas/isoDate'
+            - type: string
+              nullable: true
+        groups:
+          type: array
+          items:
+            - type: object
+              properties:
+                id:
+                  $ref: '#/components/schemas/ID'
+                name:
+                  $ref: '#/components/schemas/name'
+                description:
+                  $ref: '#/components/schemas/text'
+                last_modified:
+                  $ref: '#/components/schemas/isoDate'
+                last_modified_by:
+                  $ref: '#/components/schemas/name'
+                type:
+                  $ref: '#/components/schemas/groupType'
+        is_marked_custom:
+          type: boolean
+        is_custom_model:
+          type: boolean
+        filtered_by_ai:
+          type: boolean
+        filtered_by_user:
+          type: boolean
+        filtered_by_rule:
+          type: boolean
+        grouped_details:
+          type: array
+          items:
+            - type: object
+        summary:
+          oneOf:
+            - type: object
+              properties:
+                uuids:
+                  type: array
+                  items:
+                    - $ref: '#/components/schemas/name'
+                num_attempts:
+                  $ref: '#/components/schemas/positiveInt'
+            - type: object
+              properties:
+                dst_ips:
+                  type: array
+                  items:
+                    - $ref: '#/components/schemas/IP'
+                num_sessions:
+                  $ref: '#/components/schemas/positiveInt'
+                bytes_sent:
+                  $ref: '#/components/schemas/positiveInt'
+                bytes_received:
+                  $ref: '#/components/schemas/positiveInt'
+                description:
+                  $ref: '#/components/schemas/text'
+            - type: object
+              properties:
+                custom_model_query:
+                  $ref: '#/components/schemas/text'
+                bytes_sent:
+                  $ref: '#/components/schemas/positiveInt'
+                bytes_received:
+                  $ref: '#/components/schemas/positiveInt'
+                matches:
+                  $ref: '#/components/schemas/positiveInt'
+                first_matched:
+                  $ref: '#/components/schemas/isoDate'
+                last_matched:
+                  $ref: '#/components/schemas/isoDate'
+                description:
+                  $ref: '#/components/schemas/text'
+            - type: object
+              properties:
+                dst_ips:
+                  type: array
+                  items:
+                    - $ref: '#/components/schemas/IP'
+                dst_ports:
+                  type: array
+                  items:
+                    - $ref: '#/components/schemas/port'
+                protocols:
+                  type: array
+                  items:
+                    - $ref: '#/components/schemas/name'
+                bytes_sent:
+                  $ref: '#/components/schemas/positiveInt'
+            - type: object
+    resultsOfDetections:
+      allOf:
+        - $ref: '#/components/schemas/results'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/detection'
+    booleanString:
+      type: string
+      enum:
+        - 'true'
+        - 'false'
+    detectionMarkRequestBody:
+      type: object
+      properties:
+        detectionIdList:
+          $ref: '#/components/schemas/arrayOfIDs'
+        mark_as_fixed:
+          $ref: '#/components/schemas/booleanString'
+      required:
+        - detectionIdList
+        - mark_as_fixed
+    queryHostFields:
+      type: array
+      items:
+        type: string
+        enum:
+          - id
+          - name
+          - active_traffic
+          - has_active_traffic
+          - t_score
+          - threat
+          - c_score
+          - certainty
+          - severity
+          - last_source
+          - ip
+          - previous_ips
+          - last_detection_timestamp
+          - key_asset
+          - is_key_asset
+          - state
+          - targets_key_asset
+          - is_targeting_key_asset
+          - detection_set
+          - host_artifact_set
+          - sensor
+          - sensor_name
+          - tags
+          - note
+          - notes
+          - note_modified_by
+          - note_modified_timestamp
+          - url
+          - host_url
+          - last_modified
+          - assigned_to
+          - assigned_date
+          - groups
+          - has_custom_model
+          - privilege_level
+          - privilege_category
+          - probable_owner
+          - detection_profile
+          - assignment
+          - past_assignments
+          - detection_summaries
+          - host_session_luids
+          - host_luid
+    macAddress:
+      type: string
+    host:
+      description: Host
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        name:
+          $ref: '#/components/schemas/name'
+        active_traffic:
+          type: boolean
+        has_active_traffic:
+          type: boolean
+          deprecated: true
+        threat:
+          $ref: '#/components/schemas/vectraScore'
+        t_score:
+          $ref: '#/components/schemas/vectraScore'
+          deprecated: true
+        certainty:
+          $ref: '#/components/schemas/vectraScore'
+        c_score:
+          $ref: '#/components/schemas/vectraScore'
+          deprecated: true
+        severity:
+          $ref: '#/components/schemas/severity'
+        last_source:
+          $ref: '#/components/schemas/IP'
+        ip:
+          $ref: '#/components/schemas/IP'
+        previous_ips:
+          type: array
+          items:
+            - $ref: '#/components/schemas/IP'
+        last_detection_timestamp:
+          $ref: '#/components/schemas/isoDate'
+        key_asset:
+          type: boolean
+          deprecated: true
+        is_key_asset:
+          type: boolean
+        state:
+          $ref: '#/components/schemas/state'
+        targets_key_asset:
+          type: boolean
+          deprecated: true
+        is_targeting_key_asset:
+          type: boolean
+        detection_set:
+          $ref: '#/components/schemas/arrayOfLinks'
+        host_artifact_set:
+          type: array
+          items:
+            - type: object
+              properties:
+                type:
+                  type: string
+                value:
+                  type: string
+                source:
+                  type: string
+                siem:
+                  type: boolean
+        sensor:
+          $ref: '#/components/schemas/name'
+        sensor_name:
+          $ref: '#/components/schemas/name'
+        tags:
+          $ref: '#/components/schemas/arrayOfNames'
+        note:
+          oneOf:
+            - $ref: '#/components/schemas/text'
+            - type: string
+              nullable: true
+        note_modified_by:
+          oneOf:
+            - $ref: '#/components/schemas/name'
+            - type: string
+              nullable: true
+        note_modified_timestamp:
+          oneOf:
+            - $ref: '#/components/schemas/isoDate'
+            - type: string
+              nullable: true
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/note'
+        url:
+          $ref: '#/components/schemas/link'
+        host_url:
+          $ref: '#/components/schemas/link'
+        last_modified:
+          oneOf:
+            - $ref: '#/components/schemas/isoDate'
+            - type: string
+              nullable: true
+        assigned_to:
+          oneOf:
+            - $ref: '#/components/schemas/name'
+            - type: string
+              nullable: true
+        assigned_date:
+          oneOf:
+            - $ref: '#/components/schemas/isoDate'
+            - type: string
+              nullable: true
+        groups:
+          type: array
+          items:
+            - type: object
+              properties:
+                id:
+                  $ref: '#/components/schemas/ID'
+                name:
+                  $ref: '#/components/schemas/name'
+                description:
+                  $ref: '#/components/schemas/text'
+                last_modified:
+                  $ref: '#/components/schemas/isoDate'
+                last_modified_by:
+                  $ref: '#/components/schemas/name'
+                type:
+                  $ref: '#/components/schemas/groupType'
+        has_custom_model:
+          type: boolean
+        privilege_level:
+          $ref: '#/components/schemas/privilegeLevel'
+        privilege_category:
+          $ref: '#/components/schemas/privilegeCategory'
+        probable_owner:
+          oneOf:
+            - $ref: '#/components/schemas/name'
+            - type: string
+              nullable: true
+        detection_profile:
+          $ref: '#/components/schemas/text'
+        assignment:
+          oneOf:
+            - $ref: '#/components/schemas/assignment'
+            - type: string
+              nullable: true
+        past_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/assignment'
+        host_session_luids:
+          $ref: '#/components/schemas/arrayOfNames'
+        host_luid:
+          $ref: '#/components/schemas/name'
+    resultsOfHosts:
+      allOf:
+        - $ref: '#/components/schemas/results'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/host'
+    proxyID:
+      type: string
+      minLength: 32
+      maxLength: 32
+      example: 5832ba020b764c0395f774b49c03ed3b
+    isoDateMicroseconds:
+      description: ISO representation of a date with microseconds
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00.123456+00:00'
+    proxy:
+      description: Proxy
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/proxyID'
+        address:
+          $ref: '#/components/schemas/IP'
+        considerProxy:
+          type: boolean
+        source:
+          $ref: '#/components/schemas/name'
+        createdAt:
+          $ref: '#/components/schemas/isoDateMicroseconds'
+        lastUpdatedAt:
+          $ref: '#/components/schemas/isoDateMicroseconds'
+      required:
+        - id
+        - address
+        - considerProxy
+        - source
+        - createdAt
+        - lastUpdatedAt
+    resultsOfProxies:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            count:
+              $ref: '#/components/schemas/positiveInt'
+          required:
+            - count
+        proxies:
+          type: array
+          items:
+            $ref: '#/components/schemas/proxy'
+      required:
+        - meta
+        - proxies
+    proxyRequestBody:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/IP'
+        considerProxy:
+          type: boolean
+    schemas_error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            - type: object
+              properties:
+                title:
+                  type: string
+    tags:
+      type: object
+      properties:
+        status:
+          type: string
+        tag_id:
+          $ref: '#/components/schemas/ID'
+        tags:
+          type: array
+          items:
+            - $ref: '#/components/schemas/text'
+    tagsRequestBody:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            - $ref: '#/components/schemas/text'
+      required:
+        - tags
+    userRole:
+      description: Vectra User Role
+      type: string
+    userType:
+      description: Vectra User type
+      type: string
+      enum:
+        - local
+        - SAML
+    userAuthProfile:
+      description: Vectra User authentication profile when coming from SAML or LDAP
+      type: string
+      nullable: true
+    email:
+      type: string
+      format: email
+    user:
+      description: Vectra User object
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        last_login:
+          $ref: '#/components/schemas/isoDate'
+        username:
+          $ref: '#/components/schemas/name'
+        email:
+          $ref: '#/components/schemas/email'
+        account_type:
+          $ref: '#/components/schemas/userType'
+        authentication_profile:
+          $ref: '#/components/schemas/userAuthProfile'
+        role:
+          $ref: '#/components/schemas/userRole'
+      required:
+        - id
+        - last_login
+        - username
+        - email
+        - account_type
+        - authentication_profile
+        - role
+    resultsOfUsers:
+      allOf:
+        - $ref: '#/components/schemas/results'
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/user'
+  responses:
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+    notFound:
+      description: Object not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            detail: Not Found.
+    invalidQueryParameter:
+      description: Invalid Query Parameter
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: 'The following query parameter(s) are invalid: xxx.'
+  examples:
+    assignmentCreated:
+      value:
+        assignment:
+          id: 18
+          assigned_by:
+            id: 456
+            username: dummy-user
+          date_assigned: '2022-01-01T12:34:56Z'
+          date_resolved: null
+          events:
+            - assignment_id: 18
+              actor: 123
+              event_type: created
+              datetime: '2022-01-01T12:34:56Z'
+              context:
+                to: 80
+                entity_t_score: 55
+                entity_c_score: 65
+          outcome: null
+          resolved_by: null
+          triaged_detections: null
+          host_id: null
+          account_id: 25
+          assigned_to:
+            id: 80
+            username: SAML:dummy-user@company.com
+    userCannotBeAssigned:
+      value:
+        errors:
+          - title: User 101 does not have permissions to be assigned to hosts.
+    assignmentReassigned:
+      value:
+        assignment:
+          id: 18
+          assigned_by:
+            id: 12
+            username: other-user
+          date_assigned: '2022-01-02T12:34:56Z'
+          date_resolved: null
+          events:
+            - assignment_id: 18
+              actor: 12
+              event_type: reassigned
+              datetime: '2022-01-02T12:34:56Z'
+              context:
+                from: 80
+                to: 82
+                entity_t_score: 75
+                entity_c_score: 85
+            - assignment_id: 18
+              actor: 123
+              event_type: created
+              datetime: '2022-01-01T12:34:56Z'
+              context:
+                to: 80
+                entity_t_score: 55
+                entity_c_score: 65
+          outcome: null
+          resolved_by: null
+          triaged_detections: null
+          host_id: null
+          account_id: 25
+          assigned_to:
+            id: 82
+            username: SAML:other-user@company.com
+    assignmentFalsePositiveResolveNoTriageRequestBody:
+      value:
+        outcome: 3
+        note: This is a test false positive assignment resolution
+    assignmentBenignPositiveResolveWithTriageRequestBody:
+      value:
+        outcome: 1
+        note: This is a benign positive assignment resolution with triage rules
+        triage_as: My triage rule name
+        detection_ids:
+          - 1
+          - 2
+          - 3
+    assignmentTruePositiveResolveWithMarkAsFixedRequestBody:
+      value:
+        outcome: 1
+        note: This is a true positive assignment resolution with mark as fixed
+        mark_as_fixed: true
+        detection_ids:
+          - 1
+          - 2
+          - 3
+    assignmentSimpleResolution:
+      value:
+        assignment:
+          id: 18
+          assigned_by:
+            id: 12
+            username: other-user
+          date_assigned: '2022-01-02T12:34:56Z'
+          date_resolved: '2022-01-03T12:34:56Z'
+          events:
+            - assignment_id: 18
+              actor: 82
+              event_type: resolved
+              datetime: '2022-01-03T12:34:56Z'
+              context:
+                entity_t_score: 75
+                entity_c_score: 85
+                triage_as: null
+                triaged_detection_ids: null
+                fixed_detection_ids: null
+                created_rule_ids: null
+            - assignment_id: 18
+              actor: 12
+              event_type: reassigned
+              datetime: '2022-01-02T12:34:56Z'
+              context:
+                from: 80
+                to: 82
+                entity_t_score: 75
+                entity_c_score: 85
+            - assignment_id: 18
+              actor: 123
+              event_type: created
+              datetime: '2022-01-01T12:34:56Z'
+              context:
+                to: 80
+                entity_t_score: 55
+                entity_c_score: 65
+          outcome:
+            id: 3
+            builtin: true
+            user_selectable: true
+            title: False Positive
+            category: false_positive
+          resolved_by:
+            id: 82
+            username: SAML:other-user@company.com
+          triaged_detections: []
+          host_id: null
+          account_id: 25
+          assigned_to:
+            id: 82
+            username: SAML:other-user@company.com
+    assignmentTriagedResolution:
+      value:
+        assignment:
+          id: 22
+          assigned_by:
+            id: 82
+            username: SAML:other-user@company.com
+          date_assigned: '2022-09-25T12:34:56Z'
+          date_resolved: '2022-09-30T12:34:56Z'
+          events:
+            - assignment_id: 22
+              actor: 82
+              event_type: resolved
+              datetime: '2022-09-30T12:34:56Z'
+              context:
+                entity_t_score: 20
+                entity_c_score: 55
+                triage_as: Dummy Triage Rule
+                triaged_detection_ids:
+                  - 1
+                  - 2
+                fixed_detection_ids: null
+                created_rule_ids:
+                  - 500
+                  - 501
+            - assignment_id: 22
+              actor: 82
+              event_type: created
+              datetime: '2022-09-25T12:34:56Z'
+              context:
+                to: 82
+                entity_t_score: 20
+                entity_c_score: 55
+          outcome:
+            id: 3
+            builtin: true
+            user_selectable: true
+            title: False Positive
+            category: false_positive
+          resolved_by:
+            id: 82
+            username: SAML:other-user@company.com
+          triaged_detections:
+            - 1
+            - 2
+          host_id: null
+          account_id: 331
+          assigned_to:
+            id: 82
+            username: SAML:other-user@company.com
+    assignmentOutcomeUserCreated:
+      value:
+        id: 8
+        builtin: false
+        user_selectable: true
+        title: User created outcome
+        category: false_positive
+    assignmentOutcomeBuiltin:
+      value:
+        id: 1
+        builtin: true
+        user_selectable: true
+        title: Benign True Positive
+        category: benign_true_positive
+    errorWrongPayload:
+      value:
+        errors:
+          - title: Error loading JSON data from POST request
+    errorIPAlreadyUsed:
+      value:
+        errors:
+          - title: IP already listed.
+    errorInvalidIP:
+      value:
+        errors:
+          - title: IP not valid.
+    errorNotFound:
+      value:
+        errors:
+          - title: No matching proxy found
+    errorWrongID:
+      value:
+        errors:
+          - title: Matching id not present in db.
+    multipleExample:
+      value:
+        count: 3
+        next: null
+        previous: null
+        results:
+          - id: 20
+            last_login: '2022-01-01T12:34:56Z'
+            username: admin
+            email: ''
+            account_type: local
+            authentication_profile: null
+            role: Super Admin
+          - id: 101
+            last_login: '2022-01-01T12:34:56Z'
+            username: dummy-user
+            email: ''
+            account_type: local
+            authentication_profile: null
+            role: Read-Only
+          - id: 129
+            last_login: '2022-01-01T12:34:56'
+            username: SAML:dummy-user@company.com
+            email: dummy-user@company.com
+            account_type: SAML
+            authentication_profile: Company SE
+            role: Custom Admin
+    noneUsers:
+      value:
+        count: 0
+        next: null
+        previous: null
+        results: []
+    userAdminExample:
+      value:
+        id: 20
+        last_login: '2022-01-01T12:34:56Z'
+        username: admin
+        email: ''
+        account_type: local
+        authentication_profile: null
+        role: Super Admin
+    userLocalExample:
+      value:
+        id: 101
+        last_login: '2022-01-01T12:34:56Z'
+        username: dummy-user
+        email: ''
+        account_type: local
+        authentication_profile: null
+        role: Read-Only
+    userSAMLExample:
+      value:
+        id: 129
+        last_login: '2022-01-01T12:34:56'
+        username: SAML:dummy-user@company.com
+        email: dummy-user@company.com
+        account_type: SAML
+        authentication_profile: Company SE
+        role: Custom Admin
+security:
+  - VectraToken: []

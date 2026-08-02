@@ -1,0 +1,26 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vectranetworks-detect-v2.3-openapi.yml, openapi/vectranetworks-rux-v3.3-openapi.yml
+summary:
+  types:
+  - apiKey
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: VectraToken
+  type: apiKey
+  in: header
+  parameter: authorization
+  sources:
+  - openapi/vectranetworks-detect-v2.3-openapi.yml
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+    scopes: 0
+  sources:
+  - openapi/vectranetworks-rux-v3.3-openapi.yml

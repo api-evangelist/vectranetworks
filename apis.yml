@@ -1,26 +1,343 @@
 aid: vectranetworks
-name: Vectranetworks
-description: Vectranetworks is a company surfaced as a portfolio company of khosla-ventures and added
-  to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+name: Vectra AI
+description: Vectra AI (founded as Vectra Networks, a Khosla Ventures portfolio company)
+  is an AI-native network detection and response (NDR) platform that correlates attacker
+  behavior across network, identity, cloud, and SaaS domains. Its Attack Signal Intelligence
+  prioritizes real threats for SOC teams, and the platform exposes REST APIs — the
+  OAuth2-secured Vectra Platform API (RUX) and the token-based Vectra Detect API —
+  for pulling detections, entities, and health data into SIEM, SOAR, EDR, and ITSM
+  workflows.
 url: https://raw.githubusercontent.com/api-evangelist/vectranetworks/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - khosla-ventures
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profile
+x-tier-reason: enriched-provider
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/vectranetworks.png
 tags:
 - Company
-apis: []
+- Cybersecurity
+- Network Detection and Response
+- Threat Detection
+- Security Operations
+- Artificial Intelligence
+- SIEM
+apis:
+- aid: vectranetworks:vectranetworks-accounts-api
+  name: Vectra AI Accounts API
+  description: Dedicated endpoint to Accounts.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-accounts-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-assignment-outcomes-api
+  name: Vectra AI Assignment Outcomes API
+  description: Dedicated endpoint to Assignment Outcomes.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Assignment Outcomes
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-assignment-outcomes-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-assignments-api
+  name: Vectra AI Assignments API
+  description: Dedicated endpoint to Assignments.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Assignments
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-assignments-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-detections-api
+  name: Vectra AI Detections API
+  description: Dedicated endpoint to Detections.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Detections
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-detections-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-entities-api
+  name: Vectra AI Entities API
+  description: The Entities API from Vectra AI — 4 operation(s) for entities.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-entities-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-events-api
+  name: Vectra AI Events API
+  description: The Events API from Vectra AI — 3 operation(s) for events.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-events-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-groups-api
+  name: Vectra AI Groups API
+  description: The Groups API from Vectra AI — 1 operation(s) for groups.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-groups-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-health-api
+  name: Vectra AI Health API
+  description: The Health API from Vectra AI — 1 operation(s) for health.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-health-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-hosts-api
+  name: Vectra AI Hosts API
+  description: Dedicated endpoint to Hosts.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Hosts
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-hosts-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-lockdown-api
+  name: Vectra AI Lockdown API
+  description: The Lockdown API from Vectra AI — 1 operation(s) for lockdown.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Lockdown
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-lockdown-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-match-api
+  name: Vectra AI Match API
+  description: The Match API from Vectra AI — 7 operation(s) for match.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Match
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-match-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-notes-api
+  name: Vectra AI Notes API
+  description: Manage entities notes
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Notes
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-notes-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-proxies-api
+  name: Vectra AI Proxies API
+  description: Dedicated endpoint to Proxies
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Proxies
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-proxies-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-search-api
+  name: Vectra AI Search API
+  description: Dedicated endpoint to run searches among entities
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-search-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-tagging-api
+  name: Vectra AI Tagging API
+  description: Dedicated endpoint to manage entities's tags
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Tagging
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-tagging-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-threat-feeds-api
+  name: Vectra AI Threat Feeds API
+  description: >-
+    The threatFeeds endpoint can be used to automate the upload of STIX files for threat intelligence
+    matching. This endpoint can also be used to retrieve the current list of threatFeed objects already
+    configured in the system.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Threat Feeds
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-threat-feeds-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectranetworks-users-api
+  name: Vectra AI Users API
+  description: Dedicated endpoint to Users.
+  humanURL: https://vectranetworks.github.io/openapi-rux/
+  baseURL: https://platform.vectra.ai/api/v3.3
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/vectranetworks-users-api-openapi.yml
+  - type: APIReference
+    url: https://vectranetworks.github.io/openapi-rux/
+  - type: APIReference
+    url: https://vectranetworks.github.io/detect-openapi/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/vectranetworks-domain-security.yml
+- type: Authentication
+  url: authentication/vectranetworks-authentication.yml
+- type: OAuthScopes
+  url: scopes/vectranetworks-scopes.yml
 - type: Website
-  url: https://www.vectranetworks.com/
+  url: https://www.vectra.ai/
+- type: Blog
+  url: https://www.vectra.ai/blog
+- type: Support
+  url: https://support.vectra.ai/
+- type: StatusPage
+  url: https://status.vectra.ai/
+- type: GitHubOrganization
+  url: https://github.com/vectranetworks
+- type: Pricing
+  url: https://www.vectra.ai/pricing
+- type: PrivacyPolicy
+  url: https://www.vectra.ai/legal/privacy-policy
+- type: TermsOfService
+  url: https://www.vectra.ai/legal/terms-of-service
+- type: LLMsTxt
+  url: llms/vectranetworks-llms.txt
+- type: Documentation
+  url: https://support.vectra.ai/
+- type: ChangeLog
+  url: https://support.vectra.ai/s/topic/0TO6S000000J745WAC/product-announcements
+- type: Packages
+  url: packages/vectranetworks-packages.yml
+- type: SDKs
+  url: packages/vectranetworks-packages.yml
+- type: WellKnown
+  url: well-known/vectranetworks-well-known.yml
+- type: MCPServer
+  url: mcp/vectranetworks-mcp.yml
+- type: Conformance
+  url: conformance/vectranetworks-conformance.yml
+- type: ErrorCatalog
+  url: errors/vectranetworks-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/vectranetworks-lifecycle.yml
+- type: Conventions
+  url: conventions/vectranetworks-conventions.yml
+- type: DataModel
+  url: data-model/vectranetworks-data-model.yml
+- type: TrustCenter
+  url: security/vectranetworks-trust-center.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1

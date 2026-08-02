@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/vectranetworks-rux-v3.3-openapi.yml
+description: >-
+  Packaged agent skills for the Vectra AI Platform API (RUX), one per marquee
+  SOC flow, grounded in the real operationIds of the published v3.3 OpenAPI.
+  No provider-published skills or AGENTS.md were found in the vectranetworks
+  GitHub org, so these are generated from the spec.
+skills:
+- name: vectranetworks-triage-prioritized-entities
+  file: vectranetworks-triage-prioritized-entities.md
+  description: Triage the highest-urgency accounts and hosts and route them to analysts.
+- name: vectranetworks-investigate-detection
+  file: vectranetworks-investigate-detection.md
+  description: Investigate a single detection down to the packet level, tag it, and mark it fixed.
+- name: vectranetworks-stream-events-to-siem
+  file: vectranetworks-stream-events-to-siem.md
+  description: Continuously ingest entity-scoring, detection, and audit events into a SIEM with checkpoint cursors.

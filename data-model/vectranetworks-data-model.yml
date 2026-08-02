@@ -1,0 +1,96 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vectranetworks-rux-v3.3-openapi.yml, openapi/vectranetworks-detect-v2.3-openapi.yml
+description: >-
+  Entity-relationship graph of the Vectra AI security data model, derived from
+  schema $ref links and id-reference fields in the two published OpenAPI
+  documents. The central object is the Entity (an account or host) whose
+  urgency score is driven by its Detections; Assignments route entities to
+  analysts; Notes and Tags annotate everything; Threat Feeds and Vectra Match
+  rules enrich detection.
+entities:
+- name: Entity
+  description: A monitored account or host with urgency/threat scoring (RUX v3.x unifies both under /entities with type=account|host).
+- name: Account
+  description: Identity-side entity (v2 first-class resource, v3 entity type=account).
+- name: Host
+  description: Network-side entity with IP/MAC identifiers, key-asset flag, and sensor attribution.
+- name: Detection
+  description: An attacker-behavior detection with category, type, certainty, and threat score.
+- name: Assignment
+  description: Analyst ownership of an entity investigation, with lifecycle events and an outcome.
+- name: AssignmentOutcome
+  description: Resolution category recorded when an assignment is resolved (v2).
+- name: Note
+  description: Free-text annotation on an entity, account, host, or detection.
+- name: Tag
+  description: Label applied to detections, hosts, and accounts via /tagging.
+- name: ThreatFeed
+  description: STIX threat-intelligence feed configured for enrichment.
+- name: Group
+  description: Collection of hosts/accounts/IPs/domains used in triage and policy.
+- name: Lockdown
+  description: Active containment state applied to an entity.
+- name: User
+  description: Platform/brain user; assignee of assignments and author of notes.
+- name: Health
+  description: Platform, sensor, and connectivity health snapshot.
+- name: VectraMatchRule
+  description: Suricata-compatible match ruleset uploaded to devices (RUX /vectra-match).
+relationships:
+- from: Entity
+  to: Detection
+  type: has_many
+  via: detection_set / detection ids on the entity
+- from: Detection
+  to: Entity
+  type: belongs_to
+  via: src_entity / linked entity id
+- from: Detection
+  to: Host
+  type: belongs_to
+  via: src_ip / host_id (v2)
+- from: Entity
+  to: Note
+  type: has_many
+  via: /entities/{entity_id}/notes
+- from: Detection
+  to: Note
+  type: has_many
+  via: /detections/{id}/notes
+- from: Account
+  to: Note
+  type: has_many
+  via: /accounts/{accountID}/notes (v2)
+- from: Host
+  to: Note
+  type: has_many
+  via: /hosts/{hostID}/notes (v2)
+- from: Entity
+  to: Tag
+  type: has_many
+  via: /tagging/{detection|host|account}/{id}
+- from: Assignment
+  to: Entity
+  type: belongs_to
+  via: account_id / host_id on assignment body
+- from: Assignment
+  to: User
+  type: belongs_to
+  via: assigned_to user id
+- from: Assignment
+  to: AssignmentOutcome
+  type: has_one
+  via: outcome id on resolve (v2)
+- from: Group
+  to: Host
+  type: has_many
+  via: members[] of type host
+- from: Lockdown
+  to: Entity
+  type: belongs_to
+  via: entity id in lockdown record
+- from: VectraMatchRule
+  to: Device
+  type: belongs_to
+  via: /vectra-match/assignment device ids

@@ -1,0 +1,43 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vectranetworks-detect-v2.3-openapi.yml, openapi/vectranetworks-rux-v3.3-openapi.yml
+format: proprietary-json
+description: >-
+  Error catalog derived from the 4xx/5xx responses declared in the Vectra
+  Detect v2.3 OpenAPI (the RUX v3.3 spec documents only success responses).
+  Errors are plain application/json — not RFC 9457 problem+json — with a
+  detail/details human-readable message body (schemas: error, schemas_error).
+envelope:
+  content_type: application/json
+  fields:
+  - name: detail
+    description: A human readable error message
+  - name: details
+    description: A human readable error message
+  - name: errors
+    description: Array of {title} objects on some validation failures (schemas_error)
+problem_types:
+- status: 400
+  title: Bad request
+  occurs_on: [assignmentAssign, assignmentOutcomeUpdate, usersGetSeveral]
+  remediation: Check required body fields and query parameter formats before retrying.
+- status: 401
+  title: Unauthorized
+  occurs_on: nearly all Detect operations
+  remediation: 'Send a valid personal API token as "Authorization: Token <token>"; regenerate the token in the Detect UI if revoked.'
+- status: 403
+  title: Forbidden
+  occurs_on: nearly all Detect operations
+  remediation: The token's user lacks the role/permission for this resource; use an account with sufficient privileges.
+- status: 404
+  title: Not found
+  occurs_on: [accountGetSingle, assignmentGetSingle, assignmentOutcomeGetSingle, assignmentOutcomeDelete, detectionGetSingle, hostGetSingle, proxyGetSingle, proxyUpdate, threatFeedGetSingle, threatFeedDeleteSingle]
+  remediation: Verify the resource ID exists on this brain; IDs are per-tenant.
+- status: 409
+  title: Conflict
+  occurs_on: [assignmentAssign, assignmentResolve]
+  remediation: The entity already has an active assignment or the assignment state does not allow this transition; fetch current state first.
+- status: 422
+  title: Unprocessable entity
+  occurs_on: [proxyCreate, proxyUpdate]
+  remediation: The proxy definition failed validation; correct the address/enable fields per the proxyRequestBody schema.

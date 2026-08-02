@@ -1,0 +1,42 @@
+generated: '2026-07-21'
+method: searched
+source: live HTTP probes of the website and documented API hosts
+description: >-
+  Results of probing the /.well-known/ discovery surface for the Vectra AI
+  website (www.vectra.ai — vectranetworks.com 301-redirects there) and the
+  documented Platform API default host (platform.vectra.ai, a documentation
+  default; production portals are tenant-specific, so it does not resolve
+  publicly). Status is the HTTP code observed at fetch time. The one real
+  discovery document found was /llms.txt, saved verbatim to
+  llms/vectranetworks-llms.txt.
+hosts:
+- host: https://www.vectra.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /security.txt
+    status: 404
+  - path: /llms.txt
+    status: 200
+    file: ../llms/vectranetworks-llms.txt
+- host: https://platform.vectra.ai
+  note: documentation default host; tenant portals are customer-specific, no public DNS/HTTP
+  documents:
+  - path: /.well-known/security.txt
+    status: unreachable
+  - path: /.well-known/openid-configuration
+    status: unreachable
+  - path: /.well-known/oauth-authorization-server
+    status: unreachable
+  - path: /.well-known/api-catalog
+    status: unreachable
+  - path: /.well-known/ai-plugin.json
+    status: unreachable
