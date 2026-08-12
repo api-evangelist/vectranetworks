@@ -286,6 +286,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/vectranetworks-detect-v2.3-overlay.yaml
 - type: DomainSecurity
   url: security/vectranetworks-domain-security.yml
 - type: Authentication
