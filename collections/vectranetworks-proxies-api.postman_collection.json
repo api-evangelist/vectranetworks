@@ -1,0 +1,1329 @@
+{
+  "item": [
+    {
+      "id": "23f0e0c9-33b0-478f-b4ff-3073c910ff31",
+      "name": "Proxies",
+      "description": {
+        "content": "Dedicated endpoint to Proxies",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "44118e64-57f4-4136-abeb-2d0f49b7d49b",
+          "name": "Get all Proxies",
+          "request": {
+            "name": "Get all Proxies",
+            "description": {},
+            "url": {
+              "path": [
+                "proxies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4cae8414-1f94-4865-ae5f-e07771c5d69a",
+              "name": "Retrieved Proxies successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"count\": 3078\n  },\n  \"proxies\": [\n    {\n      \"id\": \"5832ba020b764c0395f774b49c03ed3b\",\n      \"address\": \"192.168.1.55\",\n      \"considerProxy\": true,\n      \"source\": \"string\",\n      \"createdAt\": \"2022-01-01T00:00:00.123456+00:00\",\n      \"lastUpdatedAt\": \"2022-01-01T00:00:00.123456+00:00\"\n    },\n    {\n      \"id\": \"5832ba020b764c0395f774b49c03ed3b\",\n      \"address\": \"192.168.1.55\",\n      \"considerProxy\": true,\n      \"source\": \"string\",\n      \"createdAt\": \"2022-01-01T00:00:00.123456+00:00\",\n      \"lastUpdatedAt\": \"2022-01-01T00:00:00.123456+00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37f91914-b05c-4d4f-b3fe-f71341212714",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ce0f57d-098d-46ee-aba1-180495e9bfaf",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0b87ccb-3d1d-43a6-a852-0ff3f6258d6f",
+          "name": "Create a proxy",
+          "request": {
+            "name": "Create a proxy",
+            "description": {},
+            "url": {
+              "path": [
+                "proxies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"<string>\",\n  \"considerProxy\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9ada8a26-af4e-4fd4-ab82-d799c52f9afd",
+              "name": "Proxy created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"192.168.1.55\",\n  \"considerProxy\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"count\": 4435\n  },\n  \"proxies\": [\n    {\n      \"id\": \"5832ba020b764c0395f774b49c03ed3b\",\n      \"address\": \"192.168.1.55\",\n      \"considerProxy\": false,\n      \"source\": \"string\",\n      \"createdAt\": \"2022-01-01T00:00:00.123456+00:00\",\n      \"lastUpdatedAt\": \"2022-01-01T00:00:00.123456+00:00\"\n    },\n    {\n      \"id\": \"5832ba020b764c0395f774b49c03ed3b\",\n      \"address\": \"192.168.1.55\",\n      \"considerProxy\": true,\n      \"source\": \"string\",\n      \"createdAt\": \"2022-01-01T00:00:00.123456+00:00\",\n      \"lastUpdatedAt\": \"2022-01-01T00:00:00.123456+00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c4444c4-e87b-4100-872f-31a67e9e28df",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"192.168.1.55\",\n  \"considerProxy\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78db4d03-8d4f-424f-8797-7eb90d1a5372",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"192.168.1.55\",\n  \"considerProxy\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2ea0473-78cd-44f5-a381-483ff67badeb",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"192.168.1.55\",\n  \"considerProxy\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error loading JSON data from POST request\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e92626b1-4d75-4e4b-86c4-0d518898e3b6",
+          "name": "Describe a specific Proxy",
+          "request": {
+            "name": "Describe a specific Proxy",
+            "description": {},
+            "url": {
+              "path": [
+                "proxies",
+                ":proxyID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proxyID",
+                  "description": "ID of the Proxy you're looking for"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7af72e14-13b2-42d4-99d5-3f9cd8778520",
+              "name": "Specific Proxy details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies",
+                    ":proxyID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proxyID",
+                      "description": "ID of the Proxy you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"count\": 1414\n  },\n  \"proxies\": [\n    {\n      \"id\": \"5832ba020b764c0395f774b49c03ed3b\",\n      \"address\": \"192.168.1.55\",\n      \"considerProxy\": false,\n      \"source\": \"strin\",\n      \"createdAt\": \"2022-01-01T00:00:00.123456+00:00\",\n      \"lastUpdatedAt\": \"2022-01-01T00:00:00.123456+00:00\"\n    },\n    {\n      \"id\": \"5832ba020b764c0395f774b49c03ed3b\",\n      \"address\": \"192.168.1.55\",\n      \"considerProxy\": false,\n      \"source\": \"string\",\n      \"createdAt\": \"2022-01-01T00:00:00.123456+00:00\",\n      \"lastUpdatedAt\": \"2022-01-01T00:00:00.123456+00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d2483a3-ee73-4f18-9bbc-79489dabb996",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies",
+                    ":proxyID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proxyID",
+                      "description": "ID of the Proxy you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4e9f844-8263-489b-86e8-715fffdaef0e",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies",
+                    ":proxyID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proxyID",
+                      "description": "ID of the Proxy you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f25b20b-f62b-4f6e-acd0-c1cab9052545",
+              "name": "Proxy not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies",
+                    ":proxyID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proxyID",
+                      "description": "ID of the Proxy you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"No matching proxy found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d733b67c-cd52-4b36-b1d0-6e2c83fe2c38",
+          "name": "Update a proxy",
+          "request": {
+            "name": "Update a proxy",
+            "description": {},
+            "url": {
+              "path": [
+                "proxies",
+                ":proxyID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proxyID",
+                  "description": "ID of the Proxy you're looking for"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"<string>\",\n  \"considerProxy\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9ace4ace-d55f-4894-be58-4e194760c41f",
+              "name": "Proxy updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies",
+                    ":proxyID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proxyID",
+                      "description": "ID of the Proxy you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"192.168.1.55\",\n  \"considerProxy\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"count\": 1414\n  },\n  \"proxies\": [\n    {\n      \"id\": \"5832ba020b764c0395f774b49c03ed3b\",\n      \"address\": \"192.168.1.55\",\n      \"considerProxy\": false,\n      \"source\": \"strin\",\n      \"createdAt\": \"2022-01-01T00:00:00.123456+00:00\",\n      \"lastUpdatedAt\": \"2022-01-01T00:00:00.123456+00:00\"\n    },\n    {\n      \"id\": \"5832ba020b764c0395f774b49c03ed3b\",\n      \"address\": \"192.168.1.55\",\n      \"considerProxy\": false,\n      \"source\": \"string\",\n      \"createdAt\": \"2022-01-01T00:00:00.123456+00:00\",\n      \"lastUpdatedAt\": \"2022-01-01T00:00:00.123456+00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3c92836-7d3d-4c97-a4cb-2369a39e071d",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies",
+                    ":proxyID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proxyID",
+                      "description": "ID of the Proxy you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"192.168.1.55\",\n  \"considerProxy\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ff043d7-1241-4a9d-a066-f339a4c37144",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies",
+                    ":proxyID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proxyID",
+                      "description": "ID of the Proxy you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"192.168.1.55\",\n  \"considerProxy\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c0e3b8f-94cf-4fc4-a6db-b6e6fce4dd15",
+              "name": "Proxy not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies",
+                    ":proxyID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proxyID",
+                      "description": "ID of the Proxy you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"192.168.1.55\",\n  \"considerProxy\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Matching id not present in db.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "061437f4-af68-4631-ba84-14f6d78b0a6c",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "proxies",
+                    ":proxyID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proxyID",
+                      "description": "ID of the Proxy you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"192.168.1.55\",\n  \"considerProxy\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Error loading JSON data from POST request\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The FQDN or IP to join the Vectra Detect instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "detect-api.demo.vectra.io",
+      "key": "fqdn"
+    },
+    {
+      "description": {
+        "content": "The API version to use",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v2.3",
+      "key": "apiVersion"
+    },
+    {
+      "type": "string",
+      "value": "https://{{fqdn}}/api/{{apiVersion}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "61e342de-9bed-4dc3-9d5c-ce3a536cbec2",
+    "name": "Vectra Detect Accounts Proxies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Vectra Detect on-prem instance API\n\nContact Support:\n Name: Vectra TME\n Email: tme@vectra.ai",
+      "type": "text/plain"
+    }
+  }
+}

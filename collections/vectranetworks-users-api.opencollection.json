@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Users API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Vectra Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/users",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user name"
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "Filter by role"
+              },
+              {
+                "name": "account_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user type"
+              },
+              {
+                "name": "authentication_profile",
+                "value": "",
+                "type": "query",
+                "description": "Filter by authentication profile"
+              },
+              {
+                "name": "last_login_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters for User's that have logged in since the given timestamp"
+              }
+            ]
+          },
+          "docs": "Search Vectra Users"
+        },
+        {
+          "info": {
+            "name": "Describe a single Vectra User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/users/:userID",
+            "params": [
+              {
+                "name": "userID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Vectra User you're working on"
+              }
+            ]
+          },
+          "docs": "Describe a single Vectra User"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

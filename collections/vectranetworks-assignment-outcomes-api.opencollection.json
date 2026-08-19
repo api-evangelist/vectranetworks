@@ -1,0 +1,113 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Assignment Outcomes API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Assignment Outcomes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all assignment outcomes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/assignment_outcomes"
+          },
+          "docs": "Get all assignment outcomes"
+        },
+        {
+          "info": {
+            "name": "Create a new Assignment outcome",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/assignment_outcomes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Assignment outcome"
+        },
+        {
+          "info": {
+            "name": "Describe assignment outcome",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/assignment_outcomes/:assignmentOutcomeID",
+            "params": [
+              {
+                "name": "assignmentOutcomeID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Assignment Outcome you're working on"
+              }
+            ]
+          },
+          "docs": "Describe assignment outcome"
+        },
+        {
+          "info": {
+            "name": "Modify an assignment outcome. Title can always be modified. Category can only be modified if assignment outcome has not been used as an outcome for assignment.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{fqdn}/api/{apiVersion}/assignment_outcomes/:assignmentOutcomeID",
+            "params": [
+              {
+                "name": "assignmentOutcomeID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Assignment Outcome you're working on"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify an assignment outcome. Title can always be modified. Category can only be modified if assignment outcome has not been used as an outcome for assignment.\n"
+        },
+        {
+          "info": {
+            "name": "Delete an assignment outcome",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{fqdn}/api/{apiVersion}/assignment_outcomes/:assignmentOutcomeID",
+            "params": [
+              {
+                "name": "assignmentOutcomeID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Assignment Outcome you're working on"
+              }
+            ]
+          },
+          "docs": "Delete an assignment outcome"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

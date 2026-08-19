@@ -1,0 +1,168 @@
+{
+  "item": [
+    {
+      "id": "371a9f6b-84b4-4499-83d8-b400241de84d",
+      "name": "Health",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dec4f4c7-9e47-4155-9349-c55b7ee41abf",
+          "name": "Retrieve health data of the appliance",
+          "request": {
+            "name": "Retrieve health data of the appliance",
+            "description": {},
+            "url": {
+              "path": [
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb09f5bc-3e66-480b-97f4-8a5996a8dbde",
+              "name": "Health data of the appliance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"components\": [\n    {\n      \"name\": \"string\",\n      \"status\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"status\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The FQDN or IP to join the Vectra Detect instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "detect-api.demo.vectra.io",
+      "key": "fqdn"
+    },
+    {
+      "description": {
+        "content": "The API version to use",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v2.3",
+      "key": "apiVersion"
+    },
+    {
+      "type": "string",
+      "value": "https://{{fqdn}}/api/{{apiVersion}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "46f6ae59-5c91-4526-aac2-4baa5be11b59",
+    "name": "Vectra Detect Accounts Health API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Vectra Detect on-prem instance API\n\nContact Support:\n Name: Vectra TME\n Email: tme@vectra.ai",
+      "type": "text/plain"
+    }
+  }
+}

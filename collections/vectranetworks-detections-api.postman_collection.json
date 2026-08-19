@@ -1,0 +1,4463 @@
+{
+  "item": [
+    {
+      "id": "dc1e8039-2f00-45c4-9843-a2e8fd4a52b1",
+      "name": "Detections",
+      "description": {
+        "content": "Dedicated endpoint to Detections.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fac3eaa0-0d1a-44ee-9eee-d708c01f6844",
+          "name": "Get all detections",
+          "request": {
+            "name": "Get all detections",
+            "description": {},
+            "url": {
+              "path": [
+                "detections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page result to look at"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The number of results to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "ordering",
+                  "value": "<string>",
+                  "description": "Orders results based on given attribute. Results can be sorted in descending order by prepending the query with “minus” symbol."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Filters by state"
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "Filters by tags. Returns entries that contain any of the tags specified"
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "Filters by tags. Returns entries that contain any of the tags specified"
+                },
+                {
+                  "disabled": false,
+                  "key": "certainty",
+                  "value": "<number>",
+                  "description": "Filters by certainty score"
+                },
+                {
+                  "disabled": false,
+                  "key": "certainty_gte",
+                  "value": "<number>",
+                  "description": "Filters by certainty score greater than or equals the provided score"
+                },
+                {
+                  "disabled": false,
+                  "key": "c_score",
+                  "value": "<number>",
+                  "description": "Filters by certainty score"
+                },
+                {
+                  "disabled": false,
+                  "key": "c_score_gte",
+                  "value": "<number>",
+                  "description": "Filters by certainty score greater than or equals the provided score"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_id",
+                  "value": "<integer>",
+                  "description": "Filters by ID lower than or equals the provided ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "min_id",
+                  "value": "<integer>",
+                  "description": "Filters by ID greater than or equals the provided ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "note_modified_timestamp_gte",
+                  "value": "<dateTime>",
+                  "description": "Filters on detection'notes modified timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "threat",
+                  "value": "<number>",
+                  "description": "Filters by threat score"
+                },
+                {
+                  "disabled": false,
+                  "key": "threat_gte",
+                  "value": "<number>",
+                  "description": "Filters by threat score greater than or equals the provided score"
+                },
+                {
+                  "disabled": false,
+                  "key": "t_score",
+                  "value": "<number>",
+                  "description": "Filters by threat score"
+                },
+                {
+                  "disabled": false,
+                  "key": "t_score_gte",
+                  "value": "<number>",
+                  "description": "Filters by threat score greater than or equals the provided score"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Filters returned attributes"
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "Filters by detection category"
+                },
+                {
+                  "disabled": false,
+                  "key": "detection_category",
+                  "value": "<string>",
+                  "description": "Filters by detection category"
+                },
+                {
+                  "disabled": false,
+                  "key": "detection_type",
+                  "value": "<string>",
+                  "description": "Filters by the name of the detected threat"
+                },
+                {
+                  "disabled": false,
+                  "key": "src_ip",
+                  "value": "<string>",
+                  "description": "Filters by source (IP address)"
+                },
+                {
+                  "disabled": false,
+                  "key": "last_timestamp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "last_timestamp_gte",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "host_id",
+                  "value": "<integer>",
+                  "description": "Filters by the ID of the host object the detection is attributed to"
+                },
+                {
+                  "disabled": false,
+                  "key": "destination",
+                  "value": "<string>",
+                  "description": "Filters by the destination in the detection details set"
+                },
+                {
+                  "disabled": false,
+                  "key": "proto",
+                  "value": "<string>",
+                  "description": "Filters by the protocol in the detection details set"
+                },
+                {
+                  "disabled": false,
+                  "key": "is_targeting_key_asset",
+                  "value": "<boolean>",
+                  "description": "Filters on detections targeting key assets"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a941e133-b3dd-420f-88bb-83d94f07385f",
+              "name": "Retrieved detections successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "ordering",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "active"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "certainty",
+                      "value": "80"
+                    },
+                    {
+                      "key": "certainty_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "c_score",
+                      "value": "80"
+                    },
+                    {
+                      "key": "c_score_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "max_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "min_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "note_modified_timestamp_gte",
+                      "value": "2022-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "threat",
+                      "value": "80"
+                    },
+                    {
+                      "key": "threat_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "t_score",
+                      "value": "80"
+                    },
+                    {
+                      "key": "t_score_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "command"
+                    },
+                    {
+                      "key": "detection_category",
+                      "value": "command"
+                    },
+                    {
+                      "key": "detection_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "src_ip",
+                      "value": "192.168.1.55"
+                    },
+                    {
+                      "key": "last_timestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_timestamp_gte",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "host_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proto",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_targeting_key_asset",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 2789,\n  \"next\": \"https://dummy.link\",\n  \"previous\": \"https://dummy.link\",\n  \"results\": [\n    {\n      \"id\": \"<integer>\",\n      \"url\": \"https://dummy.link\",\n      \"detection_url\": \"https://dummy.link\",\n      \"category\": \"INFO\",\n      \"detection_category\": \"INFO\",\n      \"detection\": \"Hidden HTTP Tunnel\",\n      \"detection_type\": \"Hidden HTTP Tunnel\",\n      \"custom_detection\": \"<string>\",\n      \"description\": \"string\",\n      \"src_ip\": \"192.168.1.55\",\n      \"state\": \"active\",\n      \"t_score\": 80,\n      \"threat\": 80,\n      \"c_score\": 80,\n      \"certainty\": 80,\n      \"created_timestamp\": \"2022-01-01T00:00:00Z\",\n      \"first_timestamp\": \"2022-01-01T00:00:00Z\",\n      \"last_timestamp\": \"2022-01-01T00:00:00Z\",\n      \"targets_key_asset\": true,\n      \"is_targeting_key_asset\": true,\n      \"src_account\": {},\n      \"src_host\": {\n        \"id\": \"<integer>\",\n        \"ip\": \"192.168.1.55\",\n        \"name\": \"<string>\",\n        \"url\": \"https://dummy.link\",\n        \"is_key_asset\": false,\n        \"threat\": 80,\n        \"certainty\": 80\n      },\n      \"note\": \"string\",\n      \"note_modified_by\": \"<string>\",\n      \"note_modified_timestamp\": \"2022-01-01T00:00:00Z\",\n      \"notes\": [\n        {\n          \"id\": \"<integer>\",\n          \"date_created\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date_modified\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_by\": \"<string>\",\n          \"modified_by\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"note\": \"string\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"date_created\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date_modified\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_by\": \"<string>\",\n          \"modified_by\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"note\": \"string\"\n        }\n      ],\n      \"sensor\": 80,\n      \"sensor_name\": 80,\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"triage_rule_id\": 3566,\n      \"assigned_to\": \"<string>\",\n      \"assigned_date\": \"2022-01-01T00:00:00Z\",\n      \"is_marked_custom\": false,\n      \"is_custom_model\": true,\n      \"filtered_by_ai\": true,\n      \"filtered_by_user\": false,\n      \"filtered_by_rule\": true,\n      \"summary\": {\n        \"num_attempts\": 6517\n      }\n    },\n    {\n      \"id\": \"<integer>\",\n      \"url\": \"https://dummy.link\",\n      \"detection_url\": \"https://dummy.link\",\n      \"category\": \"INFO\",\n      \"detection_category\": \"INFO\",\n      \"detection\": \"Hidden HTTP Tunnel\",\n      \"detection_type\": \"Hidden HTTP Tunnel\",\n      \"custom_detection\": \"<string>\",\n      \"description\": \"string\",\n      \"src_ip\": \"192.168.1.55\",\n      \"state\": \"active\",\n      \"t_score\": 80,\n      \"threat\": 80,\n      \"c_score\": 80,\n      \"certainty\": 80,\n      \"created_timestamp\": \"2022-01-01T00:00:00Z\",\n      \"first_timestamp\": \"2022-01-01T00:00:00Z\",\n      \"last_timestamp\": \"2022-01-01T00:00:00Z\",\n      \"targets_key_asset\": true,\n      \"is_targeting_key_asset\": true,\n      \"src_account\": {},\n      \"src_host\": {\n        \"id\": \"<integer>\",\n        \"ip\": \"192.168.1.55\",\n        \"name\": \"<string>\",\n        \"url\": \"https://dummy.link\",\n        \"is_key_asset\": true,\n        \"threat\": 80,\n        \"certainty\": 80\n      },\n      \"note\": \"string\",\n      \"note_modified_by\": \"<string>\",\n      \"note_modified_timestamp\": \"2022-01-01T00:00:00Z\",\n      \"notes\": [\n        {\n          \"id\": \"<integer>\",\n          \"date_created\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date_modified\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_by\": \"<string>\",\n          \"modified_by\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"note\": \"string\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"date_created\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"date_modified\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_by\": \"<string>\",\n          \"modified_by\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"note\": \"string\"\n        }\n      ],\n      \"sensor\": 80,\n      \"sensor_name\": 80,\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"triage_rule_id\": 3926,\n      \"assigned_to\": \"<string>\",\n      \"assigned_date\": \"2022-01-01T00:00:00Z\",\n      \"is_marked_custom\": false,\n      \"is_custom_model\": true,\n      \"filtered_by_ai\": false,\n      \"filtered_by_user\": true,\n      \"filtered_by_rule\": false,\n      \"summary\": {\n        \"num_attempts\": 1359\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff54be52-8c0b-4a4a-93c0-551f6c1fc374",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "ordering",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "active"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "certainty",
+                      "value": "80"
+                    },
+                    {
+                      "key": "certainty_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "c_score",
+                      "value": "80"
+                    },
+                    {
+                      "key": "c_score_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "max_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "min_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "note_modified_timestamp_gte",
+                      "value": "2022-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "threat",
+                      "value": "80"
+                    },
+                    {
+                      "key": "threat_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "t_score",
+                      "value": "80"
+                    },
+                    {
+                      "key": "t_score_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "command"
+                    },
+                    {
+                      "key": "detection_category",
+                      "value": "command"
+                    },
+                    {
+                      "key": "detection_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "src_ip",
+                      "value": "192.168.1.55"
+                    },
+                    {
+                      "key": "last_timestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_timestamp_gte",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "host_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proto",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_targeting_key_asset",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c04dfe85-7d65-49a4-890e-83d1596e7687",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "ordering",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "active"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "certainty",
+                      "value": "80"
+                    },
+                    {
+                      "key": "certainty_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "c_score",
+                      "value": "80"
+                    },
+                    {
+                      "key": "c_score_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "max_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "min_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "note_modified_timestamp_gte",
+                      "value": "2022-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "threat",
+                      "value": "80"
+                    },
+                    {
+                      "key": "threat_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "t_score",
+                      "value": "80"
+                    },
+                    {
+                      "key": "t_score_gte",
+                      "value": "80"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "command"
+                    },
+                    {
+                      "key": "detection_category",
+                      "value": "command"
+                    },
+                    {
+                      "key": "detection_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "src_ip",
+                      "value": "192.168.1.55"
+                    },
+                    {
+                      "key": "last_timestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_timestamp_gte",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "host_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "destination",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proto",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_targeting_key_asset",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "15204be4-d5d8-4394-b74a-486d89661a3e",
+          "name": "Mark/Unmark several Detections as fixed",
+          "request": {
+            "name": "Mark/Unmark several Detections as fixed",
+            "description": {},
+            "url": {
+              "path": [
+                "detections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"detectionIdList\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"mark_as_fixed\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b420af22-50db-4d5e-a2ec-e006313dfd29",
+              "name": "Mark/Unmark as fixed several detections successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"detectionIdList\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"mark_as_fixed\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_meta\": {\n    \"level\": \"Success\",\n    \"message\": \"Successfully marked detections\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4c8efff-6f34-42d0-8fbd-387906b27c85",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"detectionIdList\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"mark_as_fixed\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a9757fc-04f1-41e6-a8e4-8808e46a132e",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"detectionIdList\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"mark_as_fixed\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "09e2293b-782d-4a50-a3ba-6db9a945221a",
+          "name": "Describe a specific detection",
+          "request": {
+            "name": "Describe a specific detection",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":detectionID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Filters returned attributes"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "detectionID",
+                  "description": "ID of the Detection you're looking for"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "49fbc218-4e5d-4364-8bf2-98234da77ab3",
+              "name": "Describe a specific Detection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<integer>\",\n  \"url\": \"https://dummy.link\",\n  \"detection_url\": \"https://dummy.link\",\n  \"category\": \"INFO\",\n  \"detection_category\": \"INFO\",\n  \"detection\": \"Hidden HTTP Tunnel\",\n  \"detection_type\": \"Hidden HTTP Tunnel\",\n  \"custom_detection\": \"<string>\",\n  \"description\": \"string\",\n  \"src_ip\": \"192.168.1.55\",\n  \"state\": \"active\",\n  \"t_score\": 80,\n  \"threat\": 80,\n  \"c_score\": 80,\n  \"certainty\": 80,\n  \"created_timestamp\": \"2022-01-01T00:00:00Z\",\n  \"first_timestamp\": \"2022-01-01T00:00:00Z\",\n  \"last_timestamp\": \"2022-01-01T00:00:00Z\",\n  \"targets_key_asset\": false,\n  \"is_targeting_key_asset\": false,\n  \"src_account\": {},\n  \"src_host\": {\n    \"id\": \"<integer>\",\n    \"ip\": \"192.168.1.55\",\n    \"name\": \"<string>\",\n    \"url\": \"https://dummy.link\",\n    \"is_key_asset\": false,\n    \"threat\": 80,\n    \"certainty\": 80\n  },\n  \"note\": \"string\",\n  \"note_modified_by\": \"<string>\",\n  \"note_modified_timestamp\": \"2022-01-01T00:00:00Z\",\n  \"notes\": [\n    {\n      \"id\": \"<integer>\",\n      \"date_created\": \"2022-01-01T00:00:00Z\",\n      \"date_modified\": \"2022-01-01T00:00:00Z\",\n      \"created_by\": \"<string>\",\n      \"modified_by\": \"<string>\",\n      \"note\": \"string\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"date_created\": \"2022-01-01T00:00:00Z\",\n      \"date_modified\": \"2022-01-01T00:00:00Z\",\n      \"created_by\": \"<string>\",\n      \"modified_by\": \"<string>\",\n      \"note\": \"string\"\n    }\n  ],\n  \"sensor\": 80,\n  \"sensor_name\": 80,\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"triage_rule_id\": 7284,\n  \"assigned_to\": \"<string>\",\n  \"assigned_date\": \"2022-01-01T00:00:00Z\",\n  \"is_marked_custom\": true,\n  \"is_custom_model\": false,\n  \"filtered_by_ai\": true,\n  \"filtered_by_user\": true,\n  \"filtered_by_rule\": true,\n  \"summary\": {\n    \"num_attempts\": 3901\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "778137bd-3c57-4266-ac5c-1848842fbde9",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33731002-0c21-43c6-8227-ff2e4d483c71",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f92c369e-e838-40e9-9de4-5b949fb11bb9",
+              "name": "Object not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Not Found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19613283-9194-4eda-ac81-502ed73e3071",
+          "name": "Get all Detection notes",
+          "request": {
+            "name": "Get all Detection notes",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":detectionID",
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "detectionID",
+                  "description": "ID of the Detection notes you're looking for"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e321cb41-5440-4413-992d-590abad3fd42",
+              "name": "Retrieved Detection notes successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection notes you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"<integer>\",\n    \"date_created\": \"2022-01-01T00:00:00Z\",\n    \"date_modified\": \"2022-01-01T00:00:00Z\",\n    \"created_by\": \"<string>\",\n    \"modified_by\": \"<string>\",\n    \"note\": \"string\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"date_created\": \"2022-01-01T00:00:00Z\",\n    \"date_modified\": \"2022-01-01T00:00:00Z\",\n    \"created_by\": \"<string>\",\n    \"modified_by\": \"<string>\",\n    \"note\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63facd0d-fa8e-425e-b39a-52a962b05a30",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection notes you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da7d56a5-5533-4f05-95a0-93ddd8837822",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection notes you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81865036-429d-4e7f-88f5-d529c7baec8f",
+          "name": "Create a new Detection note",
+          "request": {
+            "name": "Create a new Detection note",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":detectionID",
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "detectionID",
+                  "description": "ID of the Detection notes you're looking for"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"note\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c4868ccb-38b2-448e-88ca-24bd30d91e9e",
+              "name": "Detection note created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection notes you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<integer>\",\n  \"date_created\": \"2022-01-01T00:00:00Z\",\n  \"date_modified\": \"2022-01-01T00:00:00Z\",\n  \"created_by\": \"<string>\",\n  \"modified_by\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c555d293-f439-4c6b-9ac2-0a6df0f0c3ca",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection notes you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b3dd71f-4413-4425-84dd-49047947e85c",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection notes you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b743a7f-b5ca-4e86-bc77-75bd249c1554",
+          "name": "Get a single Detection note",
+          "request": {
+            "name": "Get a single Detection note",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":detectionID",
+                "notes",
+                ":noteID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "detectionID",
+                  "description": "ID of the Detection you're looking for"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "noteID",
+                  "description": "ID of the Note you're looking for"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "59089127-a887-43fd-95d2-274c0b6c274a",
+              "name": "Retrieved Detection note successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes",
+                    ":noteID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "noteID",
+                      "description": "ID of the Note you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<integer>\",\n  \"date_created\": \"2022-01-01T00:00:00Z\",\n  \"date_modified\": \"2022-01-01T00:00:00Z\",\n  \"created_by\": \"<string>\",\n  \"modified_by\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc9bba8f-562d-4fe1-bd1f-fa5e124c822e",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes",
+                    ":noteID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "noteID",
+                      "description": "ID of the Note you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c16cfe83-c12e-4422-8e55-9a4b0e38d3d5",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes",
+                    ":noteID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "noteID",
+                      "description": "ID of the Note you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "44ffc782-567f-411d-bb64-831d6b791ca1",
+          "name": "Update an existing Detection note",
+          "request": {
+            "name": "Update an existing Detection note",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":detectionID",
+                "notes",
+                ":noteID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "detectionID",
+                  "description": "ID of the Detection you're looking for"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "noteID",
+                  "description": "ID of the Note you're looking for"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"note\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "533ee044-6788-4861-980e-7a1842d7d3ae",
+              "name": "Detection note updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes",
+                    ":noteID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "noteID",
+                      "description": "ID of the Note you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<integer>\",\n  \"date_created\": \"2022-01-01T00:00:00Z\",\n  \"date_modified\": \"2022-01-01T00:00:00Z\",\n  \"created_by\": \"<string>\",\n  \"modified_by\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9715e78-d238-4e16-8500-26c3154f4367",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes",
+                    ":noteID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "noteID",
+                      "description": "ID of the Note you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62775bfe-02e5-42be-9f69-fd9d1e080047",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes",
+                    ":noteID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "noteID",
+                      "description": "ID of the Note you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "56eecf72-5b59-4039-a123-c46bef8e64b4",
+          "name": "Delete an existing Detection note",
+          "request": {
+            "name": "Delete an existing Detection note",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":detectionID",
+                "notes",
+                ":noteID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "detectionID",
+                  "description": "ID of the Detection you're looking for"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "noteID",
+                  "description": "ID of the Note you're looking for"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4356f706-1e4b-43c9-a558-b56e0582045f",
+              "name": "Detection note deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes",
+                    ":noteID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "noteID",
+                      "description": "ID of the Note you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "304cc0aa-d69a-4b4d-b503-c44fb3bf50e6",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes",
+                    ":noteID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "noteID",
+                      "description": "ID of the Note you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea9dacf4-5019-43da-a88b-49468557369b",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "notes",
+                    ":noteID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "noteID",
+                      "description": "ID of the Note you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "397e6bdd-3025-4fe7-9977-3a7ac849fd0c",
+          "name": "Download a Detection PCAP",
+          "request": {
+            "name": "Download a Detection PCAP",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":detectionID",
+                "pcap"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "detectionID",
+                  "description": "ID of the Detection you're looking for"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "35867706-f6e1-42cd-9a8e-13c57346d69e",
+              "name": "Detection PCAP retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "pcap"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "05463812-d76e-47ab-9220-8e5204bd157f",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "pcap"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73e2c264-3438-45b0-81a2-9839259bdf66",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detectionID",
+                    "pcap"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2afcc21c-9d65-4c21-898d-6a29f05be4da",
+          "name": "Search for Detections",
+          "request": {
+            "name": "Search for Detections",
+            "description": {},
+            "url": {
+              "path": [
+                "search",
+                "detections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "The page result to look at"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The number of results to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "query_string",
+                  "value": "<string>",
+                  "description": "The Lucene search query"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ffe8848-8d5d-4e02-a641-619bfc0d75b5",
+              "name": "Retrieved Hosts successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "detections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "query_string",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7412123d-0624-4f36-ab5e-6417233f209a",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "detections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "query_string",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1e6f02f-17c7-48fe-8161-527411f5c6ad",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "detections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "query_string",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3996fef2-c754-4bfb-bf82-4895e5071175",
+          "name": "Get all Detection's tags",
+          "request": {
+            "name": "Get all Detection's tags",
+            "description": {},
+            "url": {
+              "path": [
+                "tagging",
+                "detection",
+                ":detectionID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "detectionID",
+                  "description": "ID of the Detection you're looking for"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "489af393-02c5-48c7-addc-af9c2b9abde3",
+              "name": "Retrieved tags successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tagging",
+                    "detection",
+                    ":detectionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"tag_id\": \"<integer>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18e4cf32-dd2f-4773-891b-6a7c0103ffe9",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tagging",
+                    "detection",
+                    ":detectionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ee1b3c6-1702-4ebb-9905-8ab51a0d0c71",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tagging",
+                    "detection",
+                    ":detectionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3a0784b1-244c-4301-b967-82dd36ad345d",
+          "name": "Replace all Detection's tags",
+          "request": {
+            "name": "Replace all Detection's tags",
+            "description": {},
+            "url": {
+              "path": [
+                "tagging",
+                "detection",
+                ":detectionID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "detectionID",
+                  "description": "ID of the Detection you're looking for"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tags\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "af8faf35-a76a-42f5-9168-571227929aef",
+              "name": "Replaced tags successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tagging",
+                    "detection",
+                    ":detectionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"tag_id\": \"<integer>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be90564b-2386-48c4-9c2e-f9d994a93e26",
+              "name": "Invalid User Token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tagging",
+                    "detection",
+                    ":detectionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"Invalid token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce6bed5c-ee44-40a7-a1a0-8d10842fca4a",
+              "name": "Invalid User Permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tagging",
+                    "detection",
+                    ":detectionID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detectionID",
+                      "description": "ID of the Detection you're looking for"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"details\": \"You do not have permission to perform this action.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c124555d-610f-4aa8-9006-1f8c1e06a8f4",
+          "name": "Retrieve a single detection event",
+          "request": {
+            "name": "Retrieve a single detection event",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":detection_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "detection_id",
+                  "description": "(Required) Unique ID for the detection"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "42f4fd98-de1c-4980-af12-6b4120fa51d8",
+              "name": "Detection event details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detection_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detection_id",
+                      "description": "(Required) Unique ID for the detection"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 245,\n  \"detection\": \"string\",\n  \"category\": \"string\",\n  \"src_ip\": \"string\",\n  \"state\": \"string\",\n  \"threat\": 4951,\n  \"certainty\": 8151,\n  \"first_timestamp\": \"1952-08-19T16:32:57.015Z\",\n  \"last_timestamp\": \"1955-06-30T17:36:36.910Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f622fcc-edeb-47fb-9ebc-8dda4b1949c3",
+          "name": "Mark detection as fixed",
+          "request": {
+            "name": "Mark detection as fixed",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":detection_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "detection_id",
+                  "description": "(Required) Unique ID for the detection"
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"detectionIdList\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"mark_as_fixed\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a424d6f7-ca2b-40ca-9032-dd7d09c40013",
+              "name": "Detection marked as fixed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":detection_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "detection_id",
+                      "description": "(Required) Unique ID for the detection"
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"detectionIdList\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"mark_as_fixed\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69cbb265-5960-44b1-91b9-b130a2345ec6",
+          "name": "Download PCAP data for detection",
+          "request": {
+            "name": "Download PCAP data for detection",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":id",
+                "pcap"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.tcpdump.pcap"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f1951b44-74a8-4303-9339-8bb92c694522",
+              "name": "PCAP file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":id",
+                    "pcap"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.tcpdump.pcap"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.tcpdump.pcap"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a66f74ff-6b95-4deb-aa33-dcec80c4a1d1",
+          "name": "Get detection notes",
+          "request": {
+            "name": "Get detection notes",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":id",
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1ffc0cd1-3781-4d4c-8ab7-d660c7b8196a",
+              "name": "List of notes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":id",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 165,\n    \"created_by\": \"string\",\n    \"modified_by\": \"string\",\n    \"note\": \"string\",\n    \"date_created\": \"2003-12-15T04:04:13.907Z\",\n    \"date_modified\": \"1957-01-30T00:03:13.888Z\"\n  },\n  {\n    \"id\": 4523,\n    \"created_by\": \"string\",\n    \"modified_by\": \"string\",\n    \"note\": \"string\",\n    \"date_created\": \"2013-09-21T13:33:00.423Z\",\n    \"date_modified\": \"1957-01-03T15:01:18.285Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd0bab22-8bf3-4110-bee7-cb8cb2bf96f3",
+          "name": "Add note to detection",
+          "request": {
+            "name": "Add note to detection",
+            "description": {},
+            "url": {
+              "path": [
+                "detections",
+                ":id",
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"note\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1ce9101e-1ade-4ac4-a2f0-8dfaefa0f2ad",
+              "name": "Created note",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "detections",
+                    ":id",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 3510,\n  \"created_by\": \"string\",\n  \"modified_by\": \"string\",\n  \"note\": \"string\",\n  \"date_created\": \"2021-01-29T09:02:55.064Z\",\n  \"date_modified\": \"1948-06-18T15:46:56.901Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The FQDN or IP to join the Vectra Detect instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "detect-api.demo.vectra.io",
+      "key": "fqdn"
+    },
+    {
+      "description": {
+        "content": "The API version to use",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v2.3",
+      "key": "apiVersion"
+    },
+    {
+      "type": "string",
+      "value": "https://{{fqdn}}/api/{{apiVersion}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3d0e61cd-b174-43d6-949f-09cfcd5c2273",
+    "name": "Vectra Detect Accounts Detections API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Vectra Detect on-prem instance API\n\nContact Support:\n Name: Vectra TME\n Email: tme@vectra.ai",
+      "type": "text/plain"
+    }
+  }
+}

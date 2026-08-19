@@ -1,0 +1,278 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Entities API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/entities",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the type of entities to retrieve (e.g., \"account\" or \"host\")"
+              },
+              {
+                "name": "is_prioritized",
+                "value": "",
+                "type": "query",
+                "description": "Filter entities by priority (only entities above the configured priority threshold)"
+              },
+              {
+                "name": "ordering",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the order of results, e.g., by urgency_score, last timestamp, or last_modified_timestamp"
+              },
+              {
+                "name": "last_detection_timestamp_gte",
+                "value": "",
+                "type": "query",
+                "description": "Only entities with a last detection timestamp greater than or equal to this time (inclusive, ISO-8601 format)"
+              },
+              {
+                "name": "last_detection_timestamp_lte",
+                "value": "",
+                "type": "query",
+                "description": "Only entities with a last detection timestamp less than or equal to this time (inclusive, ISO-8601 format)"
+              },
+              {
+                "name": "last_modified_timestamp_gte",
+                "value": "",
+                "type": "query",
+                "description": "Only entities with a last modified timestamp greater than or equal to this time (inclusive, ISO-8601 format)"
+              },
+              {
+                "name": "last_modified_timestamp_lte",
+                "value": "",
+                "type": "query",
+                "description": "Only entities with a last modified timestamp less than or equal to this time (inclusive, ISO-8601 format)"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by entity name"
+              },
+              {
+                "name": "note_modified_timestamp_gte",
+                "value": "",
+                "type": "query",
+                "description": "Only entities with notes modified on or after this time (ISO-8601 format)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of entities per page, with a maximum of 5000"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter by entity activation state (either \"active\" or \"inactive\")"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Filter entities by tags (comma-separated list of tags, returns entities with any specified tags)"
+              }
+            ]
+          },
+          "docs": "Retrieve all entities"
+        },
+        {
+          "info": {
+            "name": "Get entity by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/entities/:entity_id",
+            "params": [
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get entity by ID"
+        },
+        {
+          "info": {
+            "name": "Get entity notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/entities/:entity_id/notes",
+            "params": [
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get entity notes"
+        },
+        {
+          "info": {
+            "name": "Add note to entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/entities/:entity_id/notes",
+            "params": [
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add note to entity"
+        },
+        {
+          "info": {
+            "name": "Get specific entity note",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/entities/:entity_id/notes/:note_id",
+            "params": [
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "note_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get specific entity note"
+        },
+        {
+          "info": {
+            "name": "Update entity note",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/entities/:entity_id/notes/:note_id",
+            "params": [
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "note_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update entity note"
+        },
+        {
+          "info": {
+            "name": "Delete entity note",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{fqdn}/api/{apiVersion}/entities/:entity_id/notes/:note_id",
+            "params": [
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "note_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete entity note"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

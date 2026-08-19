@@ -1,0 +1,541 @@
+{
+  "item": [
+    {
+      "id": "65bb5e56-add5-4075-ae0b-3706e2f83819",
+      "name": "Events",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d53c32ba-13e5-4957-a864-feb189b0f1be",
+          "name": "Retrieve entity scoring events",
+          "request": {
+            "name": "Retrieve entity scoring events",
+            "description": {},
+            "url": {
+              "path": [
+                "events",
+                "entity_scoring"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "(Required) Specifies the type of entity scoring events (e.g., \"account\" or \"host\")"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<integer>",
+                  "description": "Starting checkpoint for filtering scoring events"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of events to return, with a default of 500 if unspecified"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_timestamp_gte",
+                  "value": "<dateTime>",
+                  "description": "Start date/time for scoring events (inclusive, ISO-8601 format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_timestamp_lte",
+                  "value": "<dateTime>",
+                  "description": "End date/time for scoring events (inclusive, ISO-8601 format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_score_decreases",
+                  "value": "<boolean>",
+                  "description": "Whether to include events that reflect score decreases"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "68ffb9d4-c92d-4957-a58a-52d1bb07fe0c",
+              "name": "A list of entity scoring events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "entity_scoring"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "event_timestamp_gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "event_timestamp_lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_score_decreases",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"entity_id\": 5715,\n    \"entity_type\": \"string\",\n    \"urgency_score\": 3571,\n    \"event_timestamp\": \"1979-10-09T09:14:01.502Z\",\n    \"name\": \"string\",\n    \"last_detection_id\": 7975,\n    \"severity\": \"Low\"\n  },\n  {\n    \"entity_id\": 1296,\n    \"entity_type\": \"string\",\n    \"urgency_score\": 2069,\n    \"event_timestamp\": \"1990-07-17T10:39:10.209Z\",\n    \"name\": \"string\",\n    \"last_detection_id\": 6365,\n    \"severity\": \"Low\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bdcc338c-68c9-46c3-88c6-3d9ca027f90b",
+          "name": "Retrieve detection events",
+          "request": {
+            "name": "Retrieve detection events",
+            "description": {},
+            "url": {
+              "path": [
+                "events",
+                "detections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<integer>",
+                  "description": "Starting checkpoint for filtering detection events"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of detection events to return, default is 500"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_timestamp_gte",
+                  "value": "<dateTime>",
+                  "description": "Start date/time for detection events (inclusive, ISO-8601 format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_timestamp_lte",
+                  "value": "<dateTime>",
+                  "description": "End date/time for detection events (inclusive, ISO-8601 format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "entity_type",
+                  "value": "<string>",
+                  "description": "Type of the related entity (\"account\" or \"host\")"
+                },
+                {
+                  "disabled": false,
+                  "key": "detection_id",
+                  "value": "<integer>",
+                  "description": "Filter by a specific Detection ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "ordering",
+                  "value": "<string>",
+                  "description": "Ordering options, with default ascending by \"event_timestamp\""
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fcbafef7-f236-4462-b2a1-75163dbef97d",
+              "name": "List of detection events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "detections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "event_timestamp_gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "event_timestamp_lte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "entity_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "detection_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "ordering",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next_checkpoint\": 7183,\n  \"remaining_count\": 3385\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "23a29eef-2ef3-4f5a-99ab-8fcbb02c2f99",
+          "name": "Retrieve audit log events",
+          "request": {
+            "name": "Retrieve audit log events",
+            "description": {},
+            "url": {
+              "path": [
+                "events",
+                "audits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<integer>",
+                  "description": "Starting checkpoint for filtering"
+                },
+                {
+                  "disabled": false,
+                  "key": "event_timestamp_gte",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of events to return"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The FQDN or IP to join the Vectra Detect instance",
+                  "type": "any",
+                  "value": "{{fqdn}}",
+                  "key": "fqdn"
+                },
+                {
+                  "description": "The API version to use",
+                  "type": "any",
+                  "value": "{{apiVersion}}",
+                  "key": "apiVersion"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5e9089a-31de-4988-93ec-5d4fc6ad5baf",
+              "name": "Audit log events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "audits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "event_timestamp_gte",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The FQDN or IP to join the Vectra Detect instance",
+                      "type": "any",
+                      "value": "{{fqdn}}",
+                      "key": "fqdn"
+                    },
+                    {
+                      "description": "The API version to use",
+                      "type": "any",
+                      "value": "{{apiVersion}}",
+                      "key": "apiVersion"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1212,\n    \"user_id\": 4961,\n    \"username\": \"string\",\n    \"event_timestamp\": \"1998-04-25T21:16:06.022Z\",\n    \"message\": \"string\",\n    \"result_status\": \"string\",\n    \"event_action\": \"string\"\n  },\n  {\n    \"id\": 8946,\n    \"user_id\": 7933,\n    \"username\": \"string\",\n    \"event_timestamp\": \"2007-04-13T01:48:52.755Z\",\n    \"message\": \"string\",\n    \"result_status\": \"string\",\n    \"event_action\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The FQDN or IP to join the Vectra Detect instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "detect-api.demo.vectra.io",
+      "key": "fqdn"
+    },
+    {
+      "description": {
+        "content": "The API version to use",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "v2.3",
+      "key": "apiVersion"
+    },
+    {
+      "type": "string",
+      "value": "https://{{fqdn}}/api/{{apiVersion}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8a4cf04c-3b4d-4162-bd96-53f36529c56f",
+    "name": "Vectra Detect Accounts Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Vectra Detect on-prem instance API\n\nContact Support:\n Name: Vectra TME\n Email: tme@vectra.ai",
+      "type": "text/plain"
+    }
+  }
+}

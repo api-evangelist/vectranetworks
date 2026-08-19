@@ -1,0 +1,389 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Notes API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Notes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all account notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:accountID/notes",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account notes you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all account notes"
+        },
+        {
+          "info": {
+            "name": "Create a new Account note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:accountID/notes",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account notes you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Account note"
+        },
+        {
+          "info": {
+            "name": "Get a single Account note",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:accountID/notes/:noteID",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Get a single Account note"
+        },
+        {
+          "info": {
+            "name": "Update an existing Account note",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:accountID/notes/:noteID",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Account note"
+        },
+        {
+          "info": {
+            "name": "Delete an existing Account note",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:accountID/notes/:noteID",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Delete an existing Account note"
+        },
+        {
+          "info": {
+            "name": "Get all Detection notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID/notes",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection notes you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all Detection notes"
+        },
+        {
+          "info": {
+            "name": "Create a new Detection note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID/notes",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection notes you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Detection note"
+        },
+        {
+          "info": {
+            "name": "Get a single Detection note",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID/notes/:noteID",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Get a single Detection note"
+        },
+        {
+          "info": {
+            "name": "Update an existing Detection note",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID/notes/:noteID",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Detection note"
+        },
+        {
+          "info": {
+            "name": "Delete an existing Detection note",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID/notes/:noteID",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Delete an existing Detection note"
+        },
+        {
+          "info": {
+            "name": "Get all Host notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:hostID/notes",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host notes you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all Host notes"
+        },
+        {
+          "info": {
+            "name": "Create a new Host note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:hostID/notes",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host notes you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Host note"
+        },
+        {
+          "info": {
+            "name": "Get a single Host note",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:hostID/notes/:noteID",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Get a single Host note"
+        },
+        {
+          "info": {
+            "name": "Update an existing Host note",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:hostID/notes/:noteID",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Host note"
+        },
+        {
+          "info": {
+            "name": "Delete an existing Host note",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:hostID/notes/:noteID",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Delete an existing Host note"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

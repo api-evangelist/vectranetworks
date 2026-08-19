@@ -1,0 +1,194 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Tagging API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tagging",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all Account's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/account/:accountID",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all Account's tags"
+        },
+        {
+          "info": {
+            "name": "Replace all Account's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/account/:accountID",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace all Account's tags"
+        },
+        {
+          "info": {
+            "name": "Get all Detection's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/detection/:detectionID",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all Detection's tags"
+        },
+        {
+          "info": {
+            "name": "Replace all Detection's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/detection/:detectionID",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace all Detection's tags"
+        },
+        {
+          "info": {
+            "name": "Get all Host's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/host/:hostID",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all Host's tags"
+        },
+        {
+          "info": {
+            "name": "Replace all Host's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/host/:hostID",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace all Host's tags"
+        },
+        {
+          "info": {
+            "name": "Retrieve tags for a specific detection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/detection/:detection_id",
+            "params": [
+              {
+                "name": "detection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID for the detection"
+              }
+            ]
+          },
+          "docs": "Retrieve tags for a specific detection"
+        },
+        {
+          "info": {
+            "name": "Add tags to a detection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/detection/:detection_id",
+            "params": [
+              {
+                "name": "detection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID for the detection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add tags to a detection"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,160 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Events API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve entity scoring events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/events/entity_scoring",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the type of entity scoring events (e.g., \"account\" or \"host\")"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Starting checkpoint for filtering scoring events"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return, with a default of 500 if unspecified"
+              },
+              {
+                "name": "event_timestamp_gte",
+                "value": "",
+                "type": "query",
+                "description": "Start date/time for scoring events (inclusive, ISO-8601 format)"
+              },
+              {
+                "name": "event_timestamp_lte",
+                "value": "",
+                "type": "query",
+                "description": "End date/time for scoring events (inclusive, ISO-8601 format)"
+              },
+              {
+                "name": "include_score_decreases",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include events that reflect score decreases"
+              }
+            ]
+          },
+          "docs": "Retrieve entity scoring events"
+        },
+        {
+          "info": {
+            "name": "Retrieve detection events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/events/detections",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Starting checkpoint for filtering detection events"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of detection events to return, default is 500"
+              },
+              {
+                "name": "event_timestamp_gte",
+                "value": "",
+                "type": "query",
+                "description": "Start date/time for detection events (inclusive, ISO-8601 format)"
+              },
+              {
+                "name": "event_timestamp_lte",
+                "value": "",
+                "type": "query",
+                "description": "End date/time for detection events (inclusive, ISO-8601 format)"
+              },
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of the related entity (\"account\" or \"host\")"
+              },
+              {
+                "name": "detection_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by a specific Detection ID"
+              },
+              {
+                "name": "ordering",
+                "value": "",
+                "type": "query",
+                "description": "Ordering options, with default ascending by \"event_timestamp\""
+              }
+            ]
+          },
+          "docs": "Retrieve detection events"
+        },
+        {
+          "info": {
+            "name": "Retrieve audit log events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/events/audits",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Starting checkpoint for filtering"
+              },
+              {
+                "name": "event_timestamp_gte",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return"
+              }
+            ]
+          },
+          "docs": "Retrieve audit log events"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

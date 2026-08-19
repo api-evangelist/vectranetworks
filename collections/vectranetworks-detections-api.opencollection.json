@@ -1,0 +1,552 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Detections API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Detections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all detections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/detections",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The page result to look at"
+              },
+              {
+                "name": "page_size",
+                "value": "50",
+                "type": "query",
+                "description": "The number of results to return per page"
+              },
+              {
+                "name": "ordering",
+                "value": "",
+                "type": "query",
+                "description": "Orders results based on given attribute. Results can be sorted in descending order by prepending the query with “minus” symbol."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filters by state"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Filters by tags. Returns entries that contain any of the tags specified"
+              },
+              {
+                "name": "certainty",
+                "value": "",
+                "type": "query",
+                "description": "Filters by certainty score"
+              },
+              {
+                "name": "certainty_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters by certainty score greater than or equals the provided score"
+              },
+              {
+                "name": "c_score",
+                "value": "",
+                "type": "query",
+                "description": "Filters by certainty score"
+              },
+              {
+                "name": "c_score_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters by certainty score greater than or equals the provided score"
+              },
+              {
+                "name": "max_id",
+                "value": "",
+                "type": "query",
+                "description": "Filters by ID lower than or equals the provided ID"
+              },
+              {
+                "name": "min_id",
+                "value": "",
+                "type": "query",
+                "description": "Filters by ID greater than or equals the provided ID"
+              },
+              {
+                "name": "note_modified_timestamp_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters on detection'notes modified timestamp"
+              },
+              {
+                "name": "threat",
+                "value": "",
+                "type": "query",
+                "description": "Filters by threat score"
+              },
+              {
+                "name": "threat_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters by threat score greater than or equals the provided score"
+              },
+              {
+                "name": "t_score",
+                "value": "",
+                "type": "query",
+                "description": "Filters by threat score"
+              },
+              {
+                "name": "t_score_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters by threat score greater than or equals the provided score"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Filters returned attributes"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Filters by detection category"
+              },
+              {
+                "name": "detection_category",
+                "value": "",
+                "type": "query",
+                "description": "Filters by detection category"
+              },
+              {
+                "name": "detection_type",
+                "value": "",
+                "type": "query",
+                "description": "Filters by the name of the detected threat"
+              },
+              {
+                "name": "src_ip",
+                "value": "",
+                "type": "query",
+                "description": "Filters by source (IP address)"
+              },
+              {
+                "name": "last_timestamp",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "last_timestamp_gte",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "host_id",
+                "value": "",
+                "type": "query",
+                "description": "Filters by the ID of the host object the detection is attributed to"
+              },
+              {
+                "name": "destination",
+                "value": "",
+                "type": "query",
+                "description": "Filters by the destination in the detection details set"
+              },
+              {
+                "name": "proto",
+                "value": "",
+                "type": "query",
+                "description": "Filters by the protocol in the detection details set"
+              },
+              {
+                "name": "is_targeting_key_asset",
+                "value": "",
+                "type": "query",
+                "description": "Filters on detections targeting key assets"
+              }
+            ]
+          },
+          "docs": "Get all detections"
+        },
+        {
+          "info": {
+            "name": "Mark/Unmark several Detections as fixed",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/detections",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mark/Unmark several Detections as fixed"
+        },
+        {
+          "info": {
+            "name": "Describe a specific detection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Filters returned attributes"
+              }
+            ]
+          },
+          "docs": "Describe a specific detection"
+        },
+        {
+          "info": {
+            "name": "Get all Detection notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID/notes",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection notes you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all Detection notes"
+        },
+        {
+          "info": {
+            "name": "Create a new Detection note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID/notes",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection notes you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Detection note"
+        },
+        {
+          "info": {
+            "name": "Get a single Detection note",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID/notes/:noteID",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Get a single Detection note"
+        },
+        {
+          "info": {
+            "name": "Update an existing Detection note",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID/notes/:noteID",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Detection note"
+        },
+        {
+          "info": {
+            "name": "Delete an existing Detection note",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID/notes/:noteID",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Delete an existing Detection note"
+        },
+        {
+          "info": {
+            "name": "Download a Detection PCAP",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detectionID/pcap",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              }
+            ]
+          },
+          "docs": "Download a Detection PCAP"
+        },
+        {
+          "info": {
+            "name": "Search for Detections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/search/detections",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The page result to look at"
+              },
+              {
+                "name": "page_size",
+                "value": "50",
+                "type": "query",
+                "description": "The number of results to return per page"
+              },
+              {
+                "name": "query_string",
+                "value": "",
+                "type": "query",
+                "description": "The Lucene search query"
+              }
+            ]
+          },
+          "docs": "Search for Detections"
+        },
+        {
+          "info": {
+            "name": "Get all Detection's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/detection/:detectionID",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all Detection's tags"
+        },
+        {
+          "info": {
+            "name": "Replace all Detection's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/detection/:detectionID",
+            "params": [
+              {
+                "name": "detectionID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Detection you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace all Detection's tags"
+        },
+        {
+          "info": {
+            "name": "Retrieve a single detection event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detection_id",
+            "params": [
+              {
+                "name": "detection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID for the detection"
+              }
+            ]
+          },
+          "docs": "Retrieve a single detection event"
+        },
+        {
+          "info": {
+            "name": "Mark detection as fixed",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:detection_id",
+            "params": [
+              {
+                "name": "detection_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID for the detection"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mark detection as fixed"
+        },
+        {
+          "info": {
+            "name": "Download PCAP data for detection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:id/pcap",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download PCAP data for detection"
+        },
+        {
+          "info": {
+            "name": "Get detection notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:id/notes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get detection notes"
+        },
+        {
+          "info": {
+            "name": "Add note to detection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/detections/:id/notes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add note to detection"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

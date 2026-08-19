@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Proxies API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Proxies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all Proxies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/proxies"
+          },
+          "docs": "Get all Proxies"
+        },
+        {
+          "info": {
+            "name": "Create a proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/proxies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a proxy"
+        },
+        {
+          "info": {
+            "name": "Describe a specific Proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/proxies/:proxyID",
+            "params": [
+              {
+                "name": "proxyID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Proxy you're looking for"
+              }
+            ]
+          },
+          "docs": "Describe a specific Proxy"
+        },
+        {
+          "info": {
+            "name": "Update a proxy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/proxies/:proxyID",
+            "params": [
+              {
+                "name": "proxyID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Proxy you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a proxy"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

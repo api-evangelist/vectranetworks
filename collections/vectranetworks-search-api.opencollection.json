@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Search API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search for Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/search/accounts",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The page result to look at"
+              },
+              {
+                "name": "page_size",
+                "value": "50",
+                "type": "query",
+                "description": "The number of results to return per page"
+              },
+              {
+                "name": "query_string",
+                "value": "",
+                "type": "query",
+                "description": "The Lucene search query"
+              }
+            ]
+          },
+          "docs": "Search for Accounts"
+        },
+        {
+          "info": {
+            "name": "Search for Detections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/search/detections",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The page result to look at"
+              },
+              {
+                "name": "page_size",
+                "value": "50",
+                "type": "query",
+                "description": "The number of results to return per page"
+              },
+              {
+                "name": "query_string",
+                "value": "",
+                "type": "query",
+                "description": "The Lucene search query"
+              }
+            ]
+          },
+          "docs": "Search for Detections"
+        },
+        {
+          "info": {
+            "name": "Search for Hosts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/search/hosts",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The page result to look at"
+              },
+              {
+                "name": "page_size",
+                "value": "50",
+                "type": "query",
+                "description": "The number of results to return per page"
+              },
+              {
+                "name": "query_string",
+                "value": "",
+                "type": "query",
+                "description": "The Lucene search query"
+              }
+            ]
+          },
+          "docs": "Search for Hosts"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

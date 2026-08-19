@@ -1,0 +1,425 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get several Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The page result to look at"
+              },
+              {
+                "name": "page_size",
+                "value": "50",
+                "type": "query",
+                "description": "The number of results to return per page"
+              },
+              {
+                "name": "ordering",
+                "value": "",
+                "type": "query",
+                "description": "Orders results based on given attribute. Results can be sorted in descending order by prepending the query with “minus” symbol."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filters by state"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Filters by tags. Returns entries that contain any of the tags specified"
+              },
+              {
+                "name": "c_score",
+                "value": "",
+                "type": "query",
+                "description": "Filters by certainty score"
+              },
+              {
+                "name": "c_score_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters by certainty score greater than or equals the provided score"
+              },
+              {
+                "name": "max_id",
+                "value": "",
+                "type": "query",
+                "description": "Filters by ID lower than or equals the provided ID"
+              },
+              {
+                "name": "min_id",
+                "value": "",
+                "type": "query",
+                "description": "Filters by ID greater than or equals the provided ID"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filters by name"
+              },
+              {
+                "name": "note_modified_timestamp_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters on detection'notes modified timestamp"
+              },
+              {
+                "name": "privilege_category",
+                "value": "",
+                "type": "query",
+                "description": "Filters by privilege category"
+              },
+              {
+                "name": "privilege_level",
+                "value": "",
+                "type": "query",
+                "description": "Filters by exact privilege level"
+              },
+              {
+                "name": "privilege_level_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters Account having a privilege level greater than or equal to the supplied number"
+              },
+              {
+                "name": "t_score",
+                "value": "",
+                "type": "query",
+                "description": "Filters by threat score"
+              },
+              {
+                "name": "t_score_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters by threat score greater than or equals the provided score"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Filters returned attributes"
+              },
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "No filter, returns all objects"
+              }
+            ]
+          },
+          "docs": "Get several Accounts"
+        },
+        {
+          "info": {
+            "name": "Describe a specific Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:accountID",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account you're looking for"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Filters returned attributes"
+              }
+            ]
+          },
+          "docs": "Describe a specific Account"
+        },
+        {
+          "info": {
+            "name": "Get all account notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:accountID/notes",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account notes you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all account notes"
+        },
+        {
+          "info": {
+            "name": "Create a new Account note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:accountID/notes",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account notes you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Account note"
+        },
+        {
+          "info": {
+            "name": "Get a single Account note",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:accountID/notes/:noteID",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Get a single Account note"
+        },
+        {
+          "info": {
+            "name": "Update an existing Account note",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:accountID/notes/:noteID",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Account note"
+        },
+        {
+          "info": {
+            "name": "Delete an existing Account note",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:accountID/notes/:noteID",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Delete an existing Account note"
+        },
+        {
+          "info": {
+            "name": "Search for Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/search/accounts",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The page result to look at"
+              },
+              {
+                "name": "page_size",
+                "value": "50",
+                "type": "query",
+                "description": "The number of results to return per page"
+              },
+              {
+                "name": "query_string",
+                "value": "",
+                "type": "query",
+                "description": "The Lucene search query"
+              }
+            ]
+          },
+          "docs": "Search for Accounts"
+        },
+        {
+          "info": {
+            "name": "Get all Account's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/account/:accountID",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all Account's tags"
+        },
+        {
+          "info": {
+            "name": "Replace all Account's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/account/:accountID",
+            "params": [
+              {
+                "name": "accountID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Account you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace all Account's tags"
+        },
+        {
+          "info": {
+            "name": "Retrieve single account details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID for the account"
+              }
+            ]
+          },
+          "docs": "Retrieve single account details"
+        },
+        {
+          "info": {
+            "name": "Add note to account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add note to account"
+        },
+        {
+          "info": {
+            "name": "Get account notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/accounts/:id/notes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get account notes"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

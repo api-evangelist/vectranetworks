@@ -2,14 +2,11 @@ generated: '2026-07-21'
 method: derived
 source: openapi/vectranetworks-rux-v3.3-openapi.yml
 status: candidate
-description: >-
-  No official hosted or remote MCP server was found for Vectra AI — the
-  vectranetworks GitHub organization (57 public repos) ships SIEM/SOAR
-  integrations (Microsoft Sentinel, Splunk SOAR, Google SecOps, Palo Alto
-  XSOAR) but no MCP server, and no Vectra entry exists in the public MCP
-  registries checked. This is a DERIVED candidate tool list drawn from the
-  Vectra Platform API (RUX) v3.3 OpenAPI operations, grouped around the SOC
-  workflows the API serves.
+description: No official hosted or remote MCP server was found for Vectra AI — the vectranetworks GitHub
+  organization (57 public repos) ships SIEM/SOAR integrations (Microsoft Sentinel, Splunk SOAR, Google
+  SecOps, Palo Alto XSOAR) but no MCP server, and no Vectra entry exists in the public MCP registries
+  checked. This is a DERIVED candidate tool list drawn from the Vectra Platform API (RUX) v3.3 OpenAPI
+  operations, grouped around the SOC workflows the API serves.
 server:
   name: vectranetworks
   transport: candidate
@@ -19,7 +16,8 @@ tools:
   operationId: getEntities
   method: GET
   path: /entities
-  description: List prioritized accounts and hosts (entities) with urgency scores, filterable by type, priority, and last-detection timestamps.
+  description: List prioritized accounts and hosts (entities) with urgency scores, filterable by type,
+    priority, and last-detection timestamps.
 - name: get_entity
   method: GET
   path: /entities/{entity_id}
@@ -94,3 +92,9 @@ tools:
   method: POST
   path: /tagging/detection/{detection_id}
   description: Add triage tags to a detection.
+deployment:
+  mode: none
+  verified: derived
+  tools: 16
+  checked: '2026-08-12'
+  source: catalog MCP census

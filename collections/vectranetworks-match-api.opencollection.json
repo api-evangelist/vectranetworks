@@ -1,0 +1,154 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Match API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Match",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Vectra Match enablement status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/vectra-match/enablement"
+          },
+          "docs": "Retrieve Vectra Match enablement status"
+        },
+        {
+          "info": {
+            "name": "Enable/disable Vectra Match",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/vectra-match/enablement",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enable/disable Vectra Match"
+        },
+        {
+          "info": {
+            "name": "Retrieve Vectra Match statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/vectra-match/stats"
+          },
+          "docs": "Retrieve Vectra Match statistics"
+        },
+        {
+          "info": {
+            "name": "Retrieve Vectra Match alert statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/vectra-match/alert-stats"
+          },
+          "docs": "Retrieve Vectra Match alert statistics"
+        },
+        {
+          "info": {
+            "name": "Retrieve Vectra Match status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/vectra-match/status"
+          },
+          "docs": "Retrieve Vectra Match status"
+        },
+        {
+          "info": {
+            "name": "Retrieve available devices for Vectra Match",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/vectra-match/available-devices"
+          },
+          "docs": "Retrieve available devices for Vectra Match"
+        },
+        {
+          "info": {
+            "name": "Retrieve Vectra Match rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/vectra-match/rules"
+          },
+          "docs": "Retrieve Vectra Match rules"
+        },
+        {
+          "info": {
+            "name": "Create or upload Vectra Match rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/vectra-match/rules",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create or upload Vectra Match rules"
+        },
+        {
+          "info": {
+            "name": "Retrieve Vectra Match assignment details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/vectra-match/assignment"
+          },
+          "docs": "Retrieve Vectra Match assignment details"
+        },
+        {
+          "info": {
+            "name": "Assign devices to Vectra Match",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/vectra-match/assignment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assign devices to Vectra Match"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

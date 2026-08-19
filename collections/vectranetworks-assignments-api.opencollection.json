@@ -1,0 +1,215 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Assignments API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Assignments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all assignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/assignments",
+            "params": [
+              {
+                "name": "accounts",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Accounts (list of Account IDs)"
+              },
+              {
+                "name": "assignees",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Assignees (list of User IDs)"
+              },
+              {
+                "name": "created_after",
+                "value": "",
+                "type": "query",
+                "description": "Filter by creation timestamp (ISO Timestamp)"
+              },
+              {
+                "name": "hosts",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Hosts (list of Host IDs)"
+              },
+              {
+                "name": "resolution",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Outcomes (list of Assignment outcome IDs)"
+              },
+              {
+                "name": "resolved",
+                "value": "",
+                "type": "query",
+                "description": "Filter by resolution status (true or false)"
+              }
+            ]
+          },
+          "docs": "Get all assignments"
+        },
+        {
+          "info": {
+            "name": "Used to assign an entity to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/assignments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Used to assign an entity to a user"
+        },
+        {
+          "info": {
+            "name": "Describe a specific assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/assignment/:assignmentID",
+            "params": [
+              {
+                "name": "assignmentID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Assignment you're working on"
+              }
+            ]
+          },
+          "docs": "Describe a specific assignment"
+        },
+        {
+          "info": {
+            "name": "Reassign an assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{fqdn}/api/{apiVersion}/assignment/:assignmentID",
+            "params": [
+              {
+                "name": "assignmentID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Assignment you're working on"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reassign an assignment"
+        },
+        {
+          "info": {
+            "name": "Delete an assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{fqdn}/api/{apiVersion}/assignment/:assignmentID",
+            "params": [
+              {
+                "name": "assignmentID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Assignment you're working on"
+              }
+            ]
+          },
+          "docs": "Delete an assignment"
+        },
+        {
+          "info": {
+            "name": "Resolve an assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{fqdn}/api/{apiVersion}/assignment/:assignmentID/resolve",
+            "params": [
+              {
+                "name": "assignmentID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Assignment you're working on"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resolve an assignment"
+        },
+        {
+          "info": {
+            "name": "Retrieve specific assignment details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/assignments/:assignment_id",
+            "params": [
+              {
+                "name": "assignment_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID for the assignment"
+              }
+            ]
+          },
+          "docs": "Retrieve specific assignment details"
+        },
+        {
+          "info": {
+            "name": "Resolve an assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/assignments/:assignment_id",
+            "params": [
+              {
+                "name": "assignment_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resolve an assignment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

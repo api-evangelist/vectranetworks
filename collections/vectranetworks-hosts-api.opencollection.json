@@ -1,0 +1,421 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectra Detect Accounts Hosts API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Hosts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get several Hosts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The page result to look at"
+              },
+              {
+                "name": "page_size",
+                "value": "50",
+                "type": "query",
+                "description": "The number of results to return per page"
+              },
+              {
+                "name": "ordering",
+                "value": "",
+                "type": "query",
+                "description": "Orders results based on given attribute. Results can be sorted in descending order by prepending the query with “minus” symbol."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filters by state"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Filters by tags. Returns entries that contain any of the tags specified"
+              },
+              {
+                "name": "c_score",
+                "value": "",
+                "type": "query",
+                "description": "Filters by certainty score"
+              },
+              {
+                "name": "c_score_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters by certainty score greater than or equals the provided score"
+              },
+              {
+                "name": "max_id",
+                "value": "",
+                "type": "query",
+                "description": "Filters by ID lower than or equals the provided ID"
+              },
+              {
+                "name": "min_id",
+                "value": "",
+                "type": "query",
+                "description": "Filters by ID greater than or equals the provided ID"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filters by name"
+              },
+              {
+                "name": "note_modified_timestamp_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters on detection'notes modified timestamp"
+              },
+              {
+                "name": "privilege_category",
+                "value": "",
+                "type": "query",
+                "description": "Filters by privilege category"
+              },
+              {
+                "name": "privilege_level",
+                "value": "",
+                "type": "query",
+                "description": "Filters by exact privilege level"
+              },
+              {
+                "name": "privilege_level_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters Account having a privilege level greater than or equal to the supplied number"
+              },
+              {
+                "name": "t_score",
+                "value": "",
+                "type": "query",
+                "description": "Filters by threat score"
+              },
+              {
+                "name": "t_score_gte",
+                "value": "",
+                "type": "query",
+                "description": "Filters by threat score greater than or equals the provided score"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Filters returned attributes"
+              },
+              {
+                "name": "last_source",
+                "value": "",
+                "type": "query",
+                "description": "Filters by last source (IP address)"
+              },
+              {
+                "name": "last_detection_timestamp",
+                "value": "",
+                "type": "query",
+                "description": "Filters by the last seen detection timestamp (should be exactly the same)"
+              },
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "No filter, returns all host objects"
+              },
+              {
+                "name": "key_asset",
+                "value": "",
+                "type": "query",
+                "description": "Filters key asset"
+              },
+              {
+                "name": "target_key_asset",
+                "value": "",
+                "type": "query",
+                "description": "Filters Hosts targeting key assets"
+              },
+              {
+                "name": "active_traffic",
+                "value": "",
+                "type": "query",
+                "description": "Filters Hosts that have generated active traffic within the last 2 hours"
+              },
+              {
+                "name": "mac_address",
+                "value": "",
+                "type": "query",
+                "description": "Fitlers Hosts having the given MAC Address"
+              }
+            ]
+          },
+          "docs": "Get several Hosts"
+        },
+        {
+          "info": {
+            "name": "Describe a specific Host",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:hostID",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host you're looking for"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Filters returned attributes"
+              }
+            ]
+          },
+          "docs": "Describe a specific Host"
+        },
+        {
+          "info": {
+            "name": "Get all Host notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:hostID/notes",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host notes you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all Host notes"
+        },
+        {
+          "info": {
+            "name": "Create a new Host note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:hostID/notes",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host notes you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Host note"
+        },
+        {
+          "info": {
+            "name": "Get a single Host note",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:hostID/notes/:noteID",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Get a single Host note"
+        },
+        {
+          "info": {
+            "name": "Update an existing Host note",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:hostID/notes/:noteID",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Host note"
+        },
+        {
+          "info": {
+            "name": "Delete an existing Host note",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:hostID/notes/:noteID",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host you're looking for"
+              },
+              {
+                "name": "noteID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Note you're looking for"
+              }
+            ]
+          },
+          "docs": "Delete an existing Host note"
+        },
+        {
+          "info": {
+            "name": "Search for Hosts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/search/hosts",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "The page result to look at"
+              },
+              {
+                "name": "page_size",
+                "value": "50",
+                "type": "query",
+                "description": "The number of results to return per page"
+              },
+              {
+                "name": "query_string",
+                "value": "",
+                "type": "query",
+                "description": "The Lucene search query"
+              }
+            ]
+          },
+          "docs": "Search for Hosts"
+        },
+        {
+          "info": {
+            "name": "Get all Host's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/host/:hostID",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host you're looking for"
+              }
+            ]
+          },
+          "docs": "Get all Host's tags"
+        },
+        {
+          "info": {
+            "name": "Replace all Host's tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{fqdn}/api/{apiVersion}/tagging/host/:hostID",
+            "params": [
+              {
+                "name": "hostID",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Host you're looking for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace all Host's tags"
+        },
+        {
+          "info": {
+            "name": "Retrieve single host details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{fqdn}/api/{apiVersion}/hosts/:host_id",
+            "params": [
+              {
+                "name": "host_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID for the host"
+              }
+            ]
+          },
+          "docs": "Retrieve single host details"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
