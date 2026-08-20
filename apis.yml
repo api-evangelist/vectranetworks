@@ -45,6 +45,8 @@ apis:
   humanURL: https://vectranetworks.github.io/openapi-rux/
   baseURL: https://platform.vectra.ai/api/v3.3
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -115,6 +117,8 @@ apis:
   humanURL: https://vectranetworks.github.io/openapi-rux/
   baseURL: https://platform.vectra.ai/api/v3.3
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -129,6 +133,8 @@ apis:
   humanURL: https://vectranetworks.github.io/openapi-rux/
   baseURL: https://platform.vectra.ai/api/v3.3
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -272,6 +278,8 @@ apis:
   humanURL: https://vectranetworks.github.io/openapi-rux/
   baseURL: https://platform.vectra.ai/api/v3.3
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
