@@ -1,7 +1,7 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
   version: 1.0.0
-  title: Vectra Detect Accounts Notes API
+  title: Vectra Detect Notes API
   contact:
     name: Vectra TME
     email: tme@vectra.ai
@@ -354,6 +354,11 @@ paths:
           $ref: '#/components/responses/invalidPermissions'
 components:
   schemas:
+    name:
+      type: string
+      minLength: 1
+    text:
+      type: string
     isoDate:
       description: ISO representation of a date
       type: string
@@ -367,25 +372,25 @@ components:
         date_created:
           oneOf:
           - $ref: '#/components/schemas/isoDate'
-          - type: string
-            nullable: true
+          - type:
+            - string
+            - 'null'
         date_modified:
           oneOf:
           - $ref: '#/components/schemas/isoDate'
-          - type: string
-            nullable: true
+          - type:
+            - string
+            - 'null'
         created_by:
           $ref: '#/components/schemas/name'
         modified_by:
           oneOf:
           - $ref: '#/components/schemas/name'
-          - type: string
-            nullable: true
+          - type:
+            - string
+            - 'null'
         note:
           $ref: '#/components/schemas/text'
-    name:
-      type: string
-      minLength: 1
     error:
       type: object
       properties:
@@ -407,8 +412,6 @@ components:
       type: integer
       format: int32
       minimum: 1
-    text:
-      type: string
   responses:
     invalidToken:
       description: Invalid User Token

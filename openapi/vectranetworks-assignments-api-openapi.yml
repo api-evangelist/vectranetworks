@@ -1,14 +1,8 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: Vectra Detect Accounts Assignments API
-  contact:
-    name: Vectra TME
-    email: tme@vectra.ai
-  description: Vectra Detect on-prem instance API
-  license:
-    name: TME Custom °-.-°
-    url: https://vectra.ai
+  title: Vectranetworks Assignments API
+  version: '1.0'
+  description: 'Operations tagged Assignments across 2 of this provider''s published API definitions: vectranetworks-detect-v2.3-openapi.yml, vectranetworks-rux-v3.3-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{fqdn}/api/{apiVersion}
   description: Vectra Detect API
@@ -19,8 +13,11 @@ servers:
     apiVersion:
       description: The API version to use
       default: v2.3
-security:
-- VectraToken: []
+- url: https://{vectra_portal_url}/api/v3.3
+  description: Vectra Platform API Server
+  variables:
+    vectra_portal_url:
+      default: platform.vectra.ai
 tags:
 - name: Assignments
   description: Dedicated endpoint to Assignments.
@@ -82,6 +79,8 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
     post:
       operationId: assignmentAssign
       summary: Used to assign an entity to a user
@@ -137,6 +136,18 @@ paths:
                 $ref: '#/components/schemas/error'
               example:
                 detail: Entity already has an open assignment.
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /assignment/{assignmentID}:
     parameters:
     - name: assignmentID
@@ -168,6 +179,8 @@ paths:
           $ref: '#/components/responses/invalidPermissions'
         '404':
           $ref: '#/components/responses/notFound'
+      security:
+      - VectraToken: []
     put:
       operationId: assignmentUpdate
       summary: Reassign an assignment
@@ -196,6 +209,8 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
     delete:
       operationId: assignmentDelete
       summary: Delete an assignment
@@ -208,6 +223,18 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /assignment/{assignmentID}/resolve:
     parameters:
     - name: assignmentID
@@ -260,6 +287,18 @@ paths:
                 $ref: '#/components/schemas/error'
               example:
                 detail: Assignment has already been resolved.
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /assignments/{assignment_id}:
     get:
       summary: Retrieve specific assignment details
@@ -280,6 +319,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Assignment'
+      security:
+      - oauth2: []
     patch:
       summary: Resolve an assignment
       operationId: resolveAssignment
@@ -306,8 +347,291 @@ paths:
       responses:
         '204':
           description: Assignment resolved successfully
+      security:
+      - oauth2: []
+    servers:
+    - url: https://{vectra_portal_url}/api/v3.3
+      description: Vectra Platform API Server
+      variables:
+        vectra_portal_url:
+          default: platform.vectra.ai
 components:
+  schemas:
+    text:
+      type: string
+    assignmentOutcomeCategory:
+      title: Assignment Outcome allowed categories
+      type: string
+      enum:
+      - benign_true_positive
+      - malicious_true_positive
+      - false_positive
+    assignmentHostRequestBody:
+      type: object
+      properties:
+        assign_host_id:
+          $ref: '#/components/schemas/ID'
+        assign_to_user_id:
+          $ref: '#/components/schemas/ID'
+      required:
+      - assign_host_id
+      - assign_to_user_id
+    assignmentOutcome:
+      description: Label resolution outcome for an assignment
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        builtin:
+          type: boolean
+        user_selectable:
+          type: boolean
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/assignmentOutcomeCategory'
+      required:
+      - id
+      - builtin
+      - user_selectable
+      - title
+      - category
+    assignmentResolveRequestBody:
+      type: object
+      properties:
+        outcome:
+          $ref: '#/components/schemas/ID'
+        note:
+          $ref: '#/components/schemas/text'
+        triage_as:
+          $ref: '#/components/schemas/name'
+        mark_as_fixed:
+          type: boolean
+        detection_ids:
+          $ref: '#/components/schemas/arrayOfIDs'
+      required:
+      - outcome
+    assignmentHistorycalEvent:
+      description: Assignment history event
+      type: object
+      properties:
+        assignment_id:
+          $ref: '#/components/schemas/ID'
+        actor:
+          $ref: '#/components/schemas/ID'
+        event_type:
+          $ref: '#/components/schemas/assignmentEventType'
+        datetime:
+          $ref: '#/components/schemas/isoDate'
+        context:
+          type: object
+          properties:
+            from:
+              $ref: '#/components/schemas/ID'
+            to:
+              $ref: '#/components/schemas/ID'
+            entity_c_score:
+              $ref: '#/components/schemas/vectraScore'
+            entity_t_score:
+              $ref: '#/components/schemas/vectraScore'
+            triage_as:
+              type:
+              - string
+              - 'null'
+            triaged_detection_ids:
+              oneOf:
+              - $ref: '#/components/schemas/arrayOfIDs'
+              - type:
+                - string
+                - 'null'
+            fixed_detection_ids:
+              oneOf:
+              - $ref: '#/components/schemas/arrayOfIDs'
+              - type:
+                - string
+                - 'null'
+            created_rule_ids:
+              oneOf:
+              - $ref: '#/components/schemas/arrayOfIDs'
+              - type:
+                - string
+                - 'null'
+    vectraScore:
+      type: number
+      minimum: 0
+      maximum: 99
+      example: 80
+    assignmentAccountRequestBody:
+      type: object
+      properties:
+        assign_account_id:
+          $ref: '#/components/schemas/ID'
+        assign_to_user_id:
+          $ref: '#/components/schemas/ID'
+      required:
+      - assign_account_id
+      - assign_to_user_id
+    assignment:
+      description: Assignment
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        assigned_by:
+          $ref: '#/components/schemas/assignmentUser'
+        date_assigned:
+          $ref: '#/components/schemas/isoDate'
+        date_resolved:
+          oneOf:
+          - $ref: '#/components/schemas/isoDate'
+          - type:
+            - number
+            - 'null'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/assignmentHistorycalEvent'
+        outcome:
+          oneOf:
+          - $ref: '#/components/schemas/assignmentOutcome'
+          - type:
+            - string
+            - 'null'
+        resolved_by:
+          oneOf:
+          - $ref: '#/components/schemas/assignmentUser'
+          - type:
+            - string
+            - 'null'
+        triaged_detections:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ID'
+        host_id:
+          oneOf:
+          - $ref: '#/components/schemas/ID'
+          - type:
+            - string
+            - 'null'
+        account_id:
+          oneOf:
+          - $ref: '#/components/schemas/ID'
+          - type:
+            - string
+            - 'null'
+        assigned_to:
+          $ref: '#/components/schemas/assignmentUser'
+      required:
+      - id
+      - assigned_by
+      - date_assigned
+      - assigned_to
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    assignmentEventType:
+      description: Type of event that can happen to an assignment
+      type: string
+      enum:
+      - created
+      - reassigned
+      - resolved
+      example: created
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    name:
+      type: string
+      minLength: 1
+    isoDate:
+      description: ISO representation of a date
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
+    link:
+      description: URL Link
+      type:
+      - string
+      - 'null'
+      format: uri
+      example: https://dummy.link
+    arrayOfIDs:
+      description: Array of IDs
+      type: array
+      items:
+        $ref: '#/components/schemas/ID'
+    resultsOfAssignments:
+      allOf:
+      - $ref: '#/components/schemas/results'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/assignment'
+    assignmentUser:
+      description: Assignment user (tiny Vectra User)
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        username:
+          $ref: '#/components/schemas/name'
+      example:
+        id: 123
+        username: SAML:dummy@company.com
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    results:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/positiveInt'
+        next:
+          $ref: '#/components/schemas/link'
+        previous:
+          $ref: '#/components/schemas/link'
+    assignmentUpdateRequestBody:
+      type: object
+      properties:
+        assign_to_user_id:
+          $ref: '#/components/schemas/ID'
+      required:
+      - assign_to_user_id
+    Assignment:
+      type: object
+      properties:
+        id:
+          type: integer
+        assigned_by:
+          type: string
+        assigned_to:
+          type: string
+        date_assigned:
+          type: string
+          format: date-time
+        date_resolved:
+          type: string
+          format: date-time
+        outcome:
+          type: integer
   examples:
+    assignmentFalsePositiveResolveNoTriageRequestBody:
+      value:
+        outcome: 3
+        note: This is a test false positive assignment resolution
     assignmentSimpleResolution:
       value:
         assignment:
@@ -361,49 +685,15 @@ components:
           assigned_to:
             id: 82
             username: SAML:other-user@company.com
-    assignmentCreated:
-      value:
-        assignment:
-          id: 18
-          assigned_by:
-            id: 456
-            username: dummy-user
-          date_assigned: '2022-01-01T12:34:56Z'
-          date_resolved: null
-          events:
-          - assignment_id: 18
-            actor: 123
-            event_type: created
-            datetime: '2022-01-01T12:34:56Z'
-            context:
-              to: 80
-              entity_t_score: 55
-              entity_c_score: 65
-          outcome: null
-          resolved_by: null
-          triaged_detections: null
-          host_id: null
-          account_id: 25
-          assigned_to:
-            id: 80
-            username: SAML:dummy-user@company.com
-    userCannotBeAssigned:
-      value:
-        errors:
-        - title: User 101 does not have permissions to be assigned to hosts.
-    assignmentBenignPositiveResolveWithTriageRequestBody:
+    assignmentTruePositiveResolveWithMarkAsFixedRequestBody:
       value:
         outcome: 1
-        note: This is a benign positive assignment resolution with triage rules
-        triage_as: My triage rule name
+        note: This is a true positive assignment resolution with mark as fixed
+        mark_as_fixed: true
         detection_ids:
         - 1
         - 2
         - 3
-    assignmentFalsePositiveResolveNoTriageRequestBody:
-      value:
-        outcome: 3
-        note: This is a test false positive assignment resolution
     assignmentTriagedResolution:
       value:
         assignment:
@@ -454,15 +744,6 @@ components:
           assigned_to:
             id: 82
             username: SAML:other-user@company.com
-    assignmentTruePositiveResolveWithMarkAsFixedRequestBody:
-      value:
-        outcome: 1
-        note: This is a true positive assignment resolution with mark as fixed
-        mark_as_fixed: true
-        detection_ids:
-        - 1
-        - 2
-        - 3
     assignmentReassigned:
       value:
         assignment:
@@ -498,275 +779,46 @@ components:
           assigned_to:
             id: 82
             username: SAML:other-user@company.com
-  schemas:
-    Assignment:
-      type: object
-      properties:
-        id:
-          type: integer
-        assigned_by:
-          type: string
-        assigned_to:
-          type: string
-        date_assigned:
-          type: string
-          format: date-time
-        date_resolved:
-          type: string
-          format: date-time
-        outcome:
-          type: integer
-    assignmentOutcome:
-      description: Label resolution outcome for an assignment
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ID'
-        builtin:
-          type: boolean
-        user_selectable:
-          type: boolean
-        title:
-          type: string
-        category:
-          $ref: '#/components/schemas/assignmentOutcomeCategory'
-      required:
-      - id
-      - builtin
-      - user_selectable
-      - title
-      - category
-    assignmentHistorycalEvent:
-      description: Assignment history event
-      type: object
-      properties:
-        assignment_id:
-          $ref: '#/components/schemas/ID'
-        actor:
-          $ref: '#/components/schemas/ID'
-        event_type:
-          $ref: '#/components/schemas/assignmentEventType'
-        datetime:
-          $ref: '#/components/schemas/isoDate'
-        context:
-          type: object
-          properties:
-            from:
-              $ref: '#/components/schemas/ID'
-            to:
-              $ref: '#/components/schemas/ID'
-            entity_c_score:
-              $ref: '#/components/schemas/vectraScore'
-            entity_t_score:
-              $ref: '#/components/schemas/vectraScore'
-            triage_as:
-              type: string
-              nullable: true
-            triaged_detection_ids:
-              oneOf:
-              - $ref: '#/components/schemas/arrayOfIDs'
-              - type: string
-                nullable: true
-            fixed_detection_ids:
-              oneOf:
-              - $ref: '#/components/schemas/arrayOfIDs'
-              - type: string
-                nullable: true
-            created_rule_ids:
-              oneOf:
-              - $ref: '#/components/schemas/arrayOfIDs'
-              - type: string
-                nullable: true
-    assignmentUser:
-      description: Assignment user (tiny Vectra User)
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ID'
-        username:
-          $ref: '#/components/schemas/name'
-      example:
-        id: 123
-        username: SAML:dummy@company.com
-    link:
-      description: URL Link
-      type: string
-      nullable: true
-      format: uri
-      example: https://dummy.link
-    positiveInt:
-      type: integer
-      format: int32
-      minimum: 0
-    assignmentUpdateRequestBody:
-      type: object
-      properties:
-        assign_to_user_id:
-          $ref: '#/components/schemas/ID'
-      required:
-      - assign_to_user_id
-    resultsOfAssignments:
-      allOf:
-      - $ref: '#/components/schemas/results'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/assignment'
-    isoDate:
-      description: ISO representation of a date
-      type: string
-      format: date-time
-      example: '2022-01-01T00:00:00Z'
-    name:
-      type: string
-      minLength: 1
-    assignment:
-      description: Assignment
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ID'
-        assigned_by:
-          $ref: '#/components/schemas/assignmentUser'
-        date_assigned:
-          $ref: '#/components/schemas/isoDate'
-        date_resolved:
-          oneOf:
-          - $ref: '#/components/schemas/isoDate'
-          - type: number
-            nullable: true
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/assignmentHistorycalEvent'
-        outcome:
-          oneOf:
-          - $ref: '#/components/schemas/assignmentOutcome'
-          - type: string
-            nullable: true
-        resolved_by:
-          oneOf:
-          - $ref: '#/components/schemas/assignmentUser'
-          - type: string
-            nullable: true
-        triaged_detections:
-          type: array
-          nullable: true
-          items:
-            $ref: '#/components/schemas/ID'
-        host_id:
-          oneOf:
-          - $ref: '#/components/schemas/ID'
-          - type: string
-            nullable: true
-        account_id:
-          oneOf:
-          - $ref: '#/components/schemas/ID'
-          - type: string
-            nullable: true
-        assigned_to:
-          $ref: '#/components/schemas/assignmentUser'
-      required:
-      - id
-      - assigned_by
-      - date_assigned
-      - assigned_to
-    assignmentAccountRequestBody:
-      type: object
-      properties:
-        assign_account_id:
-          $ref: '#/components/schemas/ID'
-        assign_to_user_id:
-          $ref: '#/components/schemas/ID'
-      required:
-      - assign_account_id
-      - assign_to_user_id
-    arrayOfIDs:
-      description: Array of IDs
-      type: array
-      items:
-        $ref: '#/components/schemas/ID'
-    text:
-      type: string
-    assignmentResolveRequestBody:
-      type: object
-      properties:
-        outcome:
-          $ref: '#/components/schemas/ID'
-        note:
-          $ref: '#/components/schemas/text'
-        triage_as:
-          $ref: '#/components/schemas/name'
-        mark_as_fixed:
-          type: boolean
+    userCannotBeAssigned:
+      value:
+        errors:
+        - title: User 101 does not have permissions to be assigned to hosts.
+    assignmentBenignPositiveResolveWithTriageRequestBody:
+      value:
+        outcome: 1
+        note: This is a benign positive assignment resolution with triage rules
+        triage_as: My triage rule name
         detection_ids:
-          $ref: '#/components/schemas/arrayOfIDs'
-      required:
-      - outcome
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
-    vectraScore:
-      type: number
-      minimum: 0
-      maximum: 99
-      example: 80
-    results:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/positiveInt'
-        next:
-          $ref: '#/components/schemas/link'
-        previous:
-          $ref: '#/components/schemas/link'
-    assignmentEventType:
-      description: Type of event that can happen to an assignment
-      type: string
-      enum:
-      - created
-      - reassigned
-      - resolved
-      example: created
-    assignmentHostRequestBody:
-      type: object
-      properties:
-        assign_host_id:
-          $ref: '#/components/schemas/ID'
-        assign_to_user_id:
-          $ref: '#/components/schemas/ID'
-      required:
-      - assign_host_id
-      - assign_to_user_id
-    assignmentOutcomeCategory:
-      title: Assignment Outcome allowed categories
-      type: string
-      enum:
-      - benign_true_positive
-      - malicious_true_positive
-      - false_positive
+        - 1
+        - 2
+        - 3
+    assignmentCreated:
+      value:
+        assignment:
+          id: 18
+          assigned_by:
+            id: 456
+            username: dummy-user
+          date_assigned: '2022-01-01T12:34:56Z'
+          date_resolved: null
+          events:
+          - assignment_id: 18
+            actor: 123
+            event_type: created
+            datetime: '2022-01-01T12:34:56Z'
+            context:
+              to: 80
+              entity_t_score: 55
+              entity_c_score: 65
+          outcome: null
+          resolved_by: null
+          triaged_detections: null
+          host_id: null
+          account_id: 25
+          assigned_to:
+            id: 80
+            username: SAML:dummy-user@company.com
   responses:
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
     invalidPermissions:
       description: Invalid User Permissions
       content:
@@ -775,6 +827,14 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: You do not have permission to perform this action.
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
     notFound:
       description: Object not found
       content:
@@ -788,3 +848,12 @@ components:
       type: apiKey
       name: authorization
       in: header
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{vectra_portal_url}/oauth2/token
+          scopes: {}
+x-refined-from:
+- vectranetworks-detect-v2.3-openapi.yml
+- vectranetworks-rux-v3.3-openapi.yml

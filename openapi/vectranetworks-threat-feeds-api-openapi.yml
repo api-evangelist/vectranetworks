@@ -1,14 +1,8 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: Vectra Detect Accounts Threat Feeds API
-  contact:
-    name: Vectra TME
-    email: tme@vectra.ai
-  description: Vectra Detect on-prem instance API
-  license:
-    name: TME Custom °-.-°
-    url: https://vectra.ai
+  title: Vectranetworks Threat Feeds API
+  version: '1.0'
+  description: 'Operations tagged Threat Feeds across 2 of this provider''s published API definitions: vectranetworks-detect-v2.3-openapi.yml, vectranetworks-rux-v3.3-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{fqdn}/api/{apiVersion}
   description: Vectra Detect API
@@ -19,8 +13,11 @@ servers:
     apiVersion:
       description: The API version to use
       default: v2.3
-security:
-- VectraToken: []
+- url: https://{vectra_portal_url}/api/v3.3
+  description: Vectra Platform API Server
+  variables:
+    vectra_portal_url:
+      default: platform.vectra.ai
 tags:
 - name: Threat Feeds
   description: The threatFeeds endpoint can be used to automate the upload of STIX files for threat intelligence matching. This endpoint can also be used to retrieve the current list of threatFeed objects already configured in the system.
@@ -43,6 +40,8 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
     post:
       summary: Create a new threat feed
       operationId: createThreatFeed
@@ -55,6 +54,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ThreatFeed'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /threatFeeds/{threatFeedID}:
     parameters:
     - name: threatFeedID
@@ -80,6 +91,8 @@ paths:
           $ref: '#/components/responses/invalidPermissions'
         '404':
           $ref: '#/components/responses/notFound'
+      security:
+      - VectraToken: []
     delete:
       operationId: threatFeedDeleteSingle
       summary: Delete a specific Threat Feed
@@ -92,6 +105,18 @@ paths:
           $ref: '#/components/responses/invalidPermissions'
         '404':
           $ref: '#/components/responses/notFound'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /threatFeeds/{id}:
     get:
       summary: Retrieve a specific threat feed
@@ -112,6 +137,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ThreatFeed'
+      security:
+      - oauth2: []
     patch:
       summary: Update a threat feed
       operationId: updateThreatFeed
@@ -131,16 +158,16 @@ paths:
       responses:
         '204':
           description: Threat feed updated successfully
+      security:
+      - oauth2: []
+    servers:
+    - url: https://{vectra_portal_url}/api/v3.3
+      description: Vectra Platform API Server
+      variables:
+        vectra_portal_url:
+          default: platform.vectra.ai
 components:
   responses:
-    notFound:
-      description: Object not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            detail: Not Found.
     invalidToken:
       description: Invalid User Token
       content:
@@ -157,6 +184,14 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: You do not have permission to perform this action.
+    notFound:
+      description: Object not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            detail: Not Found.
   schemas:
     error:
       type: object
@@ -192,3 +227,12 @@ components:
       type: apiKey
       name: authorization
       in: header
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{vectra_portal_url}/oauth2/token
+          scopes: {}
+x-refined-from:
+- vectranetworks-detect-v2.3-openapi.yml
+- vectranetworks-rux-v3.3-openapi.yml

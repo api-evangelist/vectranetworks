@@ -1,14 +1,8 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: Vectra Detect Accounts Hosts API
-  contact:
-    name: Vectra TME
-    email: tme@vectra.ai
-  description: Vectra Detect on-prem instance API
-  license:
-    name: TME Custom °-.-°
-    url: https://vectra.ai
+  title: Vectranetworks Hosts API
+  version: '1.0'
+  description: 'Operations tagged Hosts across 2 of this provider''s published API definitions: vectranetworks-detect-v2.3-openapi.yml, vectranetworks-rux-v3.3-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{fqdn}/api/{apiVersion}
   description: Vectra Detect API
@@ -19,8 +13,11 @@ servers:
     apiVersion:
       description: The API version to use
       default: v2.3
-security:
-- VectraToken: []
+- url: https://{vectra_portal_url}/api/v3.3
+  description: Vectra Platform API Server
+  variables:
+    vectra_portal_url:
+      default: platform.vectra.ai
 tags:
 - name: Hosts
   description: Dedicated endpoint to Hosts.
@@ -104,6 +101,18 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /hosts/{hostID}:
     parameters:
     - name: hostID
@@ -137,6 +146,18 @@ paths:
           $ref: '#/components/responses/invalidPermissions'
         '404':
           $ref: '#/components/responses/notFound'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /hosts/{hostID}/notes:
     parameters:
     - name: hostID
@@ -162,6 +183,8 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
     post:
       operationId: hostNoteCreate
       summary: Create a new Host note
@@ -184,6 +207,18 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /hosts/{hostID}/notes/{noteID}:
     parameters:
     - name: hostID
@@ -212,6 +247,8 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
     patch:
       operationId: hostNoteUpdate
       summary: Update an existing Host note
@@ -234,6 +271,8 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
     delete:
       operationId: hostNoteDelete
       summary: Delete an existing Host note
@@ -246,6 +285,18 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /search/hosts:
     description: Search for hosts objects.
     get:
@@ -272,6 +323,18 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /tagging/host/{hostID}:
     description: The tagging endpoint can be used to manage Host tags
     parameters:
@@ -296,6 +359,8 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
     patch:
       operationId: hostTagsReplace
       summary: Replace all Host's tags
@@ -318,6 +383,18 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /hosts/{host_id}:
     get:
       summary: Retrieve single host details
@@ -338,8 +415,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Host'
+      security:
+      - oauth2: []
+    servers:
+    - url: https://{vectra_portal_url}/api/v3.3
+      description: Vectra Platform API Server
+      variables:
+        vectra_portal_url:
+          default: platform.vectra.ai
 components:
   schemas:
+    resultsOfHosts:
+      allOf:
+      - $ref: '#/components/schemas/results'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/host'
+    text:
+      type: string
+    assignmentOutcomeCategory:
+      title: Assignment Outcome allowed categories
+      type: string
+      enum:
+      - benign_true_positive
+      - malicious_true_positive
+      - false_positive
     assignmentOutcome:
       description: Label resolution outcome for an assignment
       type: object
@@ -360,24 +463,79 @@ components:
       - user_selectable
       - title
       - category
-    Host:
+    noteRequestBody:
       type: object
       properties:
-        id:
-          type: integer
-        name:
-          type: string
-        state:
-          type: string
-        threat:
-          type: integer
-        certainty:
-          type: integer
-        ip:
-          type: string
-        last_detection_timestamp:
-          type: string
-          format: date-time
+        note:
+          $ref: '#/components/schemas/text'
+      required:
+      - note
+    arrayOfNames:
+      description: Array of names
+      type: array
+      items:
+        $ref: '#/components/schemas/name'
+    severity:
+      description: Severity
+      type: string
+      enum:
+      - low
+      - Low
+      - medium
+      - Medium
+      - high
+      - High
+      - critical
+      - Critical
+      example: medium
+    queryHostFields:
+      type: array
+      items:
+        type: string
+        enum:
+        - id
+        - name
+        - active_traffic
+        - has_active_traffic
+        - t_score
+        - threat
+        - c_score
+        - certainty
+        - severity
+        - last_source
+        - ip
+        - previous_ips
+        - last_detection_timestamp
+        - key_asset
+        - is_key_asset
+        - state
+        - targets_key_asset
+        - is_targeting_key_asset
+        - detection_set
+        - host_artifact_set
+        - sensor
+        - sensor_name
+        - tags
+        - note
+        - notes
+        - note_modified_by
+        - note_modified_timestamp
+        - url
+        - host_url
+        - last_modified
+        - assigned_to
+        - assigned_date
+        - groups
+        - has_custom_model
+        - privilege_level
+        - privilege_category
+        - probable_owner
+        - detection_profile
+        - assignment
+        - past_assignments
+        - detection_summaries
+        - host_session_luids
+        - host_luid
     assignmentHistorycalEvent:
       description: Assignment history event
       type: object
@@ -402,132 +560,41 @@ components:
             entity_t_score:
               $ref: '#/components/schemas/vectraScore'
             triage_as:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
             triaged_detection_ids:
               oneOf:
               - $ref: '#/components/schemas/arrayOfIDs'
-              - type: string
-                nullable: true
+              - type:
+                - string
+                - 'null'
             fixed_detection_ids:
               oneOf:
               - $ref: '#/components/schemas/arrayOfIDs'
-              - type: string
-                nullable: true
+              - type:
+                - string
+                - 'null'
             created_rule_ids:
               oneOf:
               - $ref: '#/components/schemas/arrayOfIDs'
-              - type: string
-                nullable: true
-    assignmentUser:
-      description: Assignment user (tiny Vectra User)
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ID'
-        username:
-          $ref: '#/components/schemas/name'
-      example:
-        id: 123
-        username: SAML:dummy@company.com
-    IP:
-      description: IP Address
-      type: string
-      example: 192.168.1.55
-    macAddress:
-      type: string
-    groupType:
-      type: string
-      enum:
-      - ip
-      - host
-    link:
-      description: URL Link
-      type: string
-      nullable: true
-      format: uri
-      example: https://dummy.link
-    positiveInt:
-      type: integer
-      format: int32
+              - type:
+                - string
+                - 'null'
+    vectraScore:
+      type: number
       minimum: 0
-    isoDate:
-      description: ISO representation of a date
-      type: string
-      format: date-time
-      example: '2022-01-01T00:00:00Z'
-    name:
-      type: string
-      minLength: 1
-    severity:
-      description: Severity
-      type: string
-      enum:
-      - low
-      - Low
-      - medium
-      - Medium
-      - high
-      - High
-      - critical
-      - Critical
-      example: medium
-    assignment:
-      description: Assignment
+      maximum: 99
+      example: 80
+    tagsRequestBody:
       type: object
       properties:
-        id:
-          $ref: '#/components/schemas/ID'
-        assigned_by:
-          $ref: '#/components/schemas/assignmentUser'
-        date_assigned:
-          $ref: '#/components/schemas/isoDate'
-        date_resolved:
-          oneOf:
-          - $ref: '#/components/schemas/isoDate'
-          - type: number
-            nullable: true
-        events:
+        tags:
           type: array
           items:
-            $ref: '#/components/schemas/assignmentHistorycalEvent'
-        outcome:
-          oneOf:
-          - $ref: '#/components/schemas/assignmentOutcome'
-          - type: string
-            nullable: true
-        resolved_by:
-          oneOf:
-          - $ref: '#/components/schemas/assignmentUser'
-          - type: string
-            nullable: true
-        triaged_detections:
-          type: array
-          nullable: true
-          items:
-            $ref: '#/components/schemas/ID'
-        host_id:
-          oneOf:
-          - $ref: '#/components/schemas/ID'
-          - type: string
-            nullable: true
-        account_id:
-          oneOf:
-          - $ref: '#/components/schemas/ID'
-          - type: string
-            nullable: true
-        assigned_to:
-          $ref: '#/components/schemas/assignmentUser'
+          - $ref: '#/components/schemas/text'
       required:
-      - id
-      - assigned_by
-      - date_assigned
-      - assigned_to
-    arrayOfIDs:
-      description: Array of IDs
-      type: array
-      items:
-        $ref: '#/components/schemas/ID'
+      - tags
     host:
       description: Host
       type: object
@@ -599,18 +666,21 @@ components:
         note:
           oneOf:
           - $ref: '#/components/schemas/text'
-          - type: string
-            nullable: true
+          - type:
+            - string
+            - 'null'
         note_modified_by:
           oneOf:
           - $ref: '#/components/schemas/name'
-          - type: string
-            nullable: true
+          - type:
+            - string
+            - 'null'
         note_modified_timestamp:
           oneOf:
           - $ref: '#/components/schemas/isoDate'
-          - type: string
-            nullable: true
+          - type:
+            - string
+            - 'null'
         notes:
           type: array
           items:
@@ -622,18 +692,21 @@ components:
         last_modified:
           oneOf:
           - $ref: '#/components/schemas/isoDate'
-          - type: string
-            nullable: true
+          - type:
+            - string
+            - 'null'
         assigned_to:
           oneOf:
           - $ref: '#/components/schemas/name'
-          - type: string
-            nullable: true
+          - type:
+            - string
+            - 'null'
         assigned_date:
           oneOf:
           - $ref: '#/components/schemas/isoDate'
-          - type: string
-            nullable: true
+          - type:
+            - string
+            - 'null'
         groups:
           type: array
           items:
@@ -660,15 +733,17 @@ components:
         probable_owner:
           oneOf:
           - $ref: '#/components/schemas/name'
-          - type: string
-            nullable: true
+          - type:
+            - string
+            - 'null'
         detection_profile:
           $ref: '#/components/schemas/text'
         assignment:
           oneOf:
           - $ref: '#/components/schemas/assignment'
-          - type: string
-            nullable: true
+          - type:
+            - string
+            - 'null'
         past_assignments:
           type: array
           items:
@@ -677,70 +752,169 @@ components:
           $ref: '#/components/schemas/arrayOfNames'
         host_luid:
           $ref: '#/components/schemas/name'
+    privilegeLevel:
+      type:
+      - number
+      - 'null'
+      minimum: 1
+      maximum: 10
+      example: 8
+    assignment:
+      description: Assignment
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        assigned_by:
+          $ref: '#/components/schemas/assignmentUser'
+        date_assigned:
+          $ref: '#/components/schemas/isoDate'
+        date_resolved:
+          oneOf:
+          - $ref: '#/components/schemas/isoDate'
+          - type:
+            - number
+            - 'null'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/assignmentHistorycalEvent'
+        outcome:
+          oneOf:
+          - $ref: '#/components/schemas/assignmentOutcome'
+          - type:
+            - string
+            - 'null'
+        resolved_by:
+          oneOf:
+          - $ref: '#/components/schemas/assignmentUser'
+          - type:
+            - string
+            - 'null'
+        triaged_detections:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ID'
+        host_id:
+          oneOf:
+          - $ref: '#/components/schemas/ID'
+          - type:
+            - string
+            - 'null'
+        account_id:
+          oneOf:
+          - $ref: '#/components/schemas/ID'
+          - type:
+            - string
+            - 'null'
+        assigned_to:
+          $ref: '#/components/schemas/assignmentUser'
+      required:
+      - id
+      - assigned_by
+      - date_assigned
+      - assigned_to
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    assignmentEventType:
+      description: Type of event that can happen to an assignment
+      type: string
+      enum:
+      - created
+      - reassigned
+      - resolved
+      example: created
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    name:
+      type: string
+      minLength: 1
+    isoDate:
+      description: ISO representation of a date
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
+    link:
+      description: URL Link
+      type:
+      - string
+      - 'null'
+      format: uri
+      example: https://dummy.link
+    arrayOfIDs:
+      description: Array of IDs
+      type: array
+      items:
+        $ref: '#/components/schemas/ID'
+    IP:
+      description: IP Address
+      type: string
+      example: 192.168.1.55
     arrayOfLinks:
       description: Array of links
       type: array
       items:
         $ref: '#/components/schemas/link'
-    queryHostFields:
-      type: array
-      items:
-        type: string
-        enum:
-        - id
-        - name
-        - active_traffic
-        - has_active_traffic
-        - t_score
-        - threat
-        - c_score
-        - certainty
-        - severity
-        - last_source
-        - ip
-        - previous_ips
-        - last_detection_timestamp
-        - key_asset
-        - is_key_asset
-        - state
-        - targets_key_asset
-        - is_targeting_key_asset
-        - detection_set
-        - host_artifact_set
-        - sensor
-        - sensor_name
-        - tags
-        - note
-        - notes
-        - note_modified_by
-        - note_modified_timestamp
-        - url
-        - host_url
-        - last_modified
-        - assigned_to
-        - assigned_date
-        - groups
-        - has_custom_model
-        - privilege_level
-        - privilege_category
-        - probable_owner
-        - detection_profile
-        - assignment
-        - past_assignments
-        - detection_summaries
-        - host_session_luids
-        - host_luid
-    text:
+    note:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        date_created:
+          oneOf:
+          - $ref: '#/components/schemas/isoDate'
+          - type:
+            - string
+            - 'null'
+        date_modified:
+          oneOf:
+          - $ref: '#/components/schemas/isoDate'
+          - type:
+            - string
+            - 'null'
+        created_by:
+          $ref: '#/components/schemas/name'
+        modified_by:
+          oneOf:
+          - $ref: '#/components/schemas/name'
+          - type:
+            - string
+            - 'null'
+        note:
+          $ref: '#/components/schemas/text'
+    state:
       type: string
-    resultsOfHosts:
-      allOf:
-      - $ref: '#/components/schemas/results'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/host'
+      enum:
+      - active
+      - inactive
+      example: active
+    assignmentUser:
+      description: Assignment user (tiny Vectra User)
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        username:
+          $ref: '#/components/schemas/name'
+      example:
+        id: 123
+        username: SAML:dummy@company.com
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
     tags:
       type: object
       properties:
@@ -752,45 +926,8 @@ components:
           type: array
           items:
           - $ref: '#/components/schemas/text'
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    state:
+    macAddress:
       type: string
-      enum:
-      - active
-      - inactive
-      example: active
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
-    arrayOfNames:
-      description: Array of names
-      type: array
-      items:
-        $ref: '#/components/schemas/name'
-    vectraScore:
-      type: number
-      minimum: 0
-      maximum: 99
-      example: 80
-    tagsRequestBody:
-      type: object
-      properties:
-        tags:
-          type: array
-          items:
-          - $ref: '#/components/schemas/text'
-      required:
-      - tags
     results:
       type: object
       properties:
@@ -800,61 +937,15 @@ components:
           $ref: '#/components/schemas/link'
         previous:
           $ref: '#/components/schemas/link'
-    note:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ID'
-        date_created:
-          oneOf:
-          - $ref: '#/components/schemas/isoDate'
-          - type: string
-            nullable: true
-        date_modified:
-          oneOf:
-          - $ref: '#/components/schemas/isoDate'
-          - type: string
-            nullable: true
-        created_by:
-          $ref: '#/components/schemas/name'
-        modified_by:
-          oneOf:
-          - $ref: '#/components/schemas/name'
-          - type: string
-            nullable: true
-        note:
-          $ref: '#/components/schemas/text'
-    privilegeLevel:
-      type: number
-      nullable: true
-      minimum: 1
-      maximum: 10
-      example: 8
-    assignmentEventType:
-      description: Type of event that can happen to an assignment
+    groupType:
       type: string
       enum:
-      - created
-      - reassigned
-      - resolved
-      example: created
-    assignmentOutcomeCategory:
-      title: Assignment Outcome allowed categories
-      type: string
-      enum:
-      - benign_true_positive
-      - malicious_true_positive
-      - false_positive
-    noteRequestBody:
-      type: object
-      properties:
-        note:
-          $ref: '#/components/schemas/text'
-      required:
-      - note
+      - ip
+      - host
     privilegeCategory:
-      type: string
-      nullable: true
+      type:
+      - string
+      - 'null'
       enum:
       - null
       - low
@@ -864,34 +955,85 @@ components:
       - high
       - High
       example: Medium
+    Host:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        state:
+          type: string
+        threat:
+          type: integer
+        certainty:
+          type: integer
+        ip:
+          type: string
+        last_detection_timestamp:
+          type: string
+          format: date-time
   parameters:
-    state:
-      name: state
-      description: Filters by state
+    minID:
+      name: min_id
+      description: Filters by ID greater than or equals the provided ID
       in: query
       schema:
-        $ref: '#/components/schemas/state'
-    threatScoreGte:
-      name: t_score_gte
-      description: Filters by threat score greater than or equals the provided score
+        $ref: '#/components/schemas/ID'
+    privilegeLevel:
+      name: privilege_level
+      description: Filters by exact privilege level
       in: query
       schema:
-        $ref: '#/components/schemas/vectraScore'
+        $ref: '#/components/schemas/privilegeLevel'
     privilegeCategory:
       name: privilege_category
       description: Filters by privilege category
       in: query
       schema:
         $ref: '#/components/schemas/privilegeCategory'
-    oneOfTags:
-      name: tags
-      description: Filters by tags. Returns entries that contain any of the tags specified
+    noteModifiedTimestampGte:
+      name: note_modified_timestamp_gte
+      description: Filters on detection'notes modified timestamp
       in: query
       schema:
-        $ref: '#/components/schemas/arrayOfNames'
+        $ref: '#/components/schemas/isoDate'
+    pageSize:
+      name: page_size
+      description: The number of results to return per page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 5000
+      example: 50
+    certaintyScoreGte:
+      name: c_score_gte
+      description: Filters by certainty score greater than or equals the provided score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    state:
+      name: state
+      description: Filters by state
+      in: query
+      schema:
+        $ref: '#/components/schemas/state'
     certaintyScore:
       name: c_score
       description: Filters by certainty score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    ordering:
+      name: ordering
+      description: Orders results based on given attribute. Results can be sorted in descending order by prepending the query with “minus” symbol.
+      in: query
+      schema:
+        type: string
+    threatScoreGte:
+      name: t_score_gte
+      description: Filters by threat score greater than or equals the provided score
       in: query
       schema:
         $ref: '#/components/schemas/vectraScore'
@@ -904,78 +1046,37 @@ components:
         format: int32
         minimum: 1
       example: 1
-    privilegeLevel:
-      name: privilege_level
-      description: Filters by exact privilege level
-      in: query
-      schema:
-        $ref: '#/components/schemas/privilegeLevel'
-    name:
-      name: name
-      description: Filters by name
-      in: query
-      schema:
-        $ref: '#/components/schemas/name'
-    certaintyScoreGte:
-      name: c_score_gte
-      description: Filters by certainty score greater than or equals the provided score
-      in: query
-      schema:
-        $ref: '#/components/schemas/vectraScore'
     threatScore:
       name: t_score
       description: Filters by threat score
       in: query
       schema:
         $ref: '#/components/schemas/vectraScore'
-    minID:
-      name: min_id
-      description: Filters by ID greater than or equals the provided ID
+    name:
+      name: name
+      description: Filters by name
       in: query
       schema:
-        $ref: '#/components/schemas/ID'
-    pageSize:
-      name: page_size
-      description: The number of results to return per page
+        $ref: '#/components/schemas/name'
+    oneOfTags:
+      name: tags
+      description: Filters by tags. Returns entries that contain any of the tags specified
       in: query
       schema:
-        type: integer
-        minimum: 1
-        maximum: 5000
-      example: 50
-    noteModifiedTimestampGte:
-      name: note_modified_timestamp_gte
-      description: Filters on detection'notes modified timestamp
-      in: query
-      schema:
-        $ref: '#/components/schemas/isoDate'
-    privilegeLevelGte:
-      name: privilege_level_gte
-      description: Filters Account having a privilege level greater than or equal to the supplied number
-      in: query
-      schema:
-        $ref: '#/components/schemas/privilegeLevel'
+        $ref: '#/components/schemas/arrayOfNames'
     maxID:
       name: max_id
       description: Filters by ID lower than or equals the provided ID
       in: query
       schema:
         $ref: '#/components/schemas/ID'
-    ordering:
-      name: ordering
-      description: Orders results based on given attribute. Results can be sorted in descending order by prepending the query with “minus” symbol.
+    privilegeLevelGte:
+      name: privilege_level_gte
+      description: Filters Account having a privilege level greater than or equal to the supplied number
       in: query
       schema:
-        type: string
+        $ref: '#/components/schemas/privilegeLevel'
   responses:
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
     invalidPermissions:
       description: Invalid User Permissions
       content:
@@ -984,6 +1085,14 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: You do not have permission to perform this action.
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
     notFound:
       description: Object not found
       content:
@@ -997,3 +1106,12 @@ components:
       type: apiKey
       name: authorization
       in: header
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{vectra_portal_url}/oauth2/token
+          scopes: {}
+x-refined-from:
+- vectranetworks-detect-v2.3-openapi.yml
+- vectranetworks-rux-v3.3-openapi.yml

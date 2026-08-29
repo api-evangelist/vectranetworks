@@ -1,26 +1,19 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: Vectra Detect Accounts Entities API
+  title: Vectra Platform Entities API
+  description: Comprehensive API documentation for Vectra's breach detection data, platform configuration, and health information.
+  version: '3.3'
   contact:
-    name: Vectra TME
-    email: tme@vectra.ai
-  description: Vectra Detect on-prem instance API
-  license:
-    name: TME Custom °-.-°
-    url: https://vectra.ai
+    name: Vectra AI Support
+    url: https://vectra.ai/support
 servers:
-- url: https://{fqdn}/api/{apiVersion}
-  description: Vectra Detect API
+- url: https://{vectra_portal_url}/api/v3.3
+  description: Vectra Platform API Server
   variables:
-    fqdn:
-      description: The FQDN or IP to join the Vectra Detect instance
-      default: detect-api.demo.vectra.io
-    apiVersion:
-      description: The API version to use
-      default: v2.3
+    vectra_portal_url:
+      default: platform.vectra.ai
 security:
-- VectraToken: []
+- oauth2: []
 tags:
 - name: Entities
 paths:
@@ -119,13 +112,15 @@ paths:
                   count:
                     type: integer
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   results:
                     type: array
                     items:
@@ -312,20 +307,6 @@ paths:
           description: Note deleted successfully
 components:
   schemas:
-    Entity:
-      type: object
-      properties:
-        id:
-          type: integer
-        type:
-          type: string
-        urgency:
-          type: integer
-        importance:
-          type: integer
-        last_detection_timestamp:
-          type: string
-          format: date-time
     Note:
       type: object
       properties:
@@ -343,8 +324,24 @@ components:
         date_modified:
           type: string
           format: date-time
+    Entity:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        urgency:
+          type: integer
+        importance:
+          type: integer
+        last_detection_timestamp:
+          type: string
+          format: date-time
   securitySchemes:
-    VectraToken:
-      type: apiKey
-      name: authorization
-      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{vectra_portal_url}/oauth2/token
+          scopes: {}

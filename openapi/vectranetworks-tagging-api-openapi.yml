@@ -1,14 +1,8 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: Vectra Detect Accounts Tagging API
-  contact:
-    name: Vectra TME
-    email: tme@vectra.ai
-  description: Vectra Detect on-prem instance API
-  license:
-    name: TME Custom °-.-°
-    url: https://vectra.ai
+  title: Vectranetworks Tagging API
+  version: '1.0'
+  description: 'Operations tagged Tagging across 2 of this provider''s published API definitions: vectranetworks-detect-v2.3-openapi.yml, vectranetworks-rux-v3.3-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://{fqdn}/api/{apiVersion}
   description: Vectra Detect API
@@ -19,8 +13,11 @@ servers:
     apiVersion:
       description: The API version to use
       default: v2.3
-security:
-- VectraToken: []
+- url: https://{vectra_portal_url}/api/v3.3
+  description: Vectra Platform API Server
+  variables:
+    vectra_portal_url:
+      default: platform.vectra.ai
 tags:
 - name: Tagging
   description: Dedicated endpoint to manage entities's tags
@@ -49,6 +46,8 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
     patch:
       operationId: accountTagsReplace
       summary: Replace all Account's tags
@@ -71,6 +70,18 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /tagging/detection/{detectionID}:
     description: The tagging endpoint can be used to manage Detection tags
     parameters:
@@ -95,6 +106,8 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
     patch:
       operationId: detectionTagsReplace
       summary: Replace all Detection's tags
@@ -117,6 +130,18 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /tagging/host/{hostID}:
     description: The tagging endpoint can be used to manage Host tags
     parameters:
@@ -141,6 +166,8 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
     patch:
       operationId: hostTagsReplace
       summary: Replace all Host's tags
@@ -163,6 +190,18 @@ paths:
           $ref: '#/components/responses/invalidToken'
         '403':
           $ref: '#/components/responses/invalidPermissions'
+      security:
+      - VectraToken: []
+    servers:
+    - url: https://{fqdn}/api/{apiVersion}
+      description: Vectra Detect API
+      variables:
+        fqdn:
+          description: The FQDN or IP to join the Vectra Detect instance
+          default: detect-api.demo.vectra.io
+        apiVersion:
+          description: The API version to use
+          default: v2.3
   /tagging/detection/{detection_id}:
     get:
       summary: Retrieve tags for a specific detection
@@ -185,6 +224,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Tag'
+      security:
+      - oauth2: []
     post:
       summary: Add tags to a detection
       operationId: addDetectionTags
@@ -211,8 +252,35 @@ paths:
       responses:
         '201':
           description: Tags added successfully
+      security:
+      - oauth2: []
+    servers:
+    - url: https://{vectra_portal_url}/api/v3.3
+      description: Vectra Platform API Server
+      variables:
+        vectra_portal_url:
+          default: platform.vectra.ai
 components:
+  responses:
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
   schemas:
+    text:
+      type: string
     tagsRequestBody:
       type: object
       properties:
@@ -272,27 +340,17 @@ components:
           items:
             type: string
           description: List of tags which are invalid. Only present when status is 'failure'
-    text:
-      type: string
-  responses:
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
-    invalidPermissions:
-      description: Invalid User Permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: You do not have permission to perform this action.
   securitySchemes:
     VectraToken:
       type: apiKey
       name: authorization
       in: header
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{vectra_portal_url}/oauth2/token
+          scopes: {}
+x-refined-from:
+- vectranetworks-detect-v2.3-openapi.yml
+- vectranetworks-rux-v3.3-openapi.yml

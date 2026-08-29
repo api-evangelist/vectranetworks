@@ -1,26 +1,19 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: Vectra Detect Accounts Match API
+  title: Vectra Platform Match API
+  description: Comprehensive API documentation for Vectra's breach detection data, platform configuration, and health information.
+  version: '3.3'
   contact:
-    name: Vectra TME
-    email: tme@vectra.ai
-  description: Vectra Detect on-prem instance API
-  license:
-    name: TME Custom °-.-°
-    url: https://vectra.ai
+    name: Vectra AI Support
+    url: https://vectra.ai/support
 servers:
-- url: https://{fqdn}/api/{apiVersion}
-  description: Vectra Detect API
+- url: https://{vectra_portal_url}/api/v3.3
+  description: Vectra Platform API Server
   variables:
-    fqdn:
-      description: The FQDN or IP to join the Vectra Detect instance
-      default: detect-api.demo.vectra.io
-    apiVersion:
-      description: The API version to use
-      default: v2.3
+    vectra_portal_url:
+      default: platform.vectra.ai
 security:
-- VectraToken: []
+- oauth2: []
 tags:
 - name: Match
 paths:
@@ -174,6 +167,37 @@ paths:
           description: Devices assigned successfully
 components:
   schemas:
+    VectraMatchStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Current status of Vectra Match
+        last_updated:
+          type: string
+          format: date-time
+          description: Timestamp of the last status update
+    Device:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+          description: Device status (e.g., "available", "assigned")
+    VectraMatchAssignment:
+      type: object
+      properties:
+        assigned_devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
+        unassigned_devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
     VectraMatchStats:
       type: object
       properties:
@@ -218,37 +242,6 @@ components:
         created_timestamp:
           type: string
           format: date-time
-    Device:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        status:
-          type: string
-          description: Device status (e.g., "available", "assigned")
-    VectraMatchStatus:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Current status of Vectra Match
-        last_updated:
-          type: string
-          format: date-time
-          description: Timestamp of the last status update
-    VectraMatchAssignment:
-      type: object
-      properties:
-        assigned_devices:
-          type: array
-          items:
-            $ref: '#/components/schemas/Device'
-        unassigned_devices:
-          type: array
-          items:
-            $ref: '#/components/schemas/Device'
     VectraMatchEnablement:
       type: object
       properties:
@@ -263,7 +256,9 @@ components:
           items:
             $ref: '#/components/schemas/Device'
   securitySchemes:
-    VectraToken:
-      type: apiKey
-      name: authorization
-      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{vectra_portal_url}/oauth2/token
+          scopes: {}

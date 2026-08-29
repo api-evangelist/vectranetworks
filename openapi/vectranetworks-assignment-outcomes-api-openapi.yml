@@ -1,7 +1,7 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
   version: 1.0.0
-  title: Vectra Detect Accounts Assignment Outcomes API
+  title: Vectra Detect Assignment Outcomes API
   contact:
     name: Vectra TME
     email: tme@vectra.ai
@@ -163,7 +163,46 @@ paths:
         '404':
           description: Error during outcome deletion
 components:
+  responses:
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+    notFound:
+      description: Object not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            detail: Not Found.
   schemas:
+    assignmentOutcomeCategory:
+      title: Assignment Outcome allowed categories
+      type: string
+      enum:
+      - benign_true_positive
+      - malicious_true_positive
+      - false_positive
+    link:
+      description: URL Link
+      type:
+      - string
+      - 'null'
+      format: uri
+      example: https://dummy.link
     resultsOfAssignmentOutcomes:
       allOf:
       - $ref: '#/components/schemas/results'
@@ -173,10 +212,13 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/assignmentOutcome'
-    positiveInt:
-      type: integer
-      format: int32
-      minimum: 0
+    assignmentOutcomeRequestBody:
+      type: object
+      properties:
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/assignmentOutcomeCategory'
     results:
       type: object
       properties:
@@ -215,56 +257,15 @@ components:
         details:
           description: A human readable error message
           type: string
-    assignmentOutcomeCategory:
-      title: Assignment Outcome allowed categories
-      type: string
-      enum:
-      - benign_true_positive
-      - malicious_true_positive
-      - false_positive
-    link:
-      description: URL Link
-      type: string
-      nullable: true
-      format: uri
-      example: https://dummy.link
     ID:
       description: ID
       type: integer
       format: int32
       minimum: 1
-    assignmentOutcomeRequestBody:
-      type: object
-      properties:
-        title:
-          type: string
-        category:
-          $ref: '#/components/schemas/assignmentOutcomeCategory'
-  responses:
-    notFound:
-      description: Object not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            detail: Not Found.
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
-    invalidPermissions:
-      description: Invalid User Permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: You do not have permission to perform this action.
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
   examples:
     assignmentOutcomeUserCreated:
       value:

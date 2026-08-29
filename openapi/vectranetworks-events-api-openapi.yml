@@ -1,26 +1,19 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: Vectra Detect Accounts Events API
+  title: Vectra Platform Events API
+  description: Comprehensive API documentation for Vectra's breach detection data, platform configuration, and health information.
+  version: '3.3'
   contact:
-    name: Vectra TME
-    email: tme@vectra.ai
-  description: Vectra Detect on-prem instance API
-  license:
-    name: TME Custom °-.-°
-    url: https://vectra.ai
+    name: Vectra AI Support
+    url: https://vectra.ai/support
 servers:
-- url: https://{fqdn}/api/{apiVersion}
-  description: Vectra Detect API
+- url: https://{vectra_portal_url}/api/v3.3
+  description: Vectra Platform API Server
   variables:
-    fqdn:
-      description: The FQDN or IP to join the Vectra Detect instance
-      default: detect-api.demo.vectra.io
-    apiVersion:
-      description: The API version to use
-      default: v2.3
+    vectra_portal_url:
+      default: platform.vectra.ai
 security:
-- VectraToken: []
+- oauth2: []
 tags:
 - name: Events
 paths:
@@ -177,6 +170,24 @@ paths:
                   $ref: '#/components/schemas/AuditLogEvent'
 components:
   schemas:
+    AuditLogEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        username:
+          type: string
+        event_timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+        result_status:
+          type: string
+        event_action:
+          type: string
     EntityScoring:
       type: object
       properties:
@@ -199,26 +210,10 @@ components:
           - Low
           - Medium
           - High
-    AuditLogEvent:
-      type: object
-      properties:
-        id:
-          type: integer
-        user_id:
-          type: integer
-        username:
-          type: string
-        event_timestamp:
-          type: string
-          format: date-time
-        message:
-          type: string
-        result_status:
-          type: string
-        event_action:
-          type: string
   securitySchemes:
-    VectraToken:
-      type: apiKey
-      name: authorization
-      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{vectra_portal_url}/oauth2/token
+          scopes: {}
