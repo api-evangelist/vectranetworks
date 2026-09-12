@@ -1,12 +1,6 @@
 aid: vectranetworks
 name: Vectra AI
-description: Vectra AI (founded as Vectra Networks, a Khosla Ventures portfolio company)
-  is an AI-native network detection and response (NDR) platform that correlates attacker
-  behavior across network, identity, cloud, and SaaS domains. Its Attack Signal Intelligence
-  prioritizes real threats for SOC teams, and the platform exposes REST APIs — the
-  OAuth2-secured Vectra Platform API (RUX) and the token-based Vectra Detect API —
-  for pulling detections, entities, and health data into SIEM, SOAR, EDR, and ITSM
-  workflows.
+description: Vectra AI (founded as Vectra Networks, a Khosla Ventures portfolio company) is an AI-native network detection and response (NDR) platform that correlates attacker behavior across network, identity, cloud, and SaaS domains. Its Attack Signal Intelligence prioritizes real threats for SOC teams, and the platform exposes REST APIs — the OAuth2-secured Vectra Platform API (RUX) and the token-based Vectra Detect API — for pulling detections, entities, and health data into SIEM, SOAR, EDR, and ITSM workflows.
 url: https://raw.githubusercontent.com/api-evangelist/vectranetworks/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -269,10 +263,7 @@ apis:
     url: https://vectranetworks.github.io/detect-openapi/
 - aid: vectranetworks:vectranetworks-threat-feeds-api
   name: Vectra AI Threat Feeds API
-  description: >-
-    The threatFeeds endpoint can be used to automate the upload of STIX files for threat intelligence
-    matching. This endpoint can also be used to retrieve the current list of threatFeed objects already
-    configured in the system.
+  description: The threatFeeds endpoint can be used to automate the upload of STIX files for threat intelligence matching. This endpoint can also be used to retrieve the current list of threatFeed objects already configured in the system.
   humanURL: https://vectranetworks.github.io/openapi-rux/
   baseURL: https://platform.vectra.ai/api/v3.3
   tags:
@@ -300,6 +291,30 @@ apis:
     url: https://vectranetworks.github.io/openapi-rux/
   - type: APIReference
     url: https://vectranetworks.github.io/detect-openapi/
+- aid: vectranetworks:vectra-ai-platform-api
+  name: Vectra AI Platform API
+  tags:
+  - Detections
+  - Hosts
+  - Account
+  - Threat Intelligence
+  - NDR
+  tags_raw:
+  - Detections
+  - Hosts
+  - Accounts
+  - Threat Intelligence
+  - NDR
+  humanURL: https://support.vectra.ai
+  baseURL: https://api.vectra.io
+  properties:
+  - url: https://support.vectra.ai
+    type: Documentation
+    title: Vectra AI Customer Support and API Documentation (gated)
+  - url: https://www.vectra.ai/platform
+    type: Portal
+    title: Vectra AI Platform
+  description: The Vectra AI Platform REST API (api.vectra.io) provides programmatic access to detections, hosts, accounts, assignments, threat-intelligence indicators, and platform configuration for the Vectra AI Platform. Customers and integration partners use the API to push detections into SIEMs, automate response in SOARs, enrich EDR workflows, and build custom security operations tooling. Detailed reference documentation and API credentials are provisioned through the Vectra customer support portal.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
