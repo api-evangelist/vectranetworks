@@ -49,7 +49,8 @@
     "tag 'Hosts' spans 2 source specs (vectranetworks-detect-v2.3-openapi.yml, vectranetworks-rux-v3.3-openapi.yml): per-path servers applied",
     "tag 'Tagging' spans 2 source specs (vectranetworks-detect-v2.3-openapi.yml, vectranetworks-rux-v3.3-openapi.yml): per-path servers applied",
     "tag 'Threat Feeds' spans 2 source specs (vectranetworks-detect-v2.3-openapi.yml, vectranetworks-rux-v3.3-openapi.yml): per-path servers applied",
-    "tag 'Users' spans 2 source specs (vectranetworks-detect-v2.3-openapi.yml, vectranetworks-rux-v3.3-openapi.yml): per-path servers applied"
+    "tag 'Users' spans 2 source specs (vectranetworks-detect-v2.3-openapi.yml, vectranetworks-rux-v3.3-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "vectranetworks-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",

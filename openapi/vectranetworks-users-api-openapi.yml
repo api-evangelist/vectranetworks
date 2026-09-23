@@ -129,7 +129,159 @@ paths:
           description: The API version to use
           default: v2.3
 components:
+  schemas:
+    results:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/positiveInt'
+        next:
+          $ref: '#/components/schemas/link'
+        previous:
+          $ref: '#/components/schemas/link'
+    userRole:
+      description: Vectra User Role
+      type: string
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    isoDate:
+      description: ISO representation of a date
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
+    link:
+      description: URL Link
+      type:
+      - string
+      - 'null'
+      format: uri
+      example: https://dummy.link
+    user:
+      description: Vectra User object
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        last_login:
+          $ref: '#/components/schemas/isoDate'
+        username:
+          $ref: '#/components/schemas/name'
+        email:
+          $ref: '#/components/schemas/email'
+        account_type:
+          $ref: '#/components/schemas/userType'
+        authentication_profile:
+          $ref: '#/components/schemas/userAuthProfile'
+        role:
+          $ref: '#/components/schemas/userRole'
+      required:
+      - id
+      - last_login
+      - username
+      - email
+      - account_type
+      - authentication_profile
+      - role
+    resultsOfUsers:
+      allOf:
+      - $ref: '#/components/schemas/results'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/user'
+    email:
+      type: string
+      format: email
+    userType:
+      description: Vectra User type
+      type: string
+      enum:
+      - local
+      - SAML
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    name:
+      type: string
+      minLength: 1
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    userAuthProfile:
+      description: Vectra User authentication profile when coming from SAML or LDAP
+      type:
+      - string
+      - 'null'
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        last_login_timestamp:
+          type: string
+          format: date-time
+  responses:
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+    invalidQueryParameter:
+      description: Invalid Query Parameter
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: 'The following query parameter(s) are invalid: xxx.'
   examples:
+    userAdminExample:
+      value:
+        id: 20
+        last_login: '2022-01-01T12:34:56Z'
+        username: admin
+        email: ''
+        account_type: local
+        authentication_profile: null
+        role: Super Admin
+    userSAMLExample:
+      value:
+        id: 129
+        last_login: '2022-01-01T12:34:56'
+        username: SAML:dummy-user@company.com
+        email: dummy-user@company.com
+        account_type: SAML
+        authentication_profile: Company SE
+        role: Custom Admin
     multipleExample:
       value:
         count: 3
@@ -172,158 +324,6 @@ components:
         next: null
         previous: null
         results: []
-    userSAMLExample:
-      value:
-        id: 129
-        last_login: '2022-01-01T12:34:56'
-        username: SAML:dummy-user@company.com
-        email: dummy-user@company.com
-        account_type: SAML
-        authentication_profile: Company SE
-        role: Custom Admin
-    userAdminExample:
-      value:
-        id: 20
-        last_login: '2022-01-01T12:34:56Z'
-        username: admin
-        email: ''
-        account_type: local
-        authentication_profile: null
-        role: Super Admin
-  schemas:
-    userAuthProfile:
-      description: Vectra User authentication profile when coming from SAML or LDAP
-      type:
-      - string
-      - 'null'
-    userRole:
-      description: Vectra User Role
-      type: string
-    email:
-      type: string
-      format: email
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    positiveInt:
-      type: integer
-      format: int32
-      minimum: 0
-    name:
-      type: string
-      minLength: 1
-    isoDate:
-      description: ISO representation of a date
-      type: string
-      format: date-time
-      example: '2022-01-01T00:00:00Z'
-    link:
-      description: URL Link
-      type:
-      - string
-      - 'null'
-      format: uri
-      example: https://dummy.link
-    user:
-      description: Vectra User object
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ID'
-        last_login:
-          $ref: '#/components/schemas/isoDate'
-        username:
-          $ref: '#/components/schemas/name'
-        email:
-          $ref: '#/components/schemas/email'
-        account_type:
-          $ref: '#/components/schemas/userType'
-        authentication_profile:
-          $ref: '#/components/schemas/userAuthProfile'
-        role:
-          $ref: '#/components/schemas/userRole'
-      required:
-      - id
-      - last_login
-      - username
-      - email
-      - account_type
-      - authentication_profile
-      - role
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
-    userType:
-      description: Vectra User type
-      type: string
-      enum:
-      - local
-      - SAML
-    resultsOfUsers:
-      allOf:
-      - $ref: '#/components/schemas/results'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/user'
-    results:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/positiveInt'
-        next:
-          $ref: '#/components/schemas/link'
-        previous:
-          $ref: '#/components/schemas/link'
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        email:
-          type: string
-        role:
-          type: string
-        last_login_timestamp:
-          type: string
-          format: date-time
-  responses:
-    invalidQueryParameter:
-      description: Invalid Query Parameter
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: 'The following query parameter(s) are invalid: xxx.'
-    invalidPermissions:
-      description: Invalid User Permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: You do not have permission to perform this action.
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
   securitySchemes:
     VectraToken:
       type: apiKey

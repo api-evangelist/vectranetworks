@@ -63,6 +63,8 @@ paths:
       responses:
         '200':
           description: Created group
+      operationId: postGroups
+      x-operation-id-source: derived
 components:
   schemas:
     Group:

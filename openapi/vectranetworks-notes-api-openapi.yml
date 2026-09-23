@@ -354,9 +354,15 @@ paths:
           $ref: '#/components/responses/invalidPermissions'
 components:
   schemas:
-    name:
-      type: string
-      minLength: 1
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
     text:
       type: string
     isoDate:
@@ -364,6 +370,21 @@ components:
       type: string
       format: date-time
       example: '2022-01-01T00:00:00Z'
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    name:
+      type: string
+      minLength: 1
+    noteRequestBody:
+      type: object
+      properties:
+        note:
+          $ref: '#/components/schemas/text'
+      required:
+      - note
     note:
       type: object
       properties:
@@ -391,36 +412,7 @@ components:
             - 'null'
         note:
           $ref: '#/components/schemas/text'
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    noteRequestBody:
-      type: object
-      properties:
-        note:
-          $ref: '#/components/schemas/text'
-      required:
-      - note
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
   responses:
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
     invalidPermissions:
       description: Invalid User Permissions
       content:
@@ -429,6 +421,14 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: You do not have permission to perform this action.
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
   securitySchemes:
     VectraToken:
       type: apiKey

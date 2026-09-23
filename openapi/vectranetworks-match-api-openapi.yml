@@ -48,6 +48,8 @@ paths:
       responses:
         '200':
           description: Updated enablement status
+      operationId: postVectraMatchEnablement
+      x-operation-id-source: derived
   /vectra-match/stats:
     get:
       summary: Retrieve Vectra Match statistics
@@ -167,16 +169,20 @@ paths:
           description: Devices assigned successfully
 components:
   schemas:
-    VectraMatchStatus:
+    VectraMatchRule:
       type: object
       properties:
-        status:
+        id:
+          type: integer
+        name:
           type: string
-          description: Current status of Vectra Match
-        last_updated:
+        description:
+          type: string
+        enabled:
+          type: boolean
+        created_timestamp:
           type: string
           format: date-time
-          description: Timestamp of the last status update
     Device:
       type: object
       properties:
@@ -187,6 +193,23 @@ components:
         status:
           type: string
           description: Device status (e.g., "available", "assigned")
+    VectraMatchAvailableDevices:
+      type: object
+      properties:
+        devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
+    VectraMatchStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Current status of Vectra Match
+        last_updated:
+          type: string
+          format: date-time
+          description: Timestamp of the last status update
     VectraMatchAssignment:
       type: object
       properties:
@@ -198,18 +221,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Device'
-    VectraMatchStats:
+    VectraMatchEnablement:
       type: object
       properties:
-        total_rules:
-          type: integer
-          description: Total number of rules
-        active_rules:
-          type: integer
-          description: Number of active rules
-        matched_events:
-          type: integer
-          description: Total matched events
+        enabled:
+          type: boolean
+          description: Indicates if Vectra Match is enabled
     VectraMatchAlertStats:
       type: object
       properties:
@@ -228,33 +245,18 @@ components:
         low_alerts:
           type: integer
           description: Number of low alerts
-    VectraMatchRule:
+    VectraMatchStats:
       type: object
       properties:
-        id:
+        total_rules:
           type: integer
-        name:
-          type: string
-        description:
-          type: string
-        enabled:
-          type: boolean
-        created_timestamp:
-          type: string
-          format: date-time
-    VectraMatchEnablement:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Indicates if Vectra Match is enabled
-    VectraMatchAvailableDevices:
-      type: object
-      properties:
-        devices:
-          type: array
-          items:
-            $ref: '#/components/schemas/Device'
+          description: Total number of rules
+        active_rules:
+          type: integer
+          description: Number of active rules
+        matched_events:
+          type: integer
+          description: Total matched events
   securitySchemes:
     oauth2:
       type: oauth2

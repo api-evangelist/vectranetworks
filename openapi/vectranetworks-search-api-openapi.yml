@@ -104,42 +104,6 @@ paths:
         '403':
           $ref: '#/components/responses/invalidPermissions'
 components:
-  responses:
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
-    invalidPermissions:
-      description: Invalid User Permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: You do not have permission to perform this action.
-  parameters:
-    pageSize:
-      name: page_size
-      description: The number of results to return per page
-      in: query
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 5000
-      example: 50
-    pageNumber:
-      name: page
-      description: The page result to look at
-      in: query
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-      example: 1
   schemas:
     error:
       type: object
@@ -150,6 +114,42 @@ components:
         details:
           description: A human readable error message
           type: string
+  responses:
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+  parameters:
+    pageNumber:
+      name: page
+      description: The page result to look at
+      in: query
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+      example: 1
+    pageSize:
+      name: page_size
+      description: The number of results to return per page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 5000
+      example: 50
   securitySchemes:
     VectraToken:
       type: apiKey

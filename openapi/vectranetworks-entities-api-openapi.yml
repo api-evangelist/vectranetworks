@@ -151,6 +151,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Entity'
+      operationId: getEntitiesByEntityId
+      x-operation-id-source: derived
   /entities/{entity_id}/notes:
     get:
       summary: Get entity notes
@@ -179,6 +181,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Note'
+      operationId: getEntitiesByEntityIdNotes
+      x-operation-id-source: derived
     post:
       summary: Add note to entity
       tags:
@@ -213,6 +217,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Note'
+      operationId: postEntitiesByEntityIdNotes
+      x-operation-id-source: derived
   /entities/{entity_id}/notes/{note_id}:
     get:
       summary: Get specific entity note
@@ -244,6 +250,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Note'
+      operationId: getEntitiesByEntityIdNotesByNoteId
+      x-operation-id-source: derived
     patch:
       summary: Update entity note
       tags:
@@ -279,6 +287,8 @@ paths:
       responses:
         '200':
           description: Updated note
+      operationId: patchEntitiesByEntityIdNotesByNoteId
+      x-operation-id-source: derived
     delete:
       summary: Delete entity note
       tags:
@@ -305,6 +315,8 @@ paths:
       responses:
         '204':
           description: Note deleted successfully
+      operationId: deleteEntitiesByEntityIdNotesByNoteId
+      x-operation-id-source: derived
 components:
   schemas:
     Note:

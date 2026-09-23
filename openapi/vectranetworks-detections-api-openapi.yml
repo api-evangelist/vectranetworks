@@ -580,6 +580,8 @@ paths:
                   $ref: '#/components/schemas/Note'
       security:
       - oauth2: []
+      operationId: getDetectionsByIdNotes
+      x-operation-id-source: derived
     post:
       summary: Add note to detection
       tags:
@@ -608,6 +610,8 @@ paths:
                 $ref: '#/components/schemas/Note'
       security:
       - oauth2: []
+      operationId: postDetectionsByIdNotes
+      x-operation-id-source: derived
     servers:
     - url: https://{vectra_portal_url}/api/v3.3
       description: Vectra Platform API Server
@@ -616,75 +620,15 @@ paths:
           default: platform.vectra.ai
 components:
   parameters:
-    minID:
-      name: min_id
-      description: Filters by ID greater than or equals the provided ID
-      in: query
-      schema:
-        $ref: '#/components/schemas/ID'
-    certaintyGte:
-      name: certainty_gte
-      description: Filters by certainty score greater than or equals the provided score
-      in: query
-      schema:
-        $ref: '#/components/schemas/vectraScore'
-    pageSize:
-      name: page_size
-      description: The number of results to return per page
-      in: query
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 5000
-      example: 50
-    noteModifiedTimestampGte:
-      name: note_modified_timestamp_gte
-      description: Filters on detection'notes modified timestamp
-      in: query
-      schema:
-        $ref: '#/components/schemas/isoDate'
-    certaintyScoreGte:
-      name: c_score_gte
-      description: Filters by certainty score greater than or equals the provided score
-      in: query
-      schema:
-        $ref: '#/components/schemas/vectraScore'
-    state:
-      name: state
-      description: Filters by state
-      in: query
-      schema:
-        $ref: '#/components/schemas/state'
-    certaintyScore:
-      name: c_score
-      description: Filters by certainty score
-      in: query
-      schema:
-        $ref: '#/components/schemas/vectraScore'
-    threat:
-      name: threat
-      description: Filters by threat score
-      in: query
-      schema:
-        $ref: '#/components/schemas/vectraScore'
-    ordering:
-      name: ordering
-      description: Orders results based on given attribute. Results can be sorted in descending order by prepending the query with “minus” symbol.
-      in: query
-      schema:
-        type: string
-    pageNumber:
-      name: page
-      description: The page result to look at
-      in: query
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-      example: 1
-    threatScoreGte:
-      name: t_score_gte
+    threatGte:
+      name: threat_gte
       description: Filters by threat score greater than or equals the provided score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    certainty:
+      name: certainty
+      description: Filters by certainty score
       in: query
       schema:
         $ref: '#/components/schemas/vectraScore'
@@ -694,52 +638,170 @@ components:
       in: query
       schema:
         $ref: '#/components/schemas/vectraScore'
+    threatScoreGte:
+      name: t_score_gte
+      description: Filters by threat score greater than or equals the provided score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    minID:
+      name: min_id
+      description: Filters by ID greater than or equals the provided ID
+      in: query
+      schema:
+        $ref: '#/components/schemas/ID'
+    pageNumber:
+      name: page
+      description: The page result to look at
+      in: query
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+      example: 1
     oneOfTags:
       name: tags
       description: Filters by tags. Returns entries that contain any of the tags specified
       in: query
       schema:
         $ref: '#/components/schemas/arrayOfNames'
+    threat:
+      name: threat
+      description: Filters by threat score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    certaintyScore:
+      name: c_score
+      description: Filters by certainty score
+      in: query
+      schema:
+        $ref: '#/components/schemas/vectraScore'
+    noteModifiedTimestampGte:
+      name: note_modified_timestamp_gte
+      description: Filters on detection'notes modified timestamp
+      in: query
+      schema:
+        $ref: '#/components/schemas/isoDate'
+    pageSize:
+      name: page_size
+      description: The number of results to return per page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 5000
+      example: 50
+    state:
+      name: state
+      description: Filters by state
+      in: query
+      schema:
+        $ref: '#/components/schemas/state'
     maxID:
       name: max_id
       description: Filters by ID lower than or equals the provided ID
       in: query
       schema:
         $ref: '#/components/schemas/ID'
-    certainty:
-      name: certainty
-      description: Filters by certainty score
+    certaintyScoreGte:
+      name: c_score_gte
+      description: Filters by certainty score greater than or equals the provided score
       in: query
       schema:
         $ref: '#/components/schemas/vectraScore'
-    threatGte:
-      name: threat_gte
-      description: Filters by threat score greater than or equals the provided score
+    ordering:
+      name: ordering
+      description: Orders results based on given attribute. Results can be sorted in descending order by prepending the query with “minus” symbol.
+      in: query
+      schema:
+        type: string
+    certaintyGte:
+      name: certainty_gte
+      description: Filters by certainty score greater than or equals the provided score
       in: query
       schema:
         $ref: '#/components/schemas/vectraScore'
   schemas:
-    detectionCategory:
+    results:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/positiveInt'
+        next:
+          $ref: '#/components/schemas/link'
+        previous:
+          $ref: '#/components/schemas/link'
+    detectionMarkRequestBody:
+      type: object
+      properties:
+        detectionIdList:
+          $ref: '#/components/schemas/arrayOfIDs'
+        mark_as_fixed:
+          $ref: '#/components/schemas/booleanString'
+      required:
+      - detectionIdList
+      - mark_as_fixed
+    port:
+      type: integer
+      format: int32
+      minimum: 0
+      maximum: 65535
+    noteRequestBody:
+      type: object
+      properties:
+        note:
+          $ref: '#/components/schemas/text'
+      required:
+      - note
+    arrayOfIDs:
+      description: Array of IDs
+      type: array
+      items:
+        $ref: '#/components/schemas/ID'
+    tags:
+      type: object
+      properties:
+        status:
+          type: string
+        tag_id:
+          $ref: '#/components/schemas/ID'
+        tags:
+          type: array
+          items:
+          - $ref: '#/components/schemas/text'
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    tagsRequestBody:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+          - $ref: '#/components/schemas/text'
+      required:
+      - tags
+    detectionType:
       type: string
       enum:
-      - COMMAND & CONTROL
-      - botnet
-      - reconnaissance
-      - lateral
-      - exfiltration
-      - INFO
-      example: INFO
-    text:
+      - Hidden HTTP Tunnel
+    isoDate:
+      description: ISO representation of a date
       type: string
-    resultsOfDetections:
-      allOf:
-      - $ref: '#/components/schemas/results'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/detection'
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
+    vectraScore:
+      type: number
+      minimum: 0
+      maximum: 99
+      example: 80
     queryDetectionFields:
       type: array
       items:
@@ -782,57 +844,6 @@ components:
         - is_custom_model
         - grouped_details
         - summary
-    noteRequestBody:
-      type: object
-      properties:
-        note:
-          $ref: '#/components/schemas/text'
-      required:
-      - note
-    arrayOfNames:
-      description: Array of names
-      type: array
-      items:
-        $ref: '#/components/schemas/name'
-    detectionType:
-      type: string
-      enum:
-      - Hidden HTTP Tunnel
-    vectraScore:
-      type: number
-      minimum: 0
-      maximum: 99
-      example: 80
-    tagsRequestBody:
-      type: object
-      properties:
-        tags:
-          type: array
-          items:
-          - $ref: '#/components/schemas/text'
-      required:
-      - tags
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    positiveInt:
-      type: integer
-      format: int32
-      minimum: 0
-    name:
-      type: string
-      minLength: 1
-    isoDate:
-      description: ISO representation of a date
-      type: string
-      format: date-time
-      example: '2022-01-01T00:00:00Z'
     link:
       description: URL Link
       type:
@@ -840,15 +851,35 @@ components:
       - 'null'
       format: uri
       example: https://dummy.link
-    arrayOfIDs:
-      description: Array of IDs
+    state:
+      type: string
+      enum:
+      - active
+      - inactive
+      example: active
+    arrayOfNames:
+      description: Array of names
       type: array
       items:
-        $ref: '#/components/schemas/ID'
+        $ref: '#/components/schemas/name'
     IP:
       description: IP Address
       type: string
       example: 192.168.1.55
+    groupType:
+      type: string
+      enum:
+      - ip
+      - host
+    resultsOfDetections:
+      allOf:
+      - $ref: '#/components/schemas/results'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/detection'
     note:
       type: object
       properties:
@@ -876,17 +907,31 @@ components:
             - 'null'
         note:
           $ref: '#/components/schemas/text'
-    state:
+    detectionCategory:
       type: string
       enum:
-      - active
-      - inactive
-      example: active
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
+      - COMMAND & CONTROL
+      - botnet
+      - reconnaissance
+      - lateral
+      - exfiltration
+      - INFO
+      example: INFO
+    queryDetectionCategory:
+      type: string
+      enum:
+      - command
+      - botnet
+      - reconnaissance
+      - lateral
+      - exfiltration
+      - info
+      example: command
+    booleanString:
+      type: string
+      enum:
+      - 'true'
+      - 'false'
     detection:
       type: object
       properties:
@@ -1112,78 +1157,20 @@ components:
               bytes_sent:
                 $ref: '#/components/schemas/positiveInt'
           - type: object
-    detectionMarkRequestBody:
-      type: object
-      properties:
-        detectionIdList:
-          $ref: '#/components/schemas/arrayOfIDs'
-        mark_as_fixed:
-          $ref: '#/components/schemas/booleanString'
-      required:
-      - detectionIdList
-      - mark_as_fixed
-    port:
+    text:
+      type: string
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    name:
+      type: string
+      minLength: 1
+    positiveInt:
       type: integer
       format: int32
       minimum: 0
-      maximum: 65535
-    booleanString:
-      type: string
-      enum:
-      - 'true'
-      - 'false'
-    tags:
-      type: object
-      properties:
-        status:
-          type: string
-        tag_id:
-          $ref: '#/components/schemas/ID'
-        tags:
-          type: array
-          items:
-          - $ref: '#/components/schemas/text'
-    queryDetectionCategory:
-      type: string
-      enum:
-      - command
-      - botnet
-      - reconnaissance
-      - lateral
-      - exfiltration
-      - info
-      example: command
-    results:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/positiveInt'
-        next:
-          $ref: '#/components/schemas/link'
-        previous:
-          $ref: '#/components/schemas/link'
-    groupType:
-      type: string
-      enum:
-      - ip
-      - host
-    Note:
-      type: object
-      properties:
-        id:
-          type: integer
-        created_by:
-          type: string
-        modified_by:
-          type: string
-        note:
-          type: string
-        date_created:
-          type: string
-          format: date-time
-        date_modified:
-          type: string
-          format: date-time
     Detection:
       type: object
       properties:
@@ -1207,15 +1194,24 @@ components:
         last_timestamp:
           type: string
           format: date-time
+    Note:
+      type: object
+      properties:
+        id:
+          type: integer
+        created_by:
+          type: string
+        modified_by:
+          type: string
+        note:
+          type: string
+        date_created:
+          type: string
+          format: date-time
+        date_modified:
+          type: string
+          format: date-time
   responses:
-    invalidPermissions:
-      description: Invalid User Permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: You do not have permission to perform this action.
     invalidToken:
       description: Invalid User Token
       content:
@@ -1224,6 +1220,14 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
     notFound:
       description: Object not found
       content:

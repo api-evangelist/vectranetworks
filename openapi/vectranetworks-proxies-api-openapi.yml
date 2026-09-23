@@ -156,56 +156,6 @@ paths:
                   $ref: '#/components/examples/errorInvalidIP'
 components:
   schemas:
-    name:
-      type: string
-      minLength: 1
-    isoDateMicroseconds:
-      description: ISO representation of a date with microseconds
-      type: string
-      format: date-time
-      example: '2022-01-01T00:00:00.123456+00:00'
-    proxy:
-      description: Proxy
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/proxyID'
-        address:
-          $ref: '#/components/schemas/IP'
-        considerProxy:
-          type: boolean
-        source:
-          $ref: '#/components/schemas/name'
-        createdAt:
-          $ref: '#/components/schemas/isoDateMicroseconds'
-        lastUpdatedAt:
-          $ref: '#/components/schemas/isoDateMicroseconds'
-      required:
-      - id
-      - address
-      - considerProxy
-      - source
-      - createdAt
-      - lastUpdatedAt
-    proxyID:
-      type: string
-      minLength: 32
-      maxLength: 32
-      example: 5832ba020b764c0395f774b49c03ed3b
-    IP:
-      description: IP Address
-      type: string
-      example: 192.168.1.55
-    schemas_error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-          - type: object
-            properties:
-              title:
-                type: string
     resultsOfProxies:
       type: object
       properties:
@@ -232,10 +182,29 @@ components:
         details:
           description: A human readable error message
           type: string
-    positiveInt:
-      type: integer
-      format: int32
-      minimum: 0
+    proxy:
+      description: Proxy
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/proxyID'
+        address:
+          $ref: '#/components/schemas/IP'
+        considerProxy:
+          type: boolean
+        source:
+          $ref: '#/components/schemas/name'
+        createdAt:
+          $ref: '#/components/schemas/isoDateMicroseconds'
+        lastUpdatedAt:
+          $ref: '#/components/schemas/isoDateMicroseconds'
+      required:
+      - id
+      - address
+      - considerProxy
+      - source
+      - createdAt
+      - lastUpdatedAt
     proxyRequestBody:
       type: object
       properties:
@@ -243,28 +212,38 @@ components:
           $ref: '#/components/schemas/IP'
         considerProxy:
           type: boolean
-  responses:
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
-    invalidPermissions:
-      description: Invalid User Permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: You do not have permission to perform this action.
-  examples:
-    errorWrongPayload:
-      value:
+    IP:
+      description: IP Address
+      type: string
+      example: 192.168.1.55
+    name:
+      type: string
+      minLength: 1
+    schemas_error:
+      type: object
+      properties:
         errors:
-        - title: Error loading JSON data from POST request
+          type: array
+          items:
+          - type: object
+            properties:
+              title:
+                type: string
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    isoDateMicroseconds:
+      description: ISO representation of a date with microseconds
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00.123456+00:00'
+    proxyID:
+      type: string
+      minLength: 32
+      maxLength: 32
+      example: 5832ba020b764c0395f774b49c03ed3b
+  examples:
     errorWrongID:
       value:
         errors:
@@ -277,10 +256,31 @@ components:
       value:
         errors:
         - title: IP not valid.
+    errorWrongPayload:
+      value:
+        errors:
+        - title: Error loading JSON data from POST request
     errorNotFound:
       value:
         errors:
         - title: No matching proxy found
+  responses:
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
   securitySchemes:
     VectraToken:
       type: apiKey
