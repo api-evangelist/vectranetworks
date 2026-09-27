@@ -167,6 +167,31 @@ paths:
         vectra_portal_url:
           default: platform.vectra.ai
 components:
+  responses:
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    notFound:
+      description: Object not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            detail: Not Found.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
   schemas:
     error:
       type: object
@@ -197,31 +222,6 @@ components:
           type: string
           format: uri
           description: URI of the threat feed file
-  responses:
-    notFound:
-      description: Object not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            detail: Not Found.
-    invalidPermissions:
-      description: Invalid User Permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: You do not have permission to perform this action.
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
   securitySchemes:
     VectraToken:
       type: apiKey

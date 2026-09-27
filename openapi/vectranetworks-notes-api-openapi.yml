@@ -354,6 +354,16 @@ paths:
           $ref: '#/components/responses/invalidPermissions'
 components:
   schemas:
+    name:
+      type: string
+      minLength: 1
+    isoDate:
+      description: ISO representation of a date
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
+    text:
+      type: string
     error:
       type: object
       properties:
@@ -363,21 +373,6 @@ components:
         details:
           description: A human readable error message
           type: string
-    text:
-      type: string
-    isoDate:
-      description: ISO representation of a date
-      type: string
-      format: date-time
-      example: '2022-01-01T00:00:00Z'
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
-    name:
-      type: string
-      minLength: 1
     noteRequestBody:
       type: object
       properties:
@@ -412,15 +407,12 @@ components:
             - 'null'
         note:
           $ref: '#/components/schemas/text'
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
   responses:
-    invalidPermissions:
-      description: Invalid User Permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: You do not have permission to perform this action.
     invalidToken:
       description: Invalid User Token
       content:
@@ -429,6 +421,14 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
   securitySchemes:
     VectraToken:
       type: apiKey

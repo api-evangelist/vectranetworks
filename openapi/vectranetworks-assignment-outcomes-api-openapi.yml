@@ -161,32 +161,22 @@ paths:
         '404':
           description: Error during outcome deletion
 components:
+  examples:
+    assignmentOutcomeUserCreated:
+      value:
+        id: 8
+        builtin: false
+        user_selectable: true
+        title: User created outcome
+        category: false_positive
+    assignmentOutcomeBuiltin:
+      value:
+        id: 1
+        builtin: true
+        user_selectable: true
+        title: Benign True Positive
+        category: benign_true_positive
   schemas:
-    assignmentOutcomeRequestBody:
-      type: object
-      properties:
-        title:
-          type: string
-        category:
-          $ref: '#/components/schemas/assignmentOutcomeCategory'
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    results:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/positiveInt'
-        next:
-          $ref: '#/components/schemas/link'
-        previous:
-          $ref: '#/components/schemas/link'
     resultsOfAssignmentOutcomes:
       allOf:
       - $ref: '#/components/schemas/results'
@@ -196,6 +186,35 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/assignmentOutcome'
+    assignmentOutcomeRequestBody:
+      type: object
+      properties:
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/assignmentOutcomeCategory'
+    results:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/positiveInt'
+        next:
+          $ref: '#/components/schemas/link'
+        previous:
+          $ref: '#/components/schemas/link'
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
     assignmentOutcomeCategory:
       title: Assignment Outcome allowed categories
       type: string
@@ -203,11 +222,6 @@ components:
       - benign_true_positive
       - malicious_true_positive
       - false_positive
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
     assignmentOutcome:
       description: Label resolution outcome for an assignment
       type: object
@@ -235,11 +249,20 @@ components:
       - 'null'
       format: uri
       example: https://dummy.link
-    positiveInt:
+    ID:
+      description: ID
       type: integer
       format: int32
-      minimum: 0
+      minimum: 1
   responses:
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
     notFound:
       description: Object not found
       content:
@@ -256,29 +279,6 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: You do not have permission to perform this action.
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
-  examples:
-    assignmentOutcomeBuiltin:
-      value:
-        id: 1
-        builtin: true
-        user_selectable: true
-        title: Benign True Positive
-        category: benign_true_positive
-    assignmentOutcomeUserCreated:
-      value:
-        id: 8
-        builtin: false
-        user_selectable: true
-        title: User created outcome
-        category: false_positive
   securitySchemes:
     VectraToken:
       type: apiKey
