@@ -261,24 +261,9 @@ paths:
         vectra_portal_url:
           default: platform.vectra.ai
 components:
-  responses:
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
-    invalidPermissions:
-      description: Invalid User Permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: You do not have permission to perform this action.
   schemas:
+    text:
+      type: string
     tagsRequestBody:
       type: object
       properties:
@@ -288,8 +273,6 @@ components:
           - $ref: '#/components/schemas/text'
       required:
       - tags
-    text:
-      type: string
     error:
       type: object
       properties:
@@ -340,6 +323,23 @@ components:
           items:
             type: string
           description: List of tags which are invalid. Only present when status is 'failure'
+  responses:
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
   securitySchemes:
     VectraToken:
       type: apiKey

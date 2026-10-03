@@ -354,16 +354,18 @@ paths:
           $ref: '#/components/responses/invalidPermissions'
 components:
   schemas:
+    text:
+      type: string
     name:
       type: string
       minLength: 1
-    isoDate:
-      description: ISO representation of a date
-      type: string
-      format: date-time
-      example: '2022-01-01T00:00:00Z'
-    text:
-      type: string
+    noteRequestBody:
+      type: object
+      properties:
+        note:
+          $ref: '#/components/schemas/text'
+      required:
+      - note
     error:
       type: object
       properties:
@@ -373,13 +375,6 @@ components:
         details:
           description: A human readable error message
           type: string
-    noteRequestBody:
-      type: object
-      properties:
-        note:
-          $ref: '#/components/schemas/text'
-      required:
-      - note
     note:
       type: object
       properties:
@@ -412,6 +407,11 @@ components:
       type: integer
       format: int32
       minimum: 1
+    isoDate:
+      description: ISO representation of a date
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
   responses:
     invalidToken:
       description: Invalid User Token

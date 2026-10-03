@@ -161,38 +161,7 @@ paths:
         '404':
           description: Error during outcome deletion
 components:
-  examples:
-    assignmentOutcomeUserCreated:
-      value:
-        id: 8
-        builtin: false
-        user_selectable: true
-        title: User created outcome
-        category: false_positive
-    assignmentOutcomeBuiltin:
-      value:
-        id: 1
-        builtin: true
-        user_selectable: true
-        title: Benign True Positive
-        category: benign_true_positive
   schemas:
-    resultsOfAssignmentOutcomes:
-      allOf:
-      - $ref: '#/components/schemas/results'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/assignmentOutcome'
-    assignmentOutcomeRequestBody:
-      type: object
-      properties:
-        title:
-          type: string
-        category:
-          $ref: '#/components/schemas/assignmentOutcomeCategory'
     results:
       type: object
       properties:
@@ -206,6 +175,20 @@ components:
       type: integer
       format: int32
       minimum: 0
+    link:
+      description: URL Link
+      type:
+      - string
+      - 'null'
+      format: uri
+      example: https://dummy.link
+    assignmentOutcomeRequestBody:
+      type: object
+      properties:
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/assignmentOutcomeCategory'
     error:
       type: object
       properties:
@@ -215,13 +198,15 @@ components:
         details:
           description: A human readable error message
           type: string
-    assignmentOutcomeCategory:
-      title: Assignment Outcome allowed categories
-      type: string
-      enum:
-      - benign_true_positive
-      - malicious_true_positive
-      - false_positive
+    resultsOfAssignmentOutcomes:
+      allOf:
+      - $ref: '#/components/schemas/results'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/assignmentOutcome'
     assignmentOutcome:
       description: Label resolution outcome for an assignment
       type: object
@@ -242,18 +227,33 @@ components:
       - user_selectable
       - title
       - category
-    link:
-      description: URL Link
-      type:
-      - string
-      - 'null'
-      format: uri
-      example: https://dummy.link
     ID:
       description: ID
       type: integer
       format: int32
       minimum: 1
+    assignmentOutcomeCategory:
+      title: Assignment Outcome allowed categories
+      type: string
+      enum:
+      - benign_true_positive
+      - malicious_true_positive
+      - false_positive
+  examples:
+    assignmentOutcomeBuiltin:
+      value:
+        id: 1
+        builtin: true
+        user_selectable: true
+        title: Benign True Positive
+        category: benign_true_positive
+    assignmentOutcomeUserCreated:
+      value:
+        id: 8
+        builtin: false
+        user_selectable: true
+        title: User created outcome
+        category: false_positive
   responses:
     invalidToken:
       description: Invalid User Token
@@ -263,14 +263,6 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: Invalid token.
-    notFound:
-      description: Object not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            detail: Not Found.
     invalidPermissions:
       description: Invalid User Permissions
       content:
@@ -279,6 +271,14 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: You do not have permission to perform this action.
+    notFound:
+      description: Object not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            detail: Not Found.
   securitySchemes:
     VectraToken:
       type: apiKey

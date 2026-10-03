@@ -155,19 +155,35 @@ paths:
                 Invalid IP:
                   $ref: '#/components/examples/errorInvalidIP'
 components:
+  examples:
+    errorWrongID:
+      value:
+        errors:
+        - title: Matching id not present in db.
+    errorNotFound:
+      value:
+        errors:
+        - title: No matching proxy found
+    errorIPAlreadyUsed:
+      value:
+        errors:
+        - title: IP already listed.
+    errorInvalidIP:
+      value:
+        errors:
+        - title: IP not valid.
+    errorWrongPayload:
+      value:
+        errors:
+        - title: Error loading JSON data from POST request
   schemas:
-    isoDateMicroseconds:
-      description: ISO representation of a date with microseconds
+    name:
       type: string
-      format: date-time
-      example: '2022-01-01T00:00:00.123456+00:00'
+      minLength: 1
     IP:
       description: IP Address
       type: string
       example: 192.168.1.55
-    name:
-      type: string
-      minLength: 1
     positiveInt:
       type: integer
       format: int32
@@ -203,6 +219,23 @@ components:
       required:
       - meta
       - proxies
+    proxyRequestBody:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/IP'
+        considerProxy:
+          type: boolean
+    schemas_error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+          - type: object
+            properties:
+              title:
+                type: string
     proxy:
       description: Proxy
       type: object
@@ -226,44 +259,11 @@ components:
       - source
       - createdAt
       - lastUpdatedAt
-    schemas_error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-          - type: object
-            properties:
-              title:
-                type: string
-    proxyRequestBody:
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/IP'
-        considerProxy:
-          type: boolean
-  examples:
-    errorNotFound:
-      value:
-        errors:
-        - title: No matching proxy found
-    errorInvalidIP:
-      value:
-        errors:
-        - title: IP not valid.
-    errorWrongPayload:
-      value:
-        errors:
-        - title: Error loading JSON data from POST request
-    errorIPAlreadyUsed:
-      value:
-        errors:
-        - title: IP already listed.
-    errorWrongID:
-      value:
-        errors:
-        - title: Matching id not present in db.
+    isoDateMicroseconds:
+      description: ISO representation of a date with microseconds
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00.123456+00:00'
   responses:
     invalidToken:
       description: Invalid User Token

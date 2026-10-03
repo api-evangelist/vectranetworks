@@ -319,6 +319,20 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Entity:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        urgency:
+          type: integer
+        importance:
+          type: integer
+        last_detection_timestamp:
+          type: string
+          format: date-time
     Note:
       type: object
       properties:
@@ -334,20 +348,6 @@ components:
           type: string
           format: date-time
         date_modified:
-          type: string
-          format: date-time
-    Entity:
-      type: object
-      properties:
-        id:
-          type: integer
-        type:
-          type: string
-        urgency:
-          type: integer
-        importance:
-          type: integer
-        last_detection_timestamp:
           type: string
           format: date-time
   securitySchemes:

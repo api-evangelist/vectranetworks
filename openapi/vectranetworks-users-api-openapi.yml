@@ -129,116 +129,25 @@ paths:
           description: The API version to use
           default: v2.3
 components:
-  schemas:
-    user:
-      description: Vectra User object
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ID'
-        last_login:
-          $ref: '#/components/schemas/isoDate'
-        username:
-          $ref: '#/components/schemas/name'
-        email:
-          $ref: '#/components/schemas/email'
-        account_type:
-          $ref: '#/components/schemas/userType'
-        authentication_profile:
-          $ref: '#/components/schemas/userAuthProfile'
-        role:
-          $ref: '#/components/schemas/userRole'
-      required:
-      - id
-      - last_login
-      - username
-      - email
-      - account_type
-      - authentication_profile
-      - role
-    email:
-      type: string
-      format: email
-    positiveInt:
-      type: integer
-      format: int32
-      minimum: 0
-    isoDate:
-      description: ISO representation of a date
-      type: string
-      format: date-time
-      example: '2022-01-01T00:00:00Z'
-    name:
-      type: string
-      minLength: 1
-    userAuthProfile:
-      description: Vectra User authentication profile when coming from SAML or LDAP
-      type:
-      - string
-      - 'null'
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
-    results:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/positiveInt'
-        next:
-          $ref: '#/components/schemas/link'
-        previous:
-          $ref: '#/components/schemas/link'
-    link:
-      description: URL Link
-      type:
-      - string
-      - 'null'
-      format: uri
-      example: https://dummy.link
-    userRole:
-      description: Vectra User Role
-      type: string
-    userType:
-      description: Vectra User type
-      type: string
-      enum:
-      - local
-      - SAML
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    resultsOfUsers:
-      allOf:
-      - $ref: '#/components/schemas/results'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/user'
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        email:
-          type: string
-        role:
-          type: string
-        last_login_timestamp:
-          type: string
-          format: date-time
   examples:
+    userAdminExample:
+      value:
+        id: 20
+        last_login: '2022-01-01T12:34:56Z'
+        username: admin
+        email: ''
+        account_type: local
+        authentication_profile: null
+        role: Super Admin
+    userSAMLExample:
+      value:
+        id: 129
+        last_login: '2022-01-01T12:34:56'
+        username: SAML:dummy-user@company.com
+        email: dummy-user@company.com
+        account_type: SAML
+        authentication_profile: Company SE
+        role: Custom Admin
     multipleExample:
       value:
         count: 3
@@ -266,6 +175,12 @@ components:
           account_type: SAML
           authentication_profile: Company SE
           role: Custom Admin
+    noneUsers:
+      value:
+        count: 0
+        next: null
+        previous: null
+        results: []
     userLocalExample:
       value:
         id: 101
@@ -275,47 +190,116 @@ components:
         account_type: local
         authentication_profile: null
         role: Read-Only
-    userAdminExample:
-      value:
-        id: 20
-        last_login: '2022-01-01T12:34:56Z'
-        username: admin
-        email: ''
-        account_type: local
-        authentication_profile: null
-        role: Super Admin
-    noneUsers:
-      value:
-        count: 0
-        next: null
-        previous: null
-        results: []
-    userSAMLExample:
-      value:
-        id: 129
-        last_login: '2022-01-01T12:34:56'
-        username: SAML:dummy-user@company.com
-        email: dummy-user@company.com
-        account_type: SAML
-        authentication_profile: Company SE
-        role: Custom Admin
+  schemas:
+    userType:
+      description: Vectra User type
+      type: string
+      enum:
+      - local
+      - SAML
+    userRole:
+      description: Vectra User Role
+      type: string
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    results:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/positiveInt'
+        next:
+          $ref: '#/components/schemas/link'
+        previous:
+          $ref: '#/components/schemas/link'
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    link:
+      description: URL Link
+      type:
+      - string
+      - 'null'
+      format: uri
+      example: https://dummy.link
+    userAuthProfile:
+      description: Vectra User authentication profile when coming from SAML or LDAP
+      type:
+      - string
+      - 'null'
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    resultsOfUsers:
+      allOf:
+      - $ref: '#/components/schemas/results'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/user'
+    isoDate:
+      description: ISO representation of a date
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
+    email:
+      type: string
+      format: email
+    name:
+      type: string
+      minLength: 1
+    user:
+      description: Vectra User object
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        last_login:
+          $ref: '#/components/schemas/isoDate'
+        username:
+          $ref: '#/components/schemas/name'
+        email:
+          $ref: '#/components/schemas/email'
+        account_type:
+          $ref: '#/components/schemas/userType'
+        authentication_profile:
+          $ref: '#/components/schemas/userAuthProfile'
+        role:
+          $ref: '#/components/schemas/userRole'
+      required:
+      - id
+      - last_login
+      - username
+      - email
+      - account_type
+      - authentication_profile
+      - role
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        last_login_timestamp:
+          type: string
+          format: date-time
   responses:
-    invalidPermissions:
-      description: Invalid User Permissions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: You do not have permission to perform this action.
-    invalidQueryParameter:
-      description: Invalid Query Parameter
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: 'The following query parameter(s) are invalid: xxx.'
     invalidToken:
       description: Invalid User Token
       content:
@@ -324,6 +308,22 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: Invalid token.
+    invalidQueryParameter:
+      description: Invalid Query Parameter
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: 'The following query parameter(s) are invalid: xxx.'
+    invalidPermissions:
+      description: Invalid User Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: You do not have permission to perform this action.
   securitySchemes:
     VectraToken:
       type: apiKey
