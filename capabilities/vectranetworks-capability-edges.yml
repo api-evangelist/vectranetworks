@@ -1,0 +1,115 @@
+slug: vectranetworks
+provider: Vectra AI
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 10
+edges:
+- tag: Detections
+  spec_file: vectranetworks-detections-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.95
+  evidence: GET /detections 'Get all detections'; 'Mark/Unmark several Detections as fixed'; 'Download
+    a Detection PCAP'; schema 'detectionCategory'
+  reason: 'Core NDR detection surface: security detections with threat scores, PCAP evidence and triage
+    state — unambiguously SOC threat detection and response.'
+- tag: Events
+  spec_file: vectranetworks-events-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: GET /events/detections getDetectionEvents 'Retrieve detection events'; GET /events/entity_scoring
+    'Retrieve entity scoring events'; GET /events/audits 'Retrieve audit log events'
+  reason: Event streams of detections, entity threat scoring and security audit logs — the SIEM/SOC feed
+    of a network detection and response platform.
+- tag: Accounts
+  spec_file: vectranetworks-accounts-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: '''Get several Accounts'', schemas ''vectraScore'', ''privilegeCategory'', ''assignment''
+    — vendor is an ''AI-native network detection and response (NDR) platform'''
+  reason: 'Homograph: ''Accounts'' here are identity/user accounts scored for attacker behaviour in an
+    NDR platform, with threat scores, privilege categories and analyst assignments — SOC threat detection
+    and response, not customer accounts or financial accounts.'
+- tag: Assignments
+  spec_file: vectranetworks-assignments-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: POST /assignments assignmentAssign 'Used to assign an entity to a user'; PUT /assignment/{assignmentID}/resolve
+    'Resolve an assignment'; schemas 'assignmentHostRequestBody', 'assignmentAccountRequestBody'
+  reason: Assigning detected entities (hosts/accounts) to analysts and resolving them is SOC triage workflow
+    within threat detection and response.
+- tag: Entities
+  spec_file: vectranetworks-entities-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: GET /entities getEntities 'Retrieve all entities'; description 'Vectra's breach detection
+    data'
+  reason: Entities are the hosts/accounts carrying breach-detection signal, annotated with analyst notes
+    — part of SOC detection and investigation workflow.
+- tag: Hosts
+  spec_file: vectranetworks-hosts-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: GET /hosts hostGetSeveral 'Get several Hosts'; schemas 'vectraScore', 'privilegeCategory',
+    'assignment'
+  reason: Hosts are monitored network assets carrying Vectra threat scores and analyst assignments — detection
+    and response inventory within the SOC, not IT asset management per se.
+- tag: Threat Feeds
+  spec_file: vectranetworks-threat-feeds-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: 'POST /threatFeeds createThreatFeed Create a new threat feed; schemas: ThreatFeed'
+  reason: Lifecycle management of threat intelligence feeds consumed by the NDR detection engine — squarely
+    security threat detection and response rather than any commercial feed concept.
+- tag: Assignment Outcomes
+  spec_file: vectranetworks-assignment-outcomes-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.78
+  evidence: GET /assignment_outcomes assignmentOutcomeGetSeveral 'Get all assignment outcomes'; schema
+    'assignmentOutcomeCategory'
+  reason: Outcome taxonomy used to close out analyst triage assignments on detections in the SOC workflow
+    — part of threat detection and response disposition handling, not HR assignments.
+- tag: Match
+  spec_file: vectranetworks-match-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.78
+  evidence: GET /vectra-match/rules ... POST /vectra-match/rules uploadVectraMatchRules Create or upload
+    Vectra Match rules; getVectraMatchAlertStats Retrieve Vectra Match alert statistics
+  reason: Vectra Match configures signature/detection rules on sensors and reports alert statistics for
+    breach detection — this is security threat detection tooling within an NDR platform, i.e. Threat Detection
+    & Response, not any business 'matching' concept.
+- tag: Lockdown
+  spec_file: vectranetworks-lockdown-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.75
+  evidence: GET /lockdown getLockdownEntities 'Retrieve entities in lockdown mode'
+  reason: Lockdown is the containment/response action applied to compromised entities in the NDR platform
+    — response side of threat detection and response. Single read-only operation keeps confidence moderate.
