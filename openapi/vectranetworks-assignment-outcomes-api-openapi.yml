@@ -171,17 +171,15 @@ components:
           $ref: '#/components/schemas/link'
         previous:
           $ref: '#/components/schemas/link'
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
     positiveInt:
       type: integer
       format: int32
       minimum: 0
-    link:
-      description: URL Link
-      type:
-      - string
-      - 'null'
-      format: uri
-      example: https://dummy.link
     assignmentOutcomeRequestBody:
       type: object
       properties:
@@ -189,24 +187,6 @@ components:
           type: string
         category:
           $ref: '#/components/schemas/assignmentOutcomeCategory'
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    resultsOfAssignmentOutcomes:
-      allOf:
-      - $ref: '#/components/schemas/results'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/assignmentOutcome'
     assignmentOutcome:
       description: Label resolution outcome for an assignment
       type: object
@@ -227,11 +207,24 @@ components:
       - user_selectable
       - title
       - category
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
+    resultsOfAssignmentOutcomes:
+      allOf:
+      - $ref: '#/components/schemas/results'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/assignmentOutcome'
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
     assignmentOutcomeCategory:
       title: Assignment Outcome allowed categories
       type: string
@@ -239,6 +232,13 @@ components:
       - benign_true_positive
       - malicious_true_positive
       - false_positive
+    link:
+      description: URL Link
+      type:
+      - string
+      - 'null'
+      format: uri
+      example: https://dummy.link
   examples:
     assignmentOutcomeBuiltin:
       value:

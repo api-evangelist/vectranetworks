@@ -262,8 +262,22 @@ paths:
           default: platform.vectra.ai
 components:
   schemas:
-    text:
-      type: string
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    tags:
+      type: object
+      properties:
+        status:
+          type: string
+        tag_id:
+          $ref: '#/components/schemas/ID'
+        tags:
+          type: array
+          items:
+          - $ref: '#/components/schemas/text'
     tagsRequestBody:
       type: object
       properties:
@@ -282,22 +296,8 @@ components:
         details:
           description: A human readable error message
           type: string
-    tags:
-      type: object
-      properties:
-        status:
-          type: string
-        tag_id:
-          $ref: '#/components/schemas/ID'
-        tags:
-          type: array
-          items:
-          - $ref: '#/components/schemas/text'
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
+    text:
+      type: string
     Tag:
       type: object
       properties:

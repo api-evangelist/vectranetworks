@@ -167,6 +167,36 @@ paths:
         vectra_portal_url:
           default: platform.vectra.ai
 components:
+  schemas:
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    ThreatFeed:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        severity:
+          type: string
+        file:
+          type: string
+          format: uri
+          description: URI of the threat feed file
   responses:
     invalidToken:
       description: Invalid User Token
@@ -192,36 +222,6 @@ components:
             $ref: '#/components/schemas/error'
           example:
             detail: Not Found.
-  schemas:
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
-    ThreatFeed:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        severity:
-          type: string
-        file:
-          type: string
-          format: uri
-          description: URI of the threat feed file
   securitySchemes:
     VectraToken:
       type: apiKey

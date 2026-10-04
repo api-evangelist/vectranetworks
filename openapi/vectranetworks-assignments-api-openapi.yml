@@ -357,13 +357,15 @@ paths:
           default: platform.vectra.ai
 components:
   schemas:
-    text:
-      type: string
-    vectraScore:
-      type: number
-      minimum: 0
-      maximum: 99
-      example: 80
+    resultsOfAssignments:
+      allOf:
+      - $ref: '#/components/schemas/results'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/assignment'
     assignmentHistorycalEvent:
       description: Assignment history event
       type: object
@@ -409,15 +411,39 @@ components:
               - type:
                 - string
                 - 'null'
-    error:
+    name:
+      type: string
+      minLength: 1
+    assignmentResolveRequestBody:
       type: object
       properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
+        outcome:
+          $ref: '#/components/schemas/ID'
+        note:
+          $ref: '#/components/schemas/text'
+        triage_as:
+          $ref: '#/components/schemas/name'
+        mark_as_fixed:
+          type: boolean
+        detection_ids:
+          $ref: '#/components/schemas/arrayOfIDs'
+      required:
+      - outcome
+    arrayOfIDs:
+      description: Array of IDs
+      type: array
+      items:
+        $ref: '#/components/schemas/ID'
+    assignmentHostRequestBody:
+      type: object
+      properties:
+        assign_host_id:
+          $ref: '#/components/schemas/ID'
+        assign_to_user_id:
+          $ref: '#/components/schemas/ID'
+      required:
+      - assign_host_id
+      - assign_to_user_id
     assignmentUser:
       description: Assignment user (tiny Vectra User)
       type: object
@@ -429,59 +455,6 @@ components:
       example:
         id: 123
         username: SAML:dummy@company.com
-    assignmentHostRequestBody:
-      type: object
-      properties:
-        assign_host_id:
-          $ref: '#/components/schemas/ID'
-        assign_to_user_id:
-          $ref: '#/components/schemas/ID'
-      required:
-      - assign_host_id
-      - assign_to_user_id
-    arrayOfIDs:
-      description: Array of IDs
-      type: array
-      items:
-        $ref: '#/components/schemas/ID'
-    assignmentEventType:
-      description: Type of event that can happen to an assignment
-      type: string
-      enum:
-      - created
-      - reassigned
-      - resolved
-      example: created
-    assignmentAccountRequestBody:
-      type: object
-      properties:
-        assign_account_id:
-          $ref: '#/components/schemas/ID'
-        assign_to_user_id:
-          $ref: '#/components/schemas/ID'
-      required:
-      - assign_account_id
-      - assign_to_user_id
-    results:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/positiveInt'
-        next:
-          $ref: '#/components/schemas/link'
-        previous:
-          $ref: '#/components/schemas/link'
-    positiveInt:
-      type: integer
-      format: int32
-      minimum: 0
-    link:
-      description: URL Link
-      type:
-      - string
-      - 'null'
-      format: uri
-      example: https://dummy.link
     assignment:
       description: Assignment
       type: object
@@ -539,26 +512,37 @@ components:
       - assigned_by
       - date_assigned
       - assigned_to
-    assignmentResolveRequestBody:
-      type: object
-      properties:
-        outcome:
-          $ref: '#/components/schemas/ID'
-        note:
-          $ref: '#/components/schemas/text'
-        triage_as:
-          $ref: '#/components/schemas/name'
-        mark_as_fixed:
-          type: boolean
-        detection_ids:
-          $ref: '#/components/schemas/arrayOfIDs'
-      required:
-      - outcome
     ID:
       description: ID
       type: integer
       format: int32
       minimum: 1
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    assignmentEventType:
+      description: Type of event that can happen to an assignment
+      type: string
+      enum:
+      - created
+      - reassigned
+      - resolved
+      example: created
+    isoDate:
+      description: ISO representation of a date
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
     assignmentOutcomeCategory:
       title: Assignment Outcome allowed categories
       type: string
@@ -566,6 +550,18 @@ components:
       - benign_true_positive
       - malicious_true_positive
       - false_positive
+    link:
+      description: URL Link
+      type:
+      - string
+      - 'null'
+      format: uri
+      example: https://dummy.link
+    vectraScore:
+      type: number
+      minimum: 0
+      maximum: 99
+      example: 80
     assignmentOutcome:
       description: Label resolution outcome for an assignment
       type: object
@@ -586,14 +582,16 @@ components:
       - user_selectable
       - title
       - category
-    isoDate:
-      description: ISO representation of a date
-      type: string
-      format: date-time
-      example: '2022-01-01T00:00:00Z'
-    name:
-      type: string
-      minLength: 1
+    assignmentAccountRequestBody:
+      type: object
+      properties:
+        assign_account_id:
+          $ref: '#/components/schemas/ID'
+        assign_to_user_id:
+          $ref: '#/components/schemas/ID'
+      required:
+      - assign_account_id
+      - assign_to_user_id
     assignmentUpdateRequestBody:
       type: object
       properties:
@@ -601,15 +599,17 @@ components:
           $ref: '#/components/schemas/ID'
       required:
       - assign_to_user_id
-    resultsOfAssignments:
-      allOf:
-      - $ref: '#/components/schemas/results'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/assignment'
+    results:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/positiveInt'
+        next:
+          $ref: '#/components/schemas/link'
+        previous:
+          $ref: '#/components/schemas/link'
+    text:
+      type: string
     Assignment:
       type: object
       properties:
@@ -628,23 +628,59 @@ components:
         outcome:
           type: integer
   examples:
-    assignmentBenignPositiveResolveWithTriageRequestBody:
+    assignmentSimpleResolution:
       value:
-        outcome: 1
-        note: This is a benign positive assignment resolution with triage rules
-        triage_as: My triage rule name
-        detection_ids:
-        - 1
-        - 2
-        - 3
-    assignmentFalsePositiveResolveNoTriageRequestBody:
-      value:
-        outcome: 3
-        note: This is a test false positive assignment resolution
-    userCannotBeAssigned:
-      value:
-        errors:
-        - title: User 101 does not have permissions to be assigned to hosts.
+        assignment:
+          id: 18
+          assigned_by:
+            id: 12
+            username: other-user
+          date_assigned: '2022-01-02T12:34:56Z'
+          date_resolved: '2022-01-03T12:34:56Z'
+          events:
+          - assignment_id: 18
+            actor: 82
+            event_type: resolved
+            datetime: '2022-01-03T12:34:56Z'
+            context:
+              entity_t_score: 75
+              entity_c_score: 85
+              triage_as: null
+              triaged_detection_ids: null
+              fixed_detection_ids: null
+              created_rule_ids: null
+          - assignment_id: 18
+            actor: 12
+            event_type: reassigned
+            datetime: '2022-01-02T12:34:56Z'
+            context:
+              from: 80
+              to: 82
+              entity_t_score: 75
+              entity_c_score: 85
+          - assignment_id: 18
+            actor: 123
+            event_type: created
+            datetime: '2022-01-01T12:34:56Z'
+            context:
+              to: 80
+              entity_t_score: 55
+              entity_c_score: 65
+          outcome:
+            id: 3
+            builtin: true
+            user_selectable: true
+            title: False Positive
+            category: false_positive
+          resolved_by:
+            id: 82
+            username: SAML:other-user@company.com
+          triaged_detections: []
+          host_id: null
+          account_id: 25
+          assigned_to:
+            id: 82
+            username: SAML:other-user@company.com
     assignmentTriagedResolution:
       value:
         assignment:
@@ -730,68 +766,6 @@ components:
           assigned_to:
             id: 82
             username: SAML:other-user@company.com
-    assignmentTruePositiveResolveWithMarkAsFixedRequestBody:
-      value:
-        outcome: 1
-        note: This is a true positive assignment resolution with mark as fixed
-        mark_as_fixed: true
-        detection_ids:
-        - 1
-        - 2
-        - 3
-    assignmentSimpleResolution:
-      value:
-        assignment:
-          id: 18
-          assigned_by:
-            id: 12
-            username: other-user
-          date_assigned: '2022-01-02T12:34:56Z'
-          date_resolved: '2022-01-03T12:34:56Z'
-          events:
-          - assignment_id: 18
-            actor: 82
-            event_type: resolved
-            datetime: '2022-01-03T12:34:56Z'
-            context:
-              entity_t_score: 75
-              entity_c_score: 85
-              triage_as: null
-              triaged_detection_ids: null
-              fixed_detection_ids: null
-              created_rule_ids: null
-          - assignment_id: 18
-            actor: 12
-            event_type: reassigned
-            datetime: '2022-01-02T12:34:56Z'
-            context:
-              from: 80
-              to: 82
-              entity_t_score: 75
-              entity_c_score: 85
-          - assignment_id: 18
-            actor: 123
-            event_type: created
-            datetime: '2022-01-01T12:34:56Z'
-            context:
-              to: 80
-              entity_t_score: 55
-              entity_c_score: 65
-          outcome:
-            id: 3
-            builtin: true
-            user_selectable: true
-            title: False Positive
-            category: false_positive
-          resolved_by:
-            id: 82
-            username: SAML:other-user@company.com
-          triaged_detections: []
-          host_id: null
-          account_id: 25
-          assigned_to:
-            id: 82
-            username: SAML:other-user@company.com
     assignmentCreated:
       value:
         assignment:
@@ -818,15 +792,33 @@ components:
           assigned_to:
             id: 80
             username: SAML:dummy-user@company.com
+    assignmentTruePositiveResolveWithMarkAsFixedRequestBody:
+      value:
+        outcome: 1
+        note: This is a true positive assignment resolution with mark as fixed
+        mark_as_fixed: true
+        detection_ids:
+        - 1
+        - 2
+        - 3
+    assignmentFalsePositiveResolveNoTriageRequestBody:
+      value:
+        outcome: 3
+        note: This is a test false positive assignment resolution
+    userCannotBeAssigned:
+      value:
+        errors:
+        - title: User 101 does not have permissions to be assigned to hosts.
+    assignmentBenignPositiveResolveWithTriageRequestBody:
+      value:
+        outcome: 1
+        note: This is a benign positive assignment resolution with triage rules
+        triage_as: My triage rule name
+        detection_ids:
+        - 1
+        - 2
+        - 3
   responses:
-    notFound:
-      description: Object not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            detail: Not Found.
     invalidToken:
       description: Invalid User Token
       content:
@@ -835,6 +827,14 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: Invalid token.
+    notFound:
+      description: Object not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            detail: Not Found.
     invalidPermissions:
       description: Invalid User Permissions
       content:

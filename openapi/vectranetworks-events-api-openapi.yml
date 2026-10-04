@@ -170,24 +170,6 @@ paths:
                   $ref: '#/components/schemas/AuditLogEvent'
 components:
   schemas:
-    AuditLogEvent:
-      type: object
-      properties:
-        id:
-          type: integer
-        user_id:
-          type: integer
-        username:
-          type: string
-        event_timestamp:
-          type: string
-          format: date-time
-        message:
-          type: string
-        result_status:
-          type: string
-        event_action:
-          type: string
     EntityScoring:
       type: object
       properties:
@@ -210,6 +192,24 @@ components:
           - Low
           - Medium
           - High
+    AuditLogEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        username:
+          type: string
+        event_timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+        result_status:
+          type: string
+        event_action:
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2

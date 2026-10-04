@@ -156,6 +156,10 @@ paths:
                   $ref: '#/components/examples/errorInvalidIP'
 components:
   examples:
+    errorInvalidIP:
+      value:
+        errors:
+        - title: IP not valid.
     errorWrongID:
       value:
         errors:
@@ -164,44 +168,54 @@ components:
       value:
         errors:
         - title: No matching proxy found
-    errorIPAlreadyUsed:
-      value:
-        errors:
-        - title: IP already listed.
-    errorInvalidIP:
-      value:
-        errors:
-        - title: IP not valid.
     errorWrongPayload:
       value:
         errors:
         - title: Error loading JSON data from POST request
+    errorIPAlreadyUsed:
+      value:
+        errors:
+        - title: IP already listed.
   schemas:
-    name:
-      type: string
-      minLength: 1
-    IP:
-      description: IP Address
-      type: string
-      example: 192.168.1.55
     positiveInt:
       type: integer
       format: int32
       minimum: 0
-    error:
+    isoDateMicroseconds:
+      description: ISO representation of a date with microseconds
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00.123456+00:00'
+    name:
+      type: string
+      minLength: 1
+    proxy:
+      description: Proxy
       type: object
       properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    proxyID:
+        id:
+          $ref: '#/components/schemas/proxyID'
+        address:
+          $ref: '#/components/schemas/IP'
+        considerProxy:
+          type: boolean
+        source:
+          $ref: '#/components/schemas/name'
+        createdAt:
+          $ref: '#/components/schemas/isoDateMicroseconds'
+        lastUpdatedAt:
+          $ref: '#/components/schemas/isoDateMicroseconds'
+      required:
+      - id
+      - address
+      - considerProxy
+      - source
+      - createdAt
+      - lastUpdatedAt
+    IP:
+      description: IP Address
       type: string
-      minLength: 32
-      maxLength: 32
-      example: 5832ba020b764c0395f774b49c03ed3b
+      example: 192.168.1.55
     resultsOfProxies:
       type: object
       properties:
@@ -226,6 +240,15 @@ components:
           $ref: '#/components/schemas/IP'
         considerProxy:
           type: boolean
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
     schemas_error:
       type: object
       properties:
@@ -236,43 +259,12 @@ components:
             properties:
               title:
                 type: string
-    proxy:
-      description: Proxy
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/proxyID'
-        address:
-          $ref: '#/components/schemas/IP'
-        considerProxy:
-          type: boolean
-        source:
-          $ref: '#/components/schemas/name'
-        createdAt:
-          $ref: '#/components/schemas/isoDateMicroseconds'
-        lastUpdatedAt:
-          $ref: '#/components/schemas/isoDateMicroseconds'
-      required:
-      - id
-      - address
-      - considerProxy
-      - source
-      - createdAt
-      - lastUpdatedAt
-    isoDateMicroseconds:
-      description: ISO representation of a date with microseconds
+    proxyID:
       type: string
-      format: date-time
-      example: '2022-01-01T00:00:00.123456+00:00'
+      minLength: 32
+      maxLength: 32
+      example: 5832ba020b764c0395f774b49c03ed3b
   responses:
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
     invalidPermissions:
       description: Invalid User Permissions
       content:
@@ -281,6 +273,14 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: You do not have permission to perform this action.
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
   securitySchemes:
     VectraToken:
       type: apiKey
