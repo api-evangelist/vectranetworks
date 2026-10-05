@@ -1,0 +1,12 @@
+{
+ "url": "https://vectranetworks.github.io/detect-openapi/vectra-detect_v2.3.yaml",
+ "requested_url": "https://vectranetworks.github.io/detect-openapi/vectra-detect_v2.3.yaml",
+ "status": 200,
+ "content_type": "text/yaml",
+ "bytes": 94639,
+ "sha256": "a7e3d691abc2df77f66bff2badebc221ab2f91d513cac57624428f0e115217e2",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}

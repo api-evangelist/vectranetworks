@@ -1,0 +1,12 @@
+{
+ "url": "https://vectranetworks.github.io/openapi-rux/vectra_rux_openapi_v3.3.yaml",
+ "requested_url": "https://vectranetworks.github.io/openapi-rux/vectra_rux_openapi_v3.3.yaml",
+ "status": 200,
+ "content_type": "text/yaml",
+ "bytes": 41831,
+ "sha256": "3136838e9f704646e1509efdde4eb4b40c733f415fd6c166599dc67926a1f869",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
