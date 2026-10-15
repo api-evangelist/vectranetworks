@@ -1,10 +1,78 @@
-generated: '2026-07-21'
-method: derived
-source: openapi/vectranetworks-rux-v3.3-openapi.yml
+generated: '2026-10-14'
+method: none
+source: openapi/vectranetworks-accounts-api-openapi.yml, openapi/vectranetworks-assignments-api-openapi.yml,
+  openapi/vectranetworks-detections-api-openapi.yml, openapi/vectranetworks-entities-api-openapi.yml,
+  openapi/vectranetworks-events-api-openapi.yml, openapi/vectranetworks-groups-api-openapi.yml,
+  openapi/vectranetworks-health-api-openapi.yml, openapi/vectranetworks-hosts-api-openapi.yml,
+  openapi/vectranetworks-lockdown-api-openapi.yml, openapi/vectranetworks-match-api-openapi.yml,
+  openapi/vectranetworks-tagging-api-openapi.yml, openapi/vectranetworks-threat-feeds-api-openapi.yml,
+  openapi/vectranetworks-users-api-openapi.yml
 schemes:
 - name: oauth2
-  source: openapi/vectranetworks-rux-v3.3-openapi.yml
+  source: openapi/vectranetworks-accounts-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-assignments-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-detections-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-entities-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-events-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-groups-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-health-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-hosts-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-lockdown-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-match-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-tagging-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-threat-feeds-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{vectra_portal_url}/oauth2/token
+- name: oauth2
+  source: openapi/vectranetworks-users-api-openapi.yml
   flows:
   - flow: clientCredentials
     tokenUrl: https://{vectra_portal_url}/oauth2/token
 scopes: []
+note: The OAuth2 security scheme(s) in the OpenAPI declare no scopes, and no security requirement
+  references one.
