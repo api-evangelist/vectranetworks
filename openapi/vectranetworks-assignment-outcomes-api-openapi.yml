@@ -162,6 +162,22 @@ paths:
           description: Error during outcome deletion
 components:
   schemas:
+    assignmentOutcomeRequestBody:
+      type: object
+      properties:
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/assignmentOutcomeCategory'
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
     results:
       type: object
       properties:
@@ -171,22 +187,31 @@ components:
           $ref: '#/components/schemas/link'
         previous:
           $ref: '#/components/schemas/link'
+    resultsOfAssignmentOutcomes:
+      allOf:
+      - $ref: '#/components/schemas/results'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/assignmentOutcome'
+    link:
+      description: URL Link
+      type:
+      - string
+      - 'null'
+      format: uri
+      example: https://dummy.link
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
     ID:
       description: ID
       type: integer
       format: int32
       minimum: 1
-    positiveInt:
-      type: integer
-      format: int32
-      minimum: 0
-    assignmentOutcomeRequestBody:
-      type: object
-      properties:
-        title:
-          type: string
-        category:
-          $ref: '#/components/schemas/assignmentOutcomeCategory'
     assignmentOutcome:
       description: Label resolution outcome for an assignment
       type: object
@@ -207,24 +232,6 @@ components:
       - user_selectable
       - title
       - category
-    resultsOfAssignmentOutcomes:
-      allOf:
-      - $ref: '#/components/schemas/results'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/assignmentOutcome'
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
     assignmentOutcomeCategory:
       title: Assignment Outcome allowed categories
       type: string
@@ -232,21 +239,7 @@ components:
       - benign_true_positive
       - malicious_true_positive
       - false_positive
-    link:
-      description: URL Link
-      type:
-      - string
-      - 'null'
-      format: uri
-      example: https://dummy.link
   examples:
-    assignmentOutcomeBuiltin:
-      value:
-        id: 1
-        builtin: true
-        user_selectable: true
-        title: Benign True Positive
-        category: benign_true_positive
     assignmentOutcomeUserCreated:
       value:
         id: 8
@@ -254,6 +247,13 @@ components:
         user_selectable: true
         title: User created outcome
         category: false_positive
+    assignmentOutcomeBuiltin:
+      value:
+        id: 1
+        builtin: true
+        user_selectable: true
+        title: Benign True Positive
+        category: benign_true_positive
   responses:
     invalidToken:
       description: Invalid User Token

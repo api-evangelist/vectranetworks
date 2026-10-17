@@ -129,22 +129,102 @@ paths:
           description: The API version to use
           default: v2.3
 components:
+  examples:
+    userSAMLExample:
+      value:
+        id: 129
+        last_login: '2022-01-01T12:34:56'
+        username: SAML:dummy-user@company.com
+        email: dummy-user@company.com
+        account_type: SAML
+        authentication_profile: Company SE
+        role: Custom Admin
+    noneUsers:
+      value:
+        count: 0
+        next: null
+        previous: null
+        results: []
+    userLocalExample:
+      value:
+        id: 101
+        last_login: '2022-01-01T12:34:56Z'
+        username: dummy-user
+        email: ''
+        account_type: local
+        authentication_profile: null
+        role: Read-Only
+    multipleExample:
+      value:
+        count: 3
+        next: null
+        previous: null
+        results:
+        - id: 20
+          last_login: '2022-01-01T12:34:56Z'
+          username: admin
+          email: ''
+          account_type: local
+          authentication_profile: null
+          role: Super Admin
+        - id: 101
+          last_login: '2022-01-01T12:34:56Z'
+          username: dummy-user
+          email: ''
+          account_type: local
+          authentication_profile: null
+          role: Read-Only
+        - id: 129
+          last_login: '2022-01-01T12:34:56'
+          username: SAML:dummy-user@company.com
+          email: dummy-user@company.com
+          account_type: SAML
+          authentication_profile: Company SE
+          role: Custom Admin
+    userAdminExample:
+      value:
+        id: 20
+        last_login: '2022-01-01T12:34:56Z'
+        username: admin
+        email: ''
+        account_type: local
+        authentication_profile: null
+        role: Super Admin
   schemas:
-    name:
+    userRole:
+      description: Vectra User Role
       type: string
-      minLength: 1
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
-    positiveInt:
-      type: integer
-      format: int32
-      minimum: 0
     email:
       type: string
       format: email
+    name:
+      type: string
+      minLength: 1
+    link:
+      description: URL Link
+      type:
+      - string
+      - 'null'
+      format: uri
+      example: https://dummy.link
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    results:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/positiveInt'
+        next:
+          $ref: '#/components/schemas/link'
+        previous:
+          $ref: '#/components/schemas/link'
     user:
       description: Vectra User object
       type: object
@@ -171,32 +251,15 @@ components:
       - account_type
       - authentication_profile
       - role
-    userAuthProfile:
-      description: Vectra User authentication profile when coming from SAML or LDAP
-      type:
-      - string
-      - 'null'
-    isoDate:
-      description: ISO representation of a date
-      type: string
-      format: date-time
-      example: '2022-01-01T00:00:00Z'
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    link:
-      description: URL Link
-      type:
-      - string
-      - 'null'
-      format: uri
-      example: https://dummy.link
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
     resultsOfUsers:
       allOf:
       - $ref: '#/components/schemas/results'
@@ -206,24 +269,22 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/user'
-    userRole:
-      description: Vectra User Role
-      type: string
-    results:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/positiveInt'
-        next:
-          $ref: '#/components/schemas/link'
-        previous:
-          $ref: '#/components/schemas/link'
+    userAuthProfile:
+      description: Vectra User authentication profile when coming from SAML or LDAP
+      type:
+      - string
+      - 'null'
     userType:
       description: Vectra User type
       type: string
       enum:
       - local
       - SAML
+    isoDate:
+      description: ISO representation of a date
+      type: string
+      format: date-time
+      example: '2022-01-01T00:00:00Z'
     User:
       type: object
       properties:
@@ -263,67 +324,6 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: You do not have permission to perform this action.
-  examples:
-    noneUsers:
-      value:
-        count: 0
-        next: null
-        previous: null
-        results: []
-    userSAMLExample:
-      value:
-        id: 129
-        last_login: '2022-01-01T12:34:56'
-        username: SAML:dummy-user@company.com
-        email: dummy-user@company.com
-        account_type: SAML
-        authentication_profile: Company SE
-        role: Custom Admin
-    userLocalExample:
-      value:
-        id: 101
-        last_login: '2022-01-01T12:34:56Z'
-        username: dummy-user
-        email: ''
-        account_type: local
-        authentication_profile: null
-        role: Read-Only
-    userAdminExample:
-      value:
-        id: 20
-        last_login: '2022-01-01T12:34:56Z'
-        username: admin
-        email: ''
-        account_type: local
-        authentication_profile: null
-        role: Super Admin
-    multipleExample:
-      value:
-        count: 3
-        next: null
-        previous: null
-        results:
-        - id: 20
-          last_login: '2022-01-01T12:34:56Z'
-          username: admin
-          email: ''
-          account_type: local
-          authentication_profile: null
-          role: Super Admin
-        - id: 101
-          last_login: '2022-01-01T12:34:56Z'
-          username: dummy-user
-          email: ''
-          account_type: local
-          authentication_profile: null
-          role: Read-Only
-        - id: 129
-          last_login: '2022-01-01T12:34:56'
-          username: SAML:dummy-user@company.com
-          email: dummy-user@company.com
-          account_type: SAML
-          authentication_profile: Company SE
-          role: Custom Admin
   securitySchemes:
     VectraToken:
       type: apiKey

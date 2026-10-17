@@ -168,11 +168,6 @@ paths:
           default: platform.vectra.ai
 components:
   schemas:
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
     error:
       type: object
       properties:
@@ -182,6 +177,11 @@ components:
         details:
           description: A human readable error message
           type: string
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
     ThreatFeed:
       type: object
       properties:

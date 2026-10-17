@@ -175,6 +175,20 @@ components:
         enabled:
           type: boolean
           description: Indicates if Vectra Match is enabled
+    VectraMatchRule:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        enabled:
+          type: boolean
+        created_timestamp:
+          type: string
+          format: date-time
     VectraMatchAssignment:
       type: object
       properties:
@@ -186,16 +200,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Device'
-    VectraMatchStatus:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Current status of Vectra Match
-        last_updated:
-          type: string
-          format: date-time
-          description: Timestamp of the last status update
     VectraMatchStats:
       type: object
       properties:
@@ -215,6 +219,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Device'
+    VectraMatchStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Current status of Vectra Match
+        last_updated:
+          type: string
+          format: date-time
+          description: Timestamp of the last status update
     Device:
       type: object
       properties:
@@ -243,20 +257,6 @@ components:
         low_alerts:
           type: integer
           description: Number of low alerts
-    VectraMatchRule:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        enabled:
-          type: boolean
-        created_timestamp:
-          type: string
-          format: date-time
   securitySchemes:
     oauth2:
       type: oauth2

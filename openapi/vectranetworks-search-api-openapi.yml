@@ -104,25 +104,16 @@ paths:
         '403':
           $ref: '#/components/responses/invalidPermissions'
 components:
-  parameters:
-    pageNumber:
-      name: page
-      description: The page result to look at
-      in: query
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-      example: 1
-    pageSize:
-      name: page_size
-      description: The number of results to return per page
-      in: query
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 5000
-      example: 50
+  schemas:
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
   responses:
     invalidToken:
       description: Invalid User Token
@@ -140,16 +131,25 @@ components:
             $ref: '#/components/schemas/error'
           example:
             details: You do not have permission to perform this action.
-  schemas:
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
+  parameters:
+    pageSize:
+      name: page_size
+      description: The number of results to return per page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 5000
+      example: 50
+    pageNumber:
+      name: page
+      description: The page result to look at
+      in: query
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+      example: 1
   securitySchemes:
     VectraToken:
       type: apiKey

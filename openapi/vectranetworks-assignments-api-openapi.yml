@@ -356,7 +356,261 @@ paths:
         vectra_portal_url:
           default: platform.vectra.ai
 components:
+  examples:
+    assignmentReassigned:
+      value:
+        assignment:
+          id: 18
+          assigned_by:
+            id: 12
+            username: other-user
+          date_assigned: '2022-01-02T12:34:56Z'
+          date_resolved: null
+          events:
+          - assignment_id: 18
+            actor: 12
+            event_type: reassigned
+            datetime: '2022-01-02T12:34:56Z'
+            context:
+              from: 80
+              to: 82
+              entity_t_score: 75
+              entity_c_score: 85
+          - assignment_id: 18
+            actor: 123
+            event_type: created
+            datetime: '2022-01-01T12:34:56Z'
+            context:
+              to: 80
+              entity_t_score: 55
+              entity_c_score: 65
+          outcome: null
+          resolved_by: null
+          triaged_detections: null
+          host_id: null
+          account_id: 25
+          assigned_to:
+            id: 82
+            username: SAML:other-user@company.com
+    userCannotBeAssigned:
+      value:
+        errors:
+        - title: User 101 does not have permissions to be assigned to hosts.
+    assignmentTruePositiveResolveWithMarkAsFixedRequestBody:
+      value:
+        outcome: 1
+        note: This is a true positive assignment resolution with mark as fixed
+        mark_as_fixed: true
+        detection_ids:
+        - 1
+        - 2
+        - 3
+    assignmentCreated:
+      value:
+        assignment:
+          id: 18
+          assigned_by:
+            id: 456
+            username: dummy-user
+          date_assigned: '2022-01-01T12:34:56Z'
+          date_resolved: null
+          events:
+          - assignment_id: 18
+            actor: 123
+            event_type: created
+            datetime: '2022-01-01T12:34:56Z'
+            context:
+              to: 80
+              entity_t_score: 55
+              entity_c_score: 65
+          outcome: null
+          resolved_by: null
+          triaged_detections: null
+          host_id: null
+          account_id: 25
+          assigned_to:
+            id: 80
+            username: SAML:dummy-user@company.com
+    assignmentBenignPositiveResolveWithTriageRequestBody:
+      value:
+        outcome: 1
+        note: This is a benign positive assignment resolution with triage rules
+        triage_as: My triage rule name
+        detection_ids:
+        - 1
+        - 2
+        - 3
+    assignmentSimpleResolution:
+      value:
+        assignment:
+          id: 18
+          assigned_by:
+            id: 12
+            username: other-user
+          date_assigned: '2022-01-02T12:34:56Z'
+          date_resolved: '2022-01-03T12:34:56Z'
+          events:
+          - assignment_id: 18
+            actor: 82
+            event_type: resolved
+            datetime: '2022-01-03T12:34:56Z'
+            context:
+              entity_t_score: 75
+              entity_c_score: 85
+              triage_as: null
+              triaged_detection_ids: null
+              fixed_detection_ids: null
+              created_rule_ids: null
+          - assignment_id: 18
+            actor: 12
+            event_type: reassigned
+            datetime: '2022-01-02T12:34:56Z'
+            context:
+              from: 80
+              to: 82
+              entity_t_score: 75
+              entity_c_score: 85
+          - assignment_id: 18
+            actor: 123
+            event_type: created
+            datetime: '2022-01-01T12:34:56Z'
+            context:
+              to: 80
+              entity_t_score: 55
+              entity_c_score: 65
+          outcome:
+            id: 3
+            builtin: true
+            user_selectable: true
+            title: False Positive
+            category: false_positive
+          resolved_by:
+            id: 82
+            username: SAML:other-user@company.com
+          triaged_detections: []
+          host_id: null
+          account_id: 25
+          assigned_to:
+            id: 82
+            username: SAML:other-user@company.com
+    assignmentFalsePositiveResolveNoTriageRequestBody:
+      value:
+        outcome: 3
+        note: This is a test false positive assignment resolution
+    assignmentTriagedResolution:
+      value:
+        assignment:
+          id: 22
+          assigned_by:
+            id: 82
+            username: SAML:other-user@company.com
+          date_assigned: '2022-09-25T12:34:56Z'
+          date_resolved: '2022-09-30T12:34:56Z'
+          events:
+          - assignment_id: 22
+            actor: 82
+            event_type: resolved
+            datetime: '2022-09-30T12:34:56Z'
+            context:
+              entity_t_score: 20
+              entity_c_score: 55
+              triage_as: Dummy Triage Rule
+              triaged_detection_ids:
+              - 1
+              - 2
+              fixed_detection_ids: null
+              created_rule_ids:
+              - 500
+              - 501
+          - assignment_id: 22
+            actor: 82
+            event_type: created
+            datetime: '2022-09-25T12:34:56Z'
+            context:
+              to: 82
+              entity_t_score: 20
+              entity_c_score: 55
+          outcome:
+            id: 3
+            builtin: true
+            user_selectable: true
+            title: False Positive
+            category: false_positive
+          resolved_by:
+            id: 82
+            username: SAML:other-user@company.com
+          triaged_detections:
+          - 1
+          - 2
+          host_id: null
+          account_id: 331
+          assigned_to:
+            id: 82
+            username: SAML:other-user@company.com
   schemas:
+    assignmentResolveRequestBody:
+      type: object
+      properties:
+        outcome:
+          $ref: '#/components/schemas/ID'
+        note:
+          $ref: '#/components/schemas/text'
+        triage_as:
+          $ref: '#/components/schemas/name'
+        mark_as_fixed:
+          type: boolean
+        detection_ids:
+          $ref: '#/components/schemas/arrayOfIDs'
+      required:
+      - outcome
+    name:
+      type: string
+      minLength: 1
+    link:
+      description: URL Link
+      type:
+      - string
+      - 'null'
+      format: uri
+      example: https://dummy.link
+    assignmentUser:
+      description: Assignment user (tiny Vectra User)
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        username:
+          $ref: '#/components/schemas/name'
+      example:
+        id: 123
+        username: SAML:dummy@company.com
+    assignmentHostRequestBody:
+      type: object
+      properties:
+        assign_host_id:
+          $ref: '#/components/schemas/ID'
+        assign_to_user_id:
+          $ref: '#/components/schemas/ID'
+      required:
+      - assign_host_id
+      - assign_to_user_id
+    assignmentOutcomeCategory:
+      title: Assignment Outcome allowed categories
+      type: string
+      enum:
+      - benign_true_positive
+      - malicious_true_positive
+      - false_positive
+    assignmentAccountRequestBody:
+      type: object
+      properties:
+        assign_account_id:
+          $ref: '#/components/schemas/ID'
+        assign_to_user_id:
+          $ref: '#/components/schemas/ID'
+      required:
+      - assign_account_id
+      - assign_to_user_id
     resultsOfAssignments:
       allOf:
       - $ref: '#/components/schemas/results'
@@ -366,6 +620,29 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/assignment'
+    vectraScore:
+      type: number
+      minimum: 0
+      maximum: 99
+      example: 80
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
+    results:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/positiveInt'
+        next:
+          $ref: '#/components/schemas/link'
+        previous:
+          $ref: '#/components/schemas/link'
     assignmentHistorycalEvent:
       description: Assignment history event
       type: object
@@ -411,50 +688,50 @@ components:
               - type:
                 - string
                 - 'null'
-    name:
+    positiveInt:
+      type: integer
+      format: int32
+      minimum: 0
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
+    assignmentEventType:
+      description: Type of event that can happen to an assignment
       type: string
-      minLength: 1
-    assignmentResolveRequestBody:
-      type: object
-      properties:
-        outcome:
-          $ref: '#/components/schemas/ID'
-        note:
-          $ref: '#/components/schemas/text'
-        triage_as:
-          $ref: '#/components/schemas/name'
-        mark_as_fixed:
-          type: boolean
-        detection_ids:
-          $ref: '#/components/schemas/arrayOfIDs'
-      required:
-      - outcome
-    arrayOfIDs:
-      description: Array of IDs
-      type: array
-      items:
-        $ref: '#/components/schemas/ID'
-    assignmentHostRequestBody:
-      type: object
-      properties:
-        assign_host_id:
-          $ref: '#/components/schemas/ID'
-        assign_to_user_id:
-          $ref: '#/components/schemas/ID'
-      required:
-      - assign_host_id
-      - assign_to_user_id
-    assignmentUser:
-      description: Assignment user (tiny Vectra User)
+      enum:
+      - created
+      - reassigned
+      - resolved
+      example: created
+    assignmentOutcome:
+      description: Label resolution outcome for an assignment
       type: object
       properties:
         id:
           $ref: '#/components/schemas/ID'
-        username:
-          $ref: '#/components/schemas/name'
-      example:
-        id: 123
-        username: SAML:dummy@company.com
+        builtin:
+          type: boolean
+        user_selectable:
+          type: boolean
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/assignmentOutcomeCategory'
+      required:
+      - id
+      - builtin
+      - user_selectable
+      - title
+      - category
+    assignmentUpdateRequestBody:
+      type: object
+      properties:
+        assign_to_user_id:
+          $ref: '#/components/schemas/ID'
+      required:
+      - assign_to_user_id
     assignment:
       description: Assignment
       type: object
@@ -512,104 +789,18 @@ components:
       - assigned_by
       - date_assigned
       - assigned_to
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
-    positiveInt:
-      type: integer
-      format: int32
-      minimum: 0
-    assignmentEventType:
-      description: Type of event that can happen to an assignment
+    text:
       type: string
-      enum:
-      - created
-      - reassigned
-      - resolved
-      example: created
+    arrayOfIDs:
+      description: Array of IDs
+      type: array
+      items:
+        $ref: '#/components/schemas/ID'
     isoDate:
       description: ISO representation of a date
       type: string
       format: date-time
       example: '2022-01-01T00:00:00Z'
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
-    assignmentOutcomeCategory:
-      title: Assignment Outcome allowed categories
-      type: string
-      enum:
-      - benign_true_positive
-      - malicious_true_positive
-      - false_positive
-    link:
-      description: URL Link
-      type:
-      - string
-      - 'null'
-      format: uri
-      example: https://dummy.link
-    vectraScore:
-      type: number
-      minimum: 0
-      maximum: 99
-      example: 80
-    assignmentOutcome:
-      description: Label resolution outcome for an assignment
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/ID'
-        builtin:
-          type: boolean
-        user_selectable:
-          type: boolean
-        title:
-          type: string
-        category:
-          $ref: '#/components/schemas/assignmentOutcomeCategory'
-      required:
-      - id
-      - builtin
-      - user_selectable
-      - title
-      - category
-    assignmentAccountRequestBody:
-      type: object
-      properties:
-        assign_account_id:
-          $ref: '#/components/schemas/ID'
-        assign_to_user_id:
-          $ref: '#/components/schemas/ID'
-      required:
-      - assign_account_id
-      - assign_to_user_id
-    assignmentUpdateRequestBody:
-      type: object
-      properties:
-        assign_to_user_id:
-          $ref: '#/components/schemas/ID'
-      required:
-      - assign_to_user_id
-    results:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/positiveInt'
-        next:
-          $ref: '#/components/schemas/link'
-        previous:
-          $ref: '#/components/schemas/link'
-    text:
-      type: string
     Assignment:
       type: object
       properties:
@@ -627,206 +818,7 @@ components:
           format: date-time
         outcome:
           type: integer
-  examples:
-    assignmentSimpleResolution:
-      value:
-        assignment:
-          id: 18
-          assigned_by:
-            id: 12
-            username: other-user
-          date_assigned: '2022-01-02T12:34:56Z'
-          date_resolved: '2022-01-03T12:34:56Z'
-          events:
-          - assignment_id: 18
-            actor: 82
-            event_type: resolved
-            datetime: '2022-01-03T12:34:56Z'
-            context:
-              entity_t_score: 75
-              entity_c_score: 85
-              triage_as: null
-              triaged_detection_ids: null
-              fixed_detection_ids: null
-              created_rule_ids: null
-          - assignment_id: 18
-            actor: 12
-            event_type: reassigned
-            datetime: '2022-01-02T12:34:56Z'
-            context:
-              from: 80
-              to: 82
-              entity_t_score: 75
-              entity_c_score: 85
-          - assignment_id: 18
-            actor: 123
-            event_type: created
-            datetime: '2022-01-01T12:34:56Z'
-            context:
-              to: 80
-              entity_t_score: 55
-              entity_c_score: 65
-          outcome:
-            id: 3
-            builtin: true
-            user_selectable: true
-            title: False Positive
-            category: false_positive
-          resolved_by:
-            id: 82
-            username: SAML:other-user@company.com
-          triaged_detections: []
-          host_id: null
-          account_id: 25
-          assigned_to:
-            id: 82
-            username: SAML:other-user@company.com
-    assignmentTriagedResolution:
-      value:
-        assignment:
-          id: 22
-          assigned_by:
-            id: 82
-            username: SAML:other-user@company.com
-          date_assigned: '2022-09-25T12:34:56Z'
-          date_resolved: '2022-09-30T12:34:56Z'
-          events:
-          - assignment_id: 22
-            actor: 82
-            event_type: resolved
-            datetime: '2022-09-30T12:34:56Z'
-            context:
-              entity_t_score: 20
-              entity_c_score: 55
-              triage_as: Dummy Triage Rule
-              triaged_detection_ids:
-              - 1
-              - 2
-              fixed_detection_ids: null
-              created_rule_ids:
-              - 500
-              - 501
-          - assignment_id: 22
-            actor: 82
-            event_type: created
-            datetime: '2022-09-25T12:34:56Z'
-            context:
-              to: 82
-              entity_t_score: 20
-              entity_c_score: 55
-          outcome:
-            id: 3
-            builtin: true
-            user_selectable: true
-            title: False Positive
-            category: false_positive
-          resolved_by:
-            id: 82
-            username: SAML:other-user@company.com
-          triaged_detections:
-          - 1
-          - 2
-          host_id: null
-          account_id: 331
-          assigned_to:
-            id: 82
-            username: SAML:other-user@company.com
-    assignmentReassigned:
-      value:
-        assignment:
-          id: 18
-          assigned_by:
-            id: 12
-            username: other-user
-          date_assigned: '2022-01-02T12:34:56Z'
-          date_resolved: null
-          events:
-          - assignment_id: 18
-            actor: 12
-            event_type: reassigned
-            datetime: '2022-01-02T12:34:56Z'
-            context:
-              from: 80
-              to: 82
-              entity_t_score: 75
-              entity_c_score: 85
-          - assignment_id: 18
-            actor: 123
-            event_type: created
-            datetime: '2022-01-01T12:34:56Z'
-            context:
-              to: 80
-              entity_t_score: 55
-              entity_c_score: 65
-          outcome: null
-          resolved_by: null
-          triaged_detections: null
-          host_id: null
-          account_id: 25
-          assigned_to:
-            id: 82
-            username: SAML:other-user@company.com
-    assignmentCreated:
-      value:
-        assignment:
-          id: 18
-          assigned_by:
-            id: 456
-            username: dummy-user
-          date_assigned: '2022-01-01T12:34:56Z'
-          date_resolved: null
-          events:
-          - assignment_id: 18
-            actor: 123
-            event_type: created
-            datetime: '2022-01-01T12:34:56Z'
-            context:
-              to: 80
-              entity_t_score: 55
-              entity_c_score: 65
-          outcome: null
-          resolved_by: null
-          triaged_detections: null
-          host_id: null
-          account_id: 25
-          assigned_to:
-            id: 80
-            username: SAML:dummy-user@company.com
-    assignmentTruePositiveResolveWithMarkAsFixedRequestBody:
-      value:
-        outcome: 1
-        note: This is a true positive assignment resolution with mark as fixed
-        mark_as_fixed: true
-        detection_ids:
-        - 1
-        - 2
-        - 3
-    assignmentFalsePositiveResolveNoTriageRequestBody:
-      value:
-        outcome: 3
-        note: This is a test false positive assignment resolution
-    userCannotBeAssigned:
-      value:
-        errors:
-        - title: User 101 does not have permissions to be assigned to hosts.
-    assignmentBenignPositiveResolveWithTriageRequestBody:
-      value:
-        outcome: 1
-        note: This is a benign positive assignment resolution with triage rules
-        triage_as: My triage rule name
-        detection_ids:
-        - 1
-        - 2
-        - 3
   responses:
-    invalidToken:
-      description: Invalid User Token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            details: Invalid token.
     notFound:
       description: Object not found
       content:
@@ -835,6 +827,14 @@ components:
             $ref: '#/components/schemas/error'
           example:
             detail: Not Found.
+    invalidToken:
+      description: Invalid User Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            details: Invalid token.
     invalidPermissions:
       description: Invalid User Permissions
       content:

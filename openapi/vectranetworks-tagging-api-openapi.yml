@@ -262,11 +262,15 @@ paths:
           default: platform.vectra.ai
 components:
   schemas:
-    ID:
-      description: ID
-      type: integer
-      format: int32
-      minimum: 1
+    error:
+      type: object
+      properties:
+        detail:
+          description: A human readable error message
+          type: string
+        details:
+          description: A human readable error message
+          type: string
     tags:
       type: object
       properties:
@@ -287,17 +291,13 @@ components:
           - $ref: '#/components/schemas/text'
       required:
       - tags
-    error:
-      type: object
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
-        details:
-          description: A human readable error message
-          type: string
     text:
       type: string
+    ID:
+      description: ID
+      type: integer
+      format: int32
+      minimum: 1
     Tag:
       type: object
       properties:
