@@ -298,7 +298,7 @@ apis:
   - Hosts
   - Account
   - Threat Intelligence
-  - NDR
+  - Network Detection and Response
   tags_raw:
   - Detections
   - Hosts
