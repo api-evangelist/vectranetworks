@@ -2,6 +2,7 @@ generated: '2026-10-14'
 method: searched
 checked:
 - crowdstrike/integrations/crowdstrike-integration-edges.yml
+- https://aws.amazon.com/marketplace/
 - microsoft-sentinel/integrations/microsoft-sentinel-integration-edges.yml
 - palo-alto-networks/integrations/palo-alto-networks-integration-edges.yml
 source:
@@ -70,3 +71,22 @@ edges:
   category: Network Security
   badges:
   - support:partner
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=1f2b84cf-ba3d-4776-bcb0-9340e6e3473f
+  listing_count: 4
+  apps:
+  - Vectra AI Platform
+  - Vectra Cognito for Service Delivery Partners (Billed Monthly)
+  - Vectra Detect for AWS
+  - Vectra Match
+  seller_name: Vectra AI
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-19'
+marketplace_apps: []

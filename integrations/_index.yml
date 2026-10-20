@@ -41,3 +41,15 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: vectranetworks-aws-marketplace
+  label: AWS Marketplace
+  partner: amazon-web-services
+  partner_name: AWS Marketplace
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=1f2b84cf-ba3d-4776-bcb0-9340e6e3473f
+  source: edge
+  relationship: distribution-channel
+  status: not-a-workflow
+  arazzo: null
