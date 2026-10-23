@@ -338,3 +338,9 @@ components:
 x-refined-from:
 - vectranetworks-detect-v2.3-openapi.yml
 - vectranetworks-rux-v3.3-openapi.yml
+x-provenance:
+  method: harvested
+  publisher: Vectra AI
+  source: https://vectranetworks.github.io/detect-openapi/vectra-detect_v2.3.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

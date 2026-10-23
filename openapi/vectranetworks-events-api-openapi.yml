@@ -217,3 +217,9 @@ components:
         clientCredentials:
           tokenUrl: https://{vectra_portal_url}/oauth2/token
           scopes: {}
+x-provenance:
+  method: harvested
+  publisher: Vectra AI
+  source: https://vectranetworks.github.io/openapi-rux/vectra_rux_openapi_v3.3.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
